@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     reactify = require('reactify'), // Transforms react JSX to JS
     source = require('vinyl-source-stream'), //Use conventional text stream with gulp ???
     concat = require('gulp-concat'), // concatenates files
-    lint = require('gulp-eslint');
+    lint = require('gulp-eslint'); //performs code check
 
 var config = {
     port: 9005,
