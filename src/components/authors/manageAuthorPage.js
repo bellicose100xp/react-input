@@ -11,8 +11,15 @@ var toastr = require('toastr');
 
 var ManageAuthorPage = React.createClass({
     mixins: [
-        Router.Navigation
+        Router.Navigation //transition to mixin
     ],
+    statics: {
+        willTransitionFrom: function(transition, component) {
+            if(component.state.dirty && !confirm('You have unsaved changes, are you sure you wanna leave?')) {
+                transition.abort();
+            }
+        }
+    },
     getInitialState: function () {
         return {
             author: {
@@ -20,10 +27,18 @@ var ManageAuthorPage = React.createClass({
                 firstName: '',
                 lastName: ''
             },
-            error: {}
+            error: {},
+            dirty: false
         };
     },
+    componentWillMount: function () {
+        var authorId = this.props.params.id;
+        if (authorId) {
+            this.setState({author: AuthorApi.getAuthorById(authorId)});
+        }
+    },
     setAuthorState: function (event) {
+        this.setState({dirty: true});
         var field = event.target.name;
         var value = event.target.value;
         this.state.author[field] = value;
@@ -55,6 +70,7 @@ var ManageAuthorPage = React.createClass({
 
         event.preventDefault();
         AuthorApi.saveAuthor(this.state.author);
+        this.setState({dirty: false});
         toastr.success('Author Added');
         this.transitionTo('authors');
     },
