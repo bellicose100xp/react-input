@@ -1,13 +1,13 @@
 'use strict';
 
-var gulp = require('gulp'),
-    connect = require('gulp-connect'), //runs a local web server
-    open = require('gulp-open'), //open a url in web browser
-    browserify = require('browserify'), //Bundles Javascript files
-    reactify = require('reactify'), // Transforms react JSX to JS
-    source = require('vinyl-source-stream'), //Use conventional text stream with gulp ???
-    concat = require('gulp-concat'), // concatenates files
-    lint = require('gulp-eslint'); //performs code check
+var gulp = require('gulp');
+var connect = require('gulp-connect'); //runs a local web server
+var open = require('gulp-open'); //open a url in web browser
+var browserify = require('browserify'); //Bundles Javascript files
+var source = require('vinyl-source-stream'); //Use conventional text stream with gulp ???
+var concat = require('gulp-concat'); // concatenates files
+var lint = require('gulp-eslint'); //performs code check
+var babelify = require('babelify');
 
 var config = {
     port: 9005,
@@ -20,8 +20,7 @@ var config = {
         mainJs: './src/main.js',
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
-            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
-            'node_modules/toastr/toastr.css'
+            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
         ]
     }
 };
@@ -35,21 +34,24 @@ gulp.task('connect', function () {
     });
 });
 
-gulp.task('open', ['connect'], function () {
-    gulp.src('./dist/index.html')
-        .pipe(open({uri: config.devBaseUrl + ':' + config.port + '/'
-        }));
-});
+//gulp.task('open', ['connect'], function () {
+//    gulp.src('./dist/index.html')
+//        .pipe(open({
+//            uri: config.devBaseUrl + ':' + config.port + '/'
+//        }));
+//});
 
 gulp.task('html', function () {
-   gulp.src(config.paths.html)
-       .pipe(gulp.dest(config.paths.dist))
-       .pipe(connect.reload())
+    gulp.src(config.paths.html)
+        .pipe(gulp.dest(config.paths.dist))
+        .pipe(connect.reload())
 });
 
 gulp.task('js', function () {
     browserify(config.paths.mainJs)
-        .transform(reactify)
+        .transform(babelify.configure({
+            ignore: /(bower_components)|(node_modules)/
+        }))
         .bundle()
         .on('error', console.error.bind(console))
         .pipe(source('bundle.js'))
@@ -59,22 +61,21 @@ gulp.task('js', function () {
 });
 
 gulp.task('css', function () {
-   gulp.src(config.paths.css)
-       .pipe(concat('bundle.css'))
-       .pipe(gulp.dest(config.paths.dist + '/css'))
+    gulp.src(config.paths.css)
+        .pipe(concat('bundle.css'))
+        .pipe(gulp.dest(config.paths.dist + '/css'))
 });
 
 gulp.task('images', function () {
     gulp.src(config.paths.images)
-    .pipe(gulp.dest(config.paths.dist + '/images'))
-    .pipe(connect.reload());
+        .pipe(gulp.dest(config.paths.dist + '/images'))
+        .pipe(connect.reload());
 
     gulp.src('./src/favicon.ico')
-    .pipe(gulp.dest(config.paths.dist));
+        .pipe(gulp.dest(config.paths.dist));
 });
 
 gulp.task('lint', function () {
-   // TODO: why return??
     return gulp.src(config.paths.js)
         .pipe(lint({
             config: 'eslint.config.json'
@@ -87,4 +88,4 @@ gulp.task('watch', function () {
     gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'open', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'connect', 'watch']);

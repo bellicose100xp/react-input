@@ -1,18 +1,16 @@
 /**
  * Created by buggy on 8/19/15.
  */
-"use strict";
 
-var React = require('react');
-var Router = require('react-router');
-var routes = require('./routes');
-var InitializeActions = require('./actions/initializeActions');
+import React from 'react';
+import Homepage from './components/homepage';
 
-InitializeActions.initApp();
+React.render(
+    <Homepage />,
+    document.querySelector('#app')
+);
 
-Router.run(routes, function (Handler) {
-   React.render(<Handler />, document.querySelector('#app'));
-});
+
 
 
 
