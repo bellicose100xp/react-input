@@ -17,6 +17,8 @@ export default class Input extends React.Component {
                             className="form-control"
                             name="firstName"
                             ref="firstName"
+                            value={this.props.customer.firstName}
+                            onChange={this.props.updateCustomer}
                         />
                     </div>
 
@@ -26,6 +28,8 @@ export default class Input extends React.Component {
                             className="form-control"
                             name="lastName"
                             ref="lastName"
+                            value={this.props.customer.lastName}
+                            onChange={this.props.updateCustomer}
                         />
                     </div>
 

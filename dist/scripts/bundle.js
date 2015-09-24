@@ -19842,17 +19842,29 @@ var Homepage = (function (_React$Component) {
     function Homepage() {
         _classCallCheck(this, Homepage);
 
-        _get(Object.getPrototypeOf(Homepage.prototype), 'constructor', this).apply(this, arguments);
+        _get(Object.getPrototypeOf(Homepage.prototype), 'constructor', this).call(this);
+
+        this.state = {
+            customer: {
+                firstName: 'John',
+                lastName: 'Doe'
+            }
+        };
     }
 
     _createClass(Homepage, [{
+        key: 'updateCustomer',
+        value: function updateCustomer() {
+            this.setState({ customer: this.state.customer });
+        }
+    }, {
         key: 'updateForm',
         value: function updateForm(e) {
-            console.log(this);
+            //console.log(this);
             e.preventDefault();
-            var x = _react2['default'].findDOMNode(this.refs.firstName).value;
-            var y = _react2['default'].findDOMNode(this.refs.lastName).value;
-            console.log(x + ' ' + y);
+            var firstName = _react2['default'].findDOMNode(this.refs.firstName).value;
+            var lastName = _react2['default'].findDOMNode(this.refs.lastName).value;
+            console.log(firstName + ' ' + lastName);
         }
     }, {
         key: 'render',
@@ -19860,7 +19872,10 @@ var Homepage = (function (_React$Component) {
             return _react2['default'].createElement(
                 'div',
                 { className: 'container' },
-                _react2['default'].createElement(_input2['default'], { updateForm: this.updateForm })
+                _react2['default'].createElement(_input2['default'], {
+                    updateCustomer: this.updateCustomer,
+                    customer: this.state.customer,
+                    updateForm: this.updateForm })
             );
         }
     }]);
@@ -19923,7 +19938,9 @@ var Input = (function (_React$Component) {
                         _react2['default'].createElement('input', {
                             className: 'form-control',
                             name: 'firstName',
-                            ref: 'firstName'
+                            ref: 'firstName',
+                            value: this.props.customer.firstName,
+                            onChange: this.props.updateCustomer
                         })
                     ),
                     _react2['default'].createElement(
@@ -19937,7 +19954,9 @@ var Input = (function (_React$Component) {
                         _react2['default'].createElement('input', {
                             className: 'form-control',
                             name: 'lastName',
-                            ref: 'lastName'
+                            ref: 'lastName',
+                            value: this.props.customer.lastName,
+                            onChange: this.props.updateCustomer
                         })
                     ),
                     _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' })

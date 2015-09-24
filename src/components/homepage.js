@@ -7,18 +7,38 @@ import Input from './input';
 
 export default class Homepage extends React.Component {
 
+    constructor(){
+
+        super();
+
+        this.state = {
+            customer: {
+                firstName: 'John',
+                lastName: 'Doe'
+            }
+        };
+
+    }
+
+    updateCustomer(){
+        this.setState({customer: this.state.customer});
+    }
+
     updateForm(e) {
-        console.log(this);
+        //console.log(this);
         e.preventDefault();
-        let x = React.findDOMNode(this.refs.firstName).value;
-        let y = React.findDOMNode(this.refs.lastName).value;
-        console.log(`${x} ${y}`);
+        let firstName = React.findDOMNode(this.refs.firstName).value;
+        let lastName = React.findDOMNode(this.refs.lastName).value;
+        console.log(`${firstName} ${lastName}`);
     }
 
     render(){
         return (
           <div className="container">
-              <Input updateForm={this.updateForm} />
+              <Input
+                  updateCustomer={this.updateCustomer}
+                  customer={this.state.customer}
+                  updateForm={this.updateForm} />
           </div>
         );
     }
