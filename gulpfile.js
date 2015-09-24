@@ -50,7 +50,8 @@ gulp.task('html', function () {
 gulp.task('js', function () {
     browserify(config.paths.mainJs)
         .transform(babelify.configure({
-            ignore: /(bower_components)|(node_modules)/
+            ignore: /(bower_components)|(node_modules)/,
+            stage: 0 //experimental features of babel
         }))
         .bundle()
         .on('error', console.error.bind(console))

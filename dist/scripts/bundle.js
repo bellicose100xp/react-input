@@ -19832,6 +19832,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _input = require('./input');
+
+var _input2 = _interopRequireDefault(_input);
+
 var Homepage = (function (_React$Component) {
     _inherits(Homepage, _React$Component);
 
@@ -19842,12 +19846,21 @@ var Homepage = (function (_React$Component) {
     }
 
     _createClass(Homepage, [{
+        key: 'updateForm',
+        value: function updateForm(e) {
+            console.log(this);
+            e.preventDefault();
+            var x = _react2['default'].findDOMNode(this.refs.firstName).value;
+            var y = _react2['default'].findDOMNode(this.refs.lastName).value;
+            console.log(x + ' ' + y);
+        }
+    }, {
         key: 'render',
         value: function render() {
             return _react2['default'].createElement(
-                'h1',
-                null,
-                ' Hello, World!!! '
+                'div',
+                { className: 'container' },
+                _react2['default'].createElement(_input2['default'], { updateForm: this.updateForm })
             );
         }
     }]);
@@ -19858,7 +19871,88 @@ var Homepage = (function (_React$Component) {
 exports['default'] = Homepage;
 module.exports = exports['default'];
 
-},{"react":156}],158:[function(require,module,exports){
+},{"./input":158,"react":156}],158:[function(require,module,exports){
+/**
+ * Created by buggy on 9/23/15.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var Input = (function (_React$Component) {
+    _inherits(Input, _React$Component);
+
+    function Input() {
+        _classCallCheck(this, Input);
+
+        _get(Object.getPrototypeOf(Input.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(Input, [{
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(
+                'div',
+                null,
+                _react2['default'].createElement(
+                    'form',
+                    { className: 'form col-md-6 col-md-offset-3', onSubmit: this.props.updateForm.bind(this) },
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'form-group' },
+                        _react2['default'].createElement(
+                            'label',
+                            { htmlFor: 'firstName' },
+                            'First Name: '
+                        ),
+                        _react2['default'].createElement('input', {
+                            className: 'form-control',
+                            name: 'firstName',
+                            ref: 'firstName'
+                        })
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'form-group' },
+                        _react2['default'].createElement(
+                            'label',
+                            { htmlFor: 'lastName' },
+                            'Last Name: '
+                        ),
+                        _react2['default'].createElement('input', {
+                            className: 'form-control',
+                            name: 'lastName',
+                            ref: 'lastName'
+                        })
+                    ),
+                    _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' })
+                )
+            );
+        }
+    }]);
+
+    return Input;
+})(_react2['default'].Component);
+
+exports['default'] = Input;
+module.exports = exports['default'];
+
+},{"react":156}],159:[function(require,module,exports){
 /**
  * Created by buggy on 8/19/15.
  */
@@ -19877,4 +19971,4 @@ var _componentsHomepage2 = _interopRequireDefault(_componentsHomepage);
 
 _react2['default'].render(_react2['default'].createElement(_componentsHomepage2['default'], null), document.querySelector('#app'));
 
-},{"./components/homepage":157,"react":156}]},{},[158]);
+},{"./components/homepage":157,"react":156}]},{},[159]);

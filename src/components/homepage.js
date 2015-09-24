@@ -3,11 +3,23 @@
  */
 'use strict';
 import React from 'react';
+import Input from './input';
 
 export default class Homepage extends React.Component {
+
+    updateForm(e) {
+        console.log(this);
+        e.preventDefault();
+        let x = React.findDOMNode(this.refs.firstName).value;
+        let y = React.findDOMNode(this.refs.lastName).value;
+        console.log(`${x} ${y}`);
+    }
+
     render(){
         return (
-          <h1> Hello, World!!! </h1>
+          <div className="container">
+              <Input updateForm={this.updateForm} />
+          </div>
         );
     }
 }
