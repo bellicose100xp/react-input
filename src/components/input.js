@@ -9,11 +9,12 @@ export default class Input extends React.Component {
     render() {
         return (
             <div>
-                <form className="form col-md-6 col-md-offset-3" onSubmit={this.props.updateForm.bind(this)}>
+                <form className="form col-md-6 col-md-offset-3" onSubmit={this.props.updateForm}>
 
                     <div className="form-group">
                         <label htmlFor="firstName">First Name: </label>
                         <input
+                            id="firstName"
                             className="form-control"
                             name="firstName"
                             ref="firstName"
