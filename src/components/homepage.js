@@ -3,21 +3,27 @@
  */
 'use strict';
 import React from 'react';
+import PropTypes from 'react-router';
 import Input from './input';
 import Customers from './customers';
+import Router from 'react-router';
 
 export default class Homepage extends React.Component {
 
-    constructor() {
+    constructor(props, context) {
 
-        super();
+        super(props, context);
+
+        //console.log(props, context);
+        //this.context = context;
 
         this.state = {
             customer: {
                 firstName: '',
                 lastName: ''
             },
-            allCustomers: []
+            allCustomers: [],
+            dirty: false
         };
 
     }
@@ -46,8 +52,8 @@ export default class Homepage extends React.Component {
         this.state.customer.lastName = '';
 
         document.querySelector('#firstName').focus();
-
-        //console.dir(this.state.allCustomers);
+        window.location = '#/test';
+       // this.context.router.transitionTo('#/test');
 
     }
 
@@ -58,6 +64,7 @@ export default class Homepage extends React.Component {
                 <Input
                     updateCustomer={this.updateCustomer}
                     customer={this.state.customer}
+                    dirty={this.state.dirty}
                     updateForm={this.updateForm}/>
 
                 <Customers
@@ -68,3 +75,7 @@ export default class Homepage extends React.Component {
         );
     }
 }
+
+//Homepage.contextTypes = {
+//    router: React.PropTypes.func.isRequired
+//};

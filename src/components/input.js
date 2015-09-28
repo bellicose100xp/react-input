@@ -7,11 +7,25 @@ import React from 'react';
 export default class Input extends React.Component {
 
     render() {
+
+        let firstNameClass = 'form-group';
+        let firstNameHelpText = '';
+
+        if (this.props.customer.firstName && this.props.customer.firstName.length <= 2) {
+            firstNameClass += ' has-error';
+            firstNameHelpText = 'First Name must be more than 2 characters';
+            this.props.dirty = true;
+        } else {
+            firstNameClass = 'form-group';
+            firstNameHelpText = '';
+            this.props.dirty = false;
+        }
+
         return (
             <div>
                 <form className="form col-md-6 col-md-offset-3" onSubmit={this.props.updateForm}>
 
-                    <div className="form-group">
+                    <div className={firstNameClass}>
                         <label htmlFor="firstName">First Name: </label>
                         <input
                             id="firstName"
@@ -21,6 +35,7 @@ export default class Input extends React.Component {
                             value={this.props.customer.firstName}
                             onChange={this.props.updateCustomer}
                         />
+                        <span className="help-block">{firstNameHelpText}</span>
                     </div>
 
                     <div className="form-group">
