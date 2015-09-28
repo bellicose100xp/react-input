@@ -3,19 +3,13 @@
  */
 'use strict';
 import React from 'react';
-import PropTypes from 'react-router';
 import Input from './input';
 import Customers from './customers';
-import Router from 'react-router';
 
 export default class Homepage extends React.Component {
 
-    constructor(props, context) {
-
-        super(props, context);
-
-        //console.log(props, context);
-        //this.context = context;
+    constructor() {
+        super();
 
         this.state = {
             customer: {
@@ -25,7 +19,11 @@ export default class Homepage extends React.Component {
             allCustomers: [],
             dirty: false
         };
+    }
 
+    static contextTypes= {
+        history: React.PropTypes.object,
+        location: React.PropTypes.object
     }
 
     componentDidMount = () => {
@@ -53,7 +51,7 @@ export default class Homepage extends React.Component {
 
         document.querySelector('#firstName').focus();
         window.location = '#/test';
-       // this.context.router.transitionTo('#/test');
+        this.context.history.pushState(null, '/test');
 
     }
 
@@ -75,7 +73,3 @@ export default class Homepage extends React.Component {
         );
     }
 }
-
-//Homepage.contextTypes = {
-//    router: React.PropTypes.func.isRequired
-//};
