@@ -9,6 +9,7 @@ var concat = require('gulp-concat'); // concatenates files
 var lint = require('gulp-eslint'); //performs code check
 var babelify = require('babelify');
 var monitorCtrlC = require('monitorctrlc');
+var historyApiFallback = require('connect-history-api-fallback');
 
 
 var config = {
@@ -32,7 +33,10 @@ gulp.task('connect', function () {
         root: ['dist'],
         port: config.port,
         base: config.devBaseUrl,
-        livereload: true
+        livereload: true,
+        middleware: function(connect, opt){
+            return [historyApiFallback({})];
+        }
     });
 });
 
