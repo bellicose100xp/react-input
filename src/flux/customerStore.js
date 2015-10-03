@@ -17,7 +17,7 @@ var ref = new Firebase("https://buggy-react.firebaseio.com/");
 let addCustomer = (newCustomer) => {
     ref.push(newCustomer);
 };
-// test
+// test 1
 
 let customerStore = Object.assign({}, EventEmitter.prototype, {
 
