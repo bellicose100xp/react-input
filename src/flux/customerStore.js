@@ -6,16 +6,13 @@ import dispatcher from './dispatcher';
 import constants from './constants';
 import { EventEmitter } from 'events';
 //var EventEmitter = require('events').EventEmitter;
-import Firebase from 'firebase';
 
 const CHANGE_EVENT = 'change';
 
 let _customers = [];
 
-var ref = new Firebase("https://buggy-react.firebaseio.com/");
-
 let addCustomer = (newCustomer) => {
-    ref.push(newCustomer);
+    _customers.push(newCustomer);
 };
 
 let customerStore = Object.assign({}, EventEmitter.prototype, {
@@ -25,19 +22,6 @@ let customerStore = Object.assign({}, EventEmitter.prototype, {
      * @return {object}
      */
     getAllCustomer: () => {
-        ref.on('value', function(dataSnapshot) {
-           // console.dir(Object.prototype.toString.call(dataSnapshot.val()));
-           // console.dir(Object.prototype.toString.call(['x', 'y', 'z']));
-            _customers = [];
-           let x = dataSnapshot.val();
-            //console.log(x);
-            for (let key in x) {
-                console.log(x[key]);
-                _customers.push(Object.assign({key: key}, x[key]));
-            }
-            console.dir(_customers);
-           // _customers = dataSnapshot.val();
-        });
         return _customers;
     },
 
