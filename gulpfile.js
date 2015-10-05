@@ -10,6 +10,7 @@ var lint = require('gulp-eslint'); //performs code check
 var babelify = require('babelify');
 var monitorCtrlC = require('monitorctrlc');
 var historyApiFallback = require('connect-history-api-fallback');
+var nodemon = require('gulp-nodemon');
 
 
 var config = {
@@ -90,10 +91,24 @@ gulp.task('lint', function () {
         .pipe(lint.format());
 });
 
+gulp.task('node', function () {
+    nodemon({
+        script: 'index.js',
+        ext: 'js',
+        env: {
+            PORT: 8000
+        },
+        ignore: ['node_modules/**','src/**','dist/**']
+    })
+    .on('restart', function () {
+        console.log('Restarting node server...');
+    })
+});
+
 gulp.task('watch', function () {
-    monitorCtrlC();
+   // monitorCtrlC();
     gulp.watch(config.paths.html, ['html']);
     gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'connect', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'connect', 'node', 'watch']);

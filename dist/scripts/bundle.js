@@ -24834,7 +24834,7 @@ var Homepage = (function (_React$Component) {
 
             document.querySelector('#firstName').focus();
             // window.location = '#/test';
-            //  this.context.history.pushState(null, '/test');
+            _this.context.history.pushState(null, '/test');
         };
 
         this.state = {
@@ -24974,11 +24974,6 @@ var Input = (function (_React$Component) {
                         })
                     ),
                     _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' })
-                ),
-                _react2['default'].createElement(
-                    _reactRouter.Link,
-                    { to: '/test' },
-                    'Take me to Test'
                 )
             );
         }

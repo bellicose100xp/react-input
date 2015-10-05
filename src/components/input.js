@@ -53,8 +53,6 @@ export default class Input extends React.Component {
                     <input className="btn btn-primary" type="submit" value="Submit"/>
 
                 </form>
-
-                <Link to="/test">Take me to Test</Link>
             </div>
         );
     }

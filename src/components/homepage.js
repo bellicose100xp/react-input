@@ -66,7 +66,7 @@ export default class Homepage extends React.Component {
 
         document.querySelector('#firstName').focus();
        // window.location = '#/test';
-      //  this.context.history.pushState(null, '/test');
+       this.context.history.pushState(null, '/test');
 
     }
 
