@@ -6,8 +6,8 @@ let express = require('express');
 let mongoose = require('mongoose');
 
 let db = mongoose.connect('mongodb://buggy:oscillatoria@ds029804.mongolab.com:29804/registry');
-let Customer = require('./server/models/customerModel');
-
+let Customer = require('./models/customerModel');
+const b = 2;
 let app = express();
 
 let port = process.env.PORT || 3000;
