@@ -96,7 +96,6 @@ gulp.task('node', function () {
         script: 'server/index.js',
         ext: 'js',
         watch: ['./server'],
-        verbose: true,
         env: {
             PORT: 8000
         },
@@ -108,7 +107,7 @@ gulp.task('node', function () {
 });
 
 gulp.task('watch', function () {
-    monitorCtrlC();
+   // monitorCtrlC();
     gulp.watch(config.paths.html, ['html']);
     gulp.watch(config.paths.js, ['js', 'lint']);
 });

@@ -28,18 +28,20 @@ export default class Homepage extends React.Component {
         location: React.PropTypes.object
     }
 
-    getAllCustomer = () => {
-        let allCustomerInStore = customerStore.getAllCustomer();
-        this.setState({allCustomers: allCustomerInStore});
+    getAllCustomerData = () => {
+        $.get('http://localhost:8000/api/customers', (data) => {
+            this.setState({allCustomers: data});
+        });
     }
 
     componentDidMount = () => {
         document.querySelector('#firstName').focus();
-        customerStore.addChangeListener(this.getAllCustomer);
+        this.getAllCustomerData();
+        customerStore.addChangeListener(this.getAllCustomerData);
     }
 
     componentWillUnmount = () => {
-        customerStore.removeChangeListener(this.getAllCustomer);
+        customerStore.removeChangeListener(this.getAllCustomerData);
     }
 
     updateCustomer = event => {
@@ -54,19 +56,15 @@ export default class Homepage extends React.Component {
 
         let firstName = this.state.customer.firstName;
         let lastName = this.state.customer.lastName;
-       // let customerListToUpdate = this.state.allCustomers;
-        // customerListToUpdate.push({firstName: firstName, lastName: lastName});
-        // this.setState({allCustomers: customerListToUpdate});
 
-            Actions.addCustomer({firstName: firstName, lastName: lastName});
-
+        Actions.addCustomer({firstName: firstName, lastName: lastName});
 
         this.state.customer.firstName = '';
         this.state.customer.lastName = '';
 
         document.querySelector('#firstName').focus();
-       // window.location = '#/test';
-       this.context.history.pushState(null, '/test');
+
+      // this.context.history.pushState(null, '/test');
 
     }
 

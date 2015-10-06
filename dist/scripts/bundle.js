@@ -24837,18 +24837,20 @@ var Homepage = (function (_React$Component) {
 
         _get(Object.getPrototypeOf(Homepage.prototype), 'constructor', this).call(this);
 
-        this.getAllCustomer = function () {
-            var allCustomerInStore = _fluxCustomerStore2['default'].getAllCustomer();
-            _this.setState({ allCustomers: allCustomerInStore });
+        this.getAllCustomerData = function () {
+            $.get('http://localhost:8000/api/customers', function (data) {
+                _this.setState({ allCustomers: data });
+            });
         };
 
         this.componentDidMount = function () {
             document.querySelector('#firstName').focus();
-            _fluxCustomerStore2['default'].addChangeListener(_this.getAllCustomer);
+            _this.getAllCustomerData();
+            _fluxCustomerStore2['default'].addChangeListener(_this.getAllCustomerData);
         };
 
         this.componentWillUnmount = function () {
-            _fluxCustomerStore2['default'].removeChangeListener(_this.getAllCustomer);
+            _fluxCustomerStore2['default'].removeChangeListener(_this.getAllCustomerData);
         };
 
         this.updateCustomer = function (event) {
@@ -24863,9 +24865,6 @@ var Homepage = (function (_React$Component) {
 
             var firstName = _this.state.customer.firstName;
             var lastName = _this.state.customer.lastName;
-            // let customerListToUpdate = this.state.allCustomers;
-            // customerListToUpdate.push({firstName: firstName, lastName: lastName});
-            // this.setState({allCustomers: customerListToUpdate});
 
             _fluxActions2['default'].addCustomer({ firstName: firstName, lastName: lastName });
 
@@ -24873,8 +24872,8 @@ var Homepage = (function (_React$Component) {
             _this.state.customer.lastName = '';
 
             document.querySelector('#firstName').focus();
-            // window.location = '#/test';
-            _this.context.history.pushState(null, '/test');
+
+            // this.context.history.pushState(null, '/test');
         };
 
         this.state = {
@@ -25099,9 +25098,6 @@ var _constants2 = _interopRequireDefault(_constants);
 
 var Actions = {
 
-    /**
-     * @param  {string} newCustomer
-     */
     addCustomer: function addCustomer(newCustomer) {
         _dispatcher2['default'].dispatch({
             actionType: _constants2['default'].ADD_CUSTOMER,
@@ -25129,7 +25125,8 @@ var _reactLibKeyMirror = require('react/lib/keyMirror');
 var _reactLibKeyMirror2 = _interopRequireDefault(_reactLibKeyMirror);
 
 exports['default'] = (0, _reactLibKeyMirror2['default'])({
-  ADD_CUSTOMER: null
+  ADD_CUSTOMER: null,
+  INITIALIZE: null
 });
 module.exports = exports['default'];
 
@@ -25166,14 +25163,6 @@ var addCustomer = function addCustomer(newCustomer) {
 
 var customerStore = Object.assign({}, _events.EventEmitter.prototype, {
 
-    /**
-     * Get the entire collection of TODOs.
-     * @return {object}
-     */
-    getAllCustomer: function getAllCustomer() {
-        return _customers;
-    },
-
     // using arrow functions results in error on any of the 'this.om'
     emitChange: function emitChange() {
         this.emit(CHANGE_EVENT);
@@ -25196,14 +25185,22 @@ var customerStore = Object.assign({}, _events.EventEmitter.prototype, {
 
 // Register callback to handle all updates
 _dispatcher2['default'].register(function (action) {
-    var text = undefined;
 
     switch (action.actionType) {
+
         case _constants2['default'].ADD_CUSTOMER:
-            text = action.newCustomer;
-            if (text !== '') {
-                addCustomer(text);
-                customerStore.emitChange();
+            var newCustomer = action.newCustomer;
+            if (newCustomer !== '') {
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:8000/api/customers',
+                    data: newCustomer,
+                    success: function success(data) {
+                        customerStore.emitChange();
+                        console.log(data);
+                    },
+                    dataType: 'json'
+                });
             }
             break;
 
@@ -25235,6 +25232,7 @@ module.exports = exports['default'];
 /**
  * Created by buggy on 8/19/15.
  */
+/* eslint-disable strict */ //disabling strict mode here cause we need global vars.
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }

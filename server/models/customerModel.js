@@ -12,4 +12,5 @@ let customerModel = new Schema({
     }
 });
 
+// since I named the model 'Customer', mongoose will automatically look for 'customers' collection
 module.exports = mongoose.model('Customer', customerModel);

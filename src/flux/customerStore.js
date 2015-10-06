@@ -17,44 +17,44 @@ let addCustomer = (newCustomer) => {
 
 let customerStore = Object.assign({}, EventEmitter.prototype, {
 
-    /**
-     * Get the entire collection of TODOs.
-     * @return {object}
-     */
-    getAllCustomer: () => {
-        return _customers;
-    },
-
     // using arrow functions results in error on any of the 'this.om'
-    emitChange: function() {
+    emitChange: function () {
         this.emit(CHANGE_EVENT);
     },
 
     /**
      * @param {function} callback
      */
-    addChangeListener: function(callback) {
+    addChangeListener: function (callback) {
         this.on(CHANGE_EVENT, callback);
     },
 
     /**
      * @param {function} callback
      */
-    removeChangeListener: function(callback) {
+    removeChangeListener: function (callback) {
         this.removeListener(CHANGE_EVENT, callback);
     }
 });
 
 // Register callback to handle all updates
 dispatcher.register(action => {
-    let text;
 
-    switch(action.actionType) {
+    switch (action.actionType) {
+
         case constants.ADD_CUSTOMER:
-            text = action.newCustomer;
-            if (text !== '') {
-                addCustomer(text);
-                customerStore.emitChange();
+            let newCustomer = action.newCustomer;
+            if (newCustomer !== '') {
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:8000/api/customers',
+                    data: newCustomer,
+                    success: (data) => {
+                        customerStore.emitChange();
+                        console.log(data);
+                    },
+                    dataType: 'json'
+                });
             }
             break;
 

@@ -7,9 +7,6 @@ import constants from './constants';
 
 let Actions = {
 
-    /**
-     * @param  {string} newCustomer
-     */
     addCustomer: newCustomer => {
         dispatcher.dispatch({
             actionType: constants.ADD_CUSTOMER,

@@ -5,5 +5,6 @@
 import keyMirror from 'react/lib/keyMirror';
 
 export default keyMirror({
-    ADD_CUSTOMER: null
+    ADD_CUSTOMER: null,
+    INITIALIZE: null
 });
