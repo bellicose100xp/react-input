@@ -9,7 +9,7 @@ customerRouter.route('/customers')
     .post((req, res) => {
         let customer = new CustomerModel(req.body); // creates an instance using mongoose
         customer.save(); // this will save customer to mongodb
-       //asyn console.log(customer);
+       // console.log(customer);
         res.status(201).send(customer); // status 201 means created
     })
     .get((req, res) => {
