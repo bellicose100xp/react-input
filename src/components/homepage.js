@@ -30,14 +30,16 @@ export default class Homepage extends React.Component {
 
     getAllCustomerData = () => {
         $.get('http://localhost:8000/api/customers', (data) => {
+            console.log('getting all customers...');
             this.setState({allCustomers: data});
         });
     }
 
     componentDidMount = () => {
         document.querySelector('#firstName').focus();
-        this.getAllCustomerData();
+        //this.getAllCustomerData();
         customerStore.addChangeListener(this.getAllCustomerData);
+        customerStore.emitChange(); //getting initial data on load from database
     }
 
     componentWillUnmount = () => {

@@ -4,6 +4,10 @@
 /* eslint-disable strict */ //disabling strict mode here cause we need global vars.
 import React from 'react';
 import {Router, Route, IndexRoute} from 'react-router';
+
+import Customer from './components/customer';
+
+// this gets rid of wierd characters in URL
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 let history = createBrowserHistory();
 
@@ -16,6 +20,7 @@ React.render((
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Homepage} />
+                <Route path="/customer/:customerId" component={Customer} />
                 <Route path="test" component={Test}/>
             </Route>
         </Router>

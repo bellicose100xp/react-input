@@ -20,6 +20,7 @@ let customerStore = Object.assign({}, EventEmitter.prototype, {
     // using arrow functions results in error on any of the 'this.om'
     emitChange: function () {
         this.emit(CHANGE_EVENT);
+        console.log('event fired');
     },
 
     /**
@@ -43,19 +44,13 @@ dispatcher.register(action => {
     switch (action.actionType) {
 
         case constants.ADD_CUSTOMER:
-            let newCustomer = action.newCustomer;
-            if (newCustomer !== '') {
-                $.ajax({
-                    type: "POST",
-                    url: 'http://localhost:8000/api/customers',
-                    data: newCustomer,
-                    success: (data) => {
-                        customerStore.emitChange();
-                        console.log(data);
-                    },
-                    dataType: 'json'
-                });
-            }
+            customerStore.emitChange();
+            console.dir(`Added Customer: ${action.addedCustomer}`);
+            break;
+
+        case constants.UPDATE_CUSTOMER:
+            customerStore.emitChange();
+            console.dir(`Updated Customer: ${action.updatedCustomer}`);
             break;
 
         default:

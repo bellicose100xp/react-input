@@ -1,9 +1,8 @@
 'use strict';
 
 let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
 
-let customerModel = new Schema({
+let customerSchema = new mongoose.Schema({
     firstName: {
         type: String
     },
@@ -13,4 +12,4 @@ let customerModel = new Schema({
 });
 
 // since I named the model 'Customer', mongoose will automatically look for 'customers' collection
-module.exports = mongoose.model('Customer', customerModel);
+module.exports = mongoose.model('Customer', customerSchema);

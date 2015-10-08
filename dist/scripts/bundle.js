@@ -24702,6 +24702,118 @@ module.exports = exports['default'];
 
 },{"react":217}],219:[function(require,module,exports){
 /**
+ * Created by buggy on 10/7/15.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _inputUpdateCustomer = require('./inputUpdateCustomer');
+
+var _inputUpdateCustomer2 = _interopRequireDefault(_inputUpdateCustomer);
+
+var _fluxCustomerStore = require('../flux/customerStore');
+
+var _fluxCustomerStore2 = _interopRequireDefault(_fluxCustomerStore);
+
+var _fluxActions = require('../flux/actions');
+
+var _fluxActions2 = _interopRequireDefault(_fluxActions);
+
+var Customer = (function (_React$Component) {
+    _inherits(Customer, _React$Component);
+
+    function Customer(props) {
+        var _this = this;
+
+        _classCallCheck(this, Customer);
+
+        _get(Object.getPrototypeOf(Customer.prototype), 'constructor', this).call(this, props);
+
+        this.getCustomerById = function () {
+            $.get('http://localhost:8000/api/customers/' + _this.props.params.customerId, function (data) {
+                _this.setState({ customer: data });
+            });
+        };
+
+        this.componentDidMount = function () {
+            //document.querySelector('#firstName').focus();
+            _this.getCustomerById();
+        };
+
+        this.updateCustomerFields = function (event) {
+            var property = event.target.name;
+            var value = event.target.value;
+            _this.state.customer[property] = value;
+            _this.setState({ customer: _this.state.customer });
+        };
+
+        this.updateCustomer = function (event) {
+            event.preventDefault();
+
+            var id = _this.state.customer._id;
+            var firstName = _this.state.customer.firstName;
+            var lastName = _this.state.customer.lastName;
+
+            _fluxActions2['default'].updateCustomer({ id: id, firstName: firstName, lastName: lastName });
+
+            // document.querySelector('#firstName').focus();
+
+            _this.context.history.pushState(null, '/');
+        };
+
+        this.state = {
+            customer: {}
+        };
+    }
+
+    _createClass(Customer, [{
+        key: 'render',
+        value: function render() {
+            // let {customerId} = this.props.params; //get the parameter from the params object
+
+            return _react2['default'].createElement(
+                'div',
+                null,
+                _react2['default'].createElement(_inputUpdateCustomer2['default'], {
+                    customer: this.state.customer,
+                    updateCustomerFields: this.updateCustomerFields,
+                    updateCustomer: this.updateCustomer
+                })
+            );
+        }
+    }], [{
+        key: 'contextTypes',
+        value: {
+            history: _react2['default'].PropTypes.object,
+            location: _react2['default'].PropTypes.object
+        },
+        enumerable: true
+    }]);
+
+    return Customer;
+})(_react2['default'].Component);
+
+exports['default'] = Customer;
+module.exports = exports['default'];
+
+},{"../flux/actions":225,"../flux/customerStore":227,"./inputUpdateCustomer":223,"react":217}],220:[function(require,module,exports){
+/**
  * Created by HSO on 9/25/15.
  */
 'use strict';
@@ -24723,6 +24835,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = require('react-router');
+
 var Customers = (function (_React$Component) {
     _inherits(Customers, _React$Component);
 
@@ -24731,10 +24845,15 @@ var Customers = (function (_React$Component) {
 
         _get(Object.getPrototypeOf(Customers.prototype), 'constructor', this).apply(this, arguments);
 
-        this.createCustomerRow = function (customer, index) {
+        this.createCustomerRow = function (customer) {
             return _react2['default'].createElement(
                 'tr',
-                { key: index },
+                { key: customer._id },
+                _react2['default'].createElement(
+                    'td',
+                    null,
+                    customer._id
+                ),
                 _react2['default'].createElement(
                     'td',
                     null,
@@ -24744,6 +24863,15 @@ var Customers = (function (_React$Component) {
                     'td',
                     null,
                     customer.lastName
+                ),
+                _react2['default'].createElement(
+                    'td',
+                    null,
+                    _react2['default'].createElement(
+                        _reactRouter.Link,
+                        { to: '/customer/' + customer._id },
+                        'Edit Customer'
+                    )
                 )
             );
         };
@@ -24764,12 +24892,22 @@ var Customers = (function (_React$Component) {
                         _react2['default'].createElement(
                             'th',
                             null,
+                            'ID'
+                        ),
+                        _react2['default'].createElement(
+                            'th',
+                            null,
                             'First Name'
                         ),
                         _react2['default'].createElement(
                             'th',
                             null,
                             'Last Name'
+                        ),
+                        _react2['default'].createElement(
+                            'th',
+                            null,
+                            'Edit'
                         )
                     )
                 ),
@@ -24788,7 +24926,7 @@ var Customers = (function (_React$Component) {
 exports['default'] = Customers;
 module.exports = exports['default'];
 
-},{"react":217}],220:[function(require,module,exports){
+},{"react":217,"react-router":38}],221:[function(require,module,exports){
 /**
  * Created by buggy on 9/19/15.
  */
@@ -24839,14 +24977,16 @@ var Homepage = (function (_React$Component) {
 
         this.getAllCustomerData = function () {
             $.get('http://localhost:8000/api/customers', function (data) {
+                console.log('getting all customers...');
                 _this.setState({ allCustomers: data });
             });
         };
 
         this.componentDidMount = function () {
             document.querySelector('#firstName').focus();
-            _this.getAllCustomerData();
+            //this.getAllCustomerData();
             _fluxCustomerStore2['default'].addChangeListener(_this.getAllCustomerData);
+            _fluxCustomerStore2['default'].emitChange(); //getting initial data on load from database
         };
 
         this.componentWillUnmount = function () {
@@ -24917,7 +25057,7 @@ var Homepage = (function (_React$Component) {
 exports['default'] = Homepage;
 module.exports = exports['default'];
 
-},{"../flux/actions":223,"../flux/customerStore":225,"./customers":219,"./input":221,"react":217}],221:[function(require,module,exports){
+},{"../flux/actions":225,"../flux/customerStore":227,"./customers":220,"./input":222,"react":217}],222:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -25024,7 +25164,96 @@ var Input = (function (_React$Component) {
 exports['default'] = Input;
 module.exports = exports['default'];
 
-},{"react":217,"react-router":38}],222:[function(require,module,exports){
+},{"react":217,"react-router":38}],223:[function(require,module,exports){
+/**
+ * Created by buggy on 9/23/15.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var InputUpdateCustomer = (function (_React$Component) {
+    _inherits(InputUpdateCustomer, _React$Component);
+
+    function InputUpdateCustomer() {
+        _classCallCheck(this, InputUpdateCustomer);
+
+        _get(Object.getPrototypeOf(InputUpdateCustomer.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(InputUpdateCustomer, [{
+        key: 'render',
+        value: function render() {
+
+            return _react2['default'].createElement(
+                'div',
+                null,
+                _react2['default'].createElement(
+                    'form',
+                    { className: 'form col-md-6 col-md-offset-3', onSubmit: this.props.updateCustomer },
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'form-group' },
+                        _react2['default'].createElement(
+                            'label',
+                            { htmlFor: 'firstName' },
+                            'First Name: '
+                        ),
+                        _react2['default'].createElement('input', {
+                            id: 'firstName',
+                            className: 'form-control',
+                            name: 'firstName',
+                            ref: 'firstName',
+                            value: this.props.customer.firstName,
+                            onChange: this.props.updateCustomerFields
+                        })
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'form-group' },
+                        _react2['default'].createElement(
+                            'label',
+                            { htmlFor: 'lastName' },
+                            'Last Name: '
+                        ),
+                        _react2['default'].createElement('input', {
+                            className: 'form-control',
+                            name: 'lastName',
+                            ref: 'lastName',
+                            value: this.props.customer.lastName,
+                            onChange: this.props.updateCustomerFields
+                        })
+                    ),
+                    _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' })
+                )
+            );
+        }
+    }]);
+
+    return InputUpdateCustomer;
+})(_react2['default'].Component);
+
+exports['default'] = InputUpdateCustomer;
+module.exports = exports['default'];
+
+},{"react":217,"react-router":38}],224:[function(require,module,exports){
 /**
  * Created by buggy on 9/27/15.
  */
@@ -25077,7 +25306,7 @@ var Test = (function (_React$Component) {
 exports['default'] = Test;
 module.exports = exports['default'];
 
-},{"react":217}],223:[function(require,module,exports){
+},{"react":217}],225:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -25099,23 +25328,52 @@ var _constants2 = _interopRequireDefault(_constants);
 var Actions = {
 
     addCustomer: function addCustomer(newCustomer) {
-        _dispatcher2['default'].dispatch({
-            actionType: _constants2['default'].ADD_CUSTOMER,
-            newCustomer: newCustomer
-        });
+
+        if (newCustomer !== '') {
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8000/api/customers',
+                data: newCustomer,
+                success: function success(data) {
+                    _dispatcher2['default'].dispatch({
+                        actionType: _constants2['default'].ADD_CUSTOMER,
+                        addedCustomer: data
+                    });
+                },
+                dataType: 'json'
+            });
+        }
+    },
+
+    updateCustomer: function updateCustomer(customerToUpdate) {
+
+        if (customerToUpdate !== '') {
+            $.ajax({
+                type: "PUT",
+                url: 'http://localhost:8000/api/customers/' + customerToUpdate.id,
+                data: customerToUpdate,
+                success: function success(data) {
+                    _dispatcher2['default'].dispatch({
+                        actionType: _constants2['default'].UPDATE_CUSTOMER,
+                        updatedCustomer: data
+                    });
+                },
+                dataType: 'json'
+            });
+        }
     }
 };
 
 exports['default'] = Actions;
 module.exports = exports['default'];
 
-},{"./constants":224,"./dispatcher":226}],224:[function(require,module,exports){
+},{"./constants":226,"./dispatcher":228}],226:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
 'use strict';
 Object.defineProperty(exports, '__esModule', {
-  value: true
+    value: true
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -25125,12 +25383,13 @@ var _reactLibKeyMirror = require('react/lib/keyMirror');
 var _reactLibKeyMirror2 = _interopRequireDefault(_reactLibKeyMirror);
 
 exports['default'] = (0, _reactLibKeyMirror2['default'])({
-  ADD_CUSTOMER: null,
-  INITIALIZE: null
+    ADD_CUSTOMER: null,
+    UPDATE_CUSTOMER: null,
+    INITIALIZE: null
 });
 module.exports = exports['default'];
 
-},{"react/lib/keyMirror":202}],225:[function(require,module,exports){
+},{"react/lib/keyMirror":202}],227:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -25166,6 +25425,7 @@ var customerStore = Object.assign({}, _events.EventEmitter.prototype, {
     // using arrow functions results in error on any of the 'this.om'
     emitChange: function emitChange() {
         this.emit(CHANGE_EVENT);
+        console.log('event fired');
     },
 
     /**
@@ -25189,19 +25449,13 @@ _dispatcher2['default'].register(function (action) {
     switch (action.actionType) {
 
         case _constants2['default'].ADD_CUSTOMER:
-            var newCustomer = action.newCustomer;
-            if (newCustomer !== '') {
-                $.ajax({
-                    type: "POST",
-                    url: 'http://localhost:8000/api/customers',
-                    data: newCustomer,
-                    success: function success(data) {
-                        customerStore.emitChange();
-                        console.log(data);
-                    },
-                    dataType: 'json'
-                });
-            }
+            customerStore.emitChange();
+            console.dir('Added Customer: ' + action.addedCustomer);
+            break;
+
+        case _constants2['default'].UPDATE_CUSTOMER:
+            customerStore.emitChange();
+            console.dir('Updated Customer: ' + action.updatedCustomer);
             break;
 
         default:
@@ -25212,7 +25466,7 @@ _dispatcher2['default'].register(function (action) {
 exports['default'] = customerStore;
 module.exports = exports['default'];
 
-},{"./constants":224,"./dispatcher":226,"events":1}],226:[function(require,module,exports){
+},{"./constants":226,"./dispatcher":228,"events":1}],228:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -25228,7 +25482,7 @@ var dispatcher = new _flux.Dispatcher();
 exports['default'] = dispatcher;
 module.exports = exports['default'];
 
-},{"flux":3}],227:[function(require,module,exports){
+},{"flux":3}],229:[function(require,module,exports){
 /**
  * Created by buggy on 8/19/15.
  */
@@ -25242,6 +25496,12 @@ var _react = require('react');
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
+
+var _componentsCustomer = require('./components/customer');
+
+var _componentsCustomer2 = _interopRequireDefault(_componentsCustomer);
+
+// this gets rid of wierd characters in URL
 
 var _historyLibCreateBrowserHistory = require('history/lib/createBrowserHistory');
 
@@ -25272,8 +25532,9 @@ _react2['default'].render(_react2['default'].createElement(
         _reactRouter.Route,
         { path: '/', component: _app2['default'] },
         _react2['default'].createElement(_reactRouter.IndexRoute, { component: _componentsHomepage2['default'] }),
+        _react2['default'].createElement(_reactRouter.Route, { path: '/customer/:customerId', component: _componentsCustomer2['default'] }),
         _react2['default'].createElement(_reactRouter.Route, { path: 'test', component: _componentsTest2['default'] })
     )
 ), document.querySelector('#app'));
 
-},{"./app":218,"./components/customers":219,"./components/homepage":220,"./components/test":222,"history/lib/createBrowserHistory":11,"react":217,"react-router":38}]},{},[227]);
+},{"./app":218,"./components/customer":219,"./components/customers":220,"./components/homepage":221,"./components/test":224,"history/lib/createBrowserHistory":11,"react":217,"react-router":38}]},{},[229]);
