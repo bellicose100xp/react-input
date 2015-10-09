@@ -42,8 +42,21 @@ let Actions = {
                 dataType: 'json'
             });
         }
+    },
 
-
+    removeCustomer: customerToRemove => {
+        $.ajax({
+            type: "DELETE",
+            url: `http://localhost:8000/api/customers/${customerToRemove._id}`,
+            data: customerToRemove,
+            success: (data) => {
+                dispatcher.dispatch({
+                    actionType: constants.REMOVE_CUSTOMER,
+                    removedCustomer: data
+                });
+            },
+            dataType: 'json'
+        });
     }
 };
 

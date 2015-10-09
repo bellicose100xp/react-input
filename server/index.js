@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 //allow cross origin request
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT");
+    res.header("Access-Control-Allow-Methods", "POST, GET, DELETE, OPTIONS, PUT");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });

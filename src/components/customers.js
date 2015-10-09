@@ -14,6 +14,7 @@ export default class Customers extends React.Component {
               <td>{customer.firstName}</td>
               <td>{customer.lastName}</td>
               <td><Link to={`/customer/${customer._id}`}>Edit Customer</Link></td>
+              <td><button className="btn btn-danger" onClick={this.props.removeCustomer.bind(null, customer)}>Delete</button></td>
           </tr>
         );
     }
@@ -27,6 +28,7 @@ export default class Customers extends React.Component {
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>

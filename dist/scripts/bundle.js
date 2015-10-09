@@ -24841,6 +24841,8 @@ var Customers = (function (_React$Component) {
     _inherits(Customers, _React$Component);
 
     function Customers() {
+        var _this = this;
+
         _classCallCheck(this, Customers);
 
         _get(Object.getPrototypeOf(Customers.prototype), 'constructor', this).apply(this, arguments);
@@ -24871,6 +24873,15 @@ var Customers = (function (_React$Component) {
                         _reactRouter.Link,
                         { to: '/customer/' + customer._id },
                         'Edit Customer'
+                    )
+                ),
+                _react2['default'].createElement(
+                    'td',
+                    null,
+                    _react2['default'].createElement(
+                        'button',
+                        { className: 'btn btn-danger', onClick: _this.props.removeCustomer.bind(null, customer) },
+                        'Delete'
                     )
                 )
             );
@@ -24908,6 +24919,11 @@ var Customers = (function (_React$Component) {
                             'th',
                             null,
                             'Edit'
+                        ),
+                        _react2['default'].createElement(
+                            'th',
+                            null,
+                            'Delete'
                         )
                     )
                 ),
@@ -25016,6 +25032,11 @@ var Homepage = (function (_React$Component) {
             // this.context.history.pushState(null, '/test');
         };
 
+        this.removeCustomer = function (customer) {
+            // console.log(customer);
+            _fluxActions2['default'].removeCustomer(customer);
+        };
+
         this.state = {
             customer: {
                 firstName: '',
@@ -25038,7 +25059,8 @@ var Homepage = (function (_React$Component) {
                     dirty: this.state.dirty,
                     updateForm: this.updateForm }),
                 _react2['default'].createElement(_customers2['default'], {
-                    customers: this.state.allCustomers
+                    customers: this.state.allCustomers,
+                    removeCustomer: this.removeCustomer
                 })
             );
         }
@@ -25361,6 +25383,21 @@ var Actions = {
                 dataType: 'json'
             });
         }
+    },
+
+    removeCustomer: function removeCustomer(customerToRemove) {
+        $.ajax({
+            type: "DELETE",
+            url: 'http://localhost:8000/api/customers/' + customerToRemove._id,
+            data: customerToRemove,
+            success: function success(data) {
+                _dispatcher2['default'].dispatch({
+                    actionType: _constants2['default'].REMOVE_CUSTOMER,
+                    removedCustomer: data
+                });
+            },
+            dataType: 'json'
+        });
     }
 };
 
@@ -25385,6 +25422,7 @@ var _reactLibKeyMirror2 = _interopRequireDefault(_reactLibKeyMirror);
 exports['default'] = (0, _reactLibKeyMirror2['default'])({
     ADD_CUSTOMER: null,
     UPDATE_CUSTOMER: null,
+    REMOVE_CUSTOMER: null,
     INITIALIZE: null
 });
 module.exports = exports['default'];
@@ -25456,6 +25494,11 @@ _dispatcher2['default'].register(function (action) {
         case _constants2['default'].UPDATE_CUSTOMER:
             customerStore.emitChange();
             console.dir('Updated Customer: ' + action.updatedCustomer);
+            break;
+
+        case _constants2['default'].REMOVE_CUSTOMER:
+            customerStore.emitChange();
+            console.dir('Removed Customer: ' + action.removedCustomer);
             break;
 
         default:

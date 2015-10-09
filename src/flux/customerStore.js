@@ -53,6 +53,11 @@ dispatcher.register(action => {
             console.dir(`Updated Customer: ${action.updatedCustomer}`);
             break;
 
+        case constants.REMOVE_CUSTOMER:
+            customerStore.emitChange();
+            console.dir(`Removed Customer: ${action.removedCustomer}`);
+            break;
+
         default:
         // no op
     }

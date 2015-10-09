@@ -70,6 +70,11 @@ export default class Homepage extends React.Component {
 
     }
 
+    removeCustomer = (customer) => {
+       // console.log(customer);
+       Actions.removeCustomer(customer);
+    };
+
     render() {
         return (
             <div className="container">
@@ -82,6 +87,7 @@ export default class Homepage extends React.Component {
 
                 <Customers
                     customers={this.state.allCustomers}
+                    removeCustomer={this.removeCustomer}
                 />
 
             </div>
