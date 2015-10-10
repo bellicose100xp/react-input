@@ -1074,13 +1074,49 @@ function createRandomKey(length) {
 }
 
 function extractPath(string) {
-  var match = string.match(/^https?:\/\/[^\/]*/);
+  var match = string.match(/https?:\/\/[^\/]*/);
 
   if (match == null) return string;
 
   _warning2['default'](false, 'Location path must be pathname + query string only, not a fully qualified URL like "%s"', string);
 
   return string.substring(match[0].length);
+}
+
+function createLocation() {
+  var path = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
+  var state = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+  var action = arguments.length <= 2 || arguments[2] === undefined ? _Actions.POP : arguments[2];
+  var key = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+
+  path = extractPath(path);
+
+  var pathname = path;
+  var search = '';
+  var hash = '';
+
+  var hashIndex = pathname.indexOf('#');
+  if (hashIndex !== -1) {
+    hash = pathname.substring(hashIndex);
+    pathname = pathname.substring(0, hashIndex);
+  }
+
+  var searchIndex = pathname.indexOf('?');
+  if (searchIndex !== -1) {
+    search = pathname.substring(searchIndex);
+    pathname = pathname.substring(0, searchIndex);
+  }
+
+  if (pathname === '') pathname = '/';
+
+  return {
+    pathname: pathname,
+    search: search,
+    hash: hash,
+    state: state,
+    action: action,
+    key: key
+  };
 }
 
 function locationsAreEqual(a, b) {
@@ -1212,6 +1248,20 @@ function createHistory() {
     transitionTo(createLocation(path, state, _Actions.REPLACE, createKey()));
   }
 
+  function setState(state) {
+    if (location) {
+      updateLocationState(location, state);
+      updateLocation(location);
+    } else {
+      updateLocationState(getCurrentLocation(), state);
+    }
+  }
+
+  function updateLocationState(location, state) {
+    location.state = _extends({}, location.state, state);
+    saveState(location.key, location.state);
+  }
+
   function goBack() {
     go(-1);
   }
@@ -1232,55 +1282,6 @@ function createHistory() {
     return path;
   }
 
-  function createLocation() {
-    var path = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
-    var state = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-    var action = arguments.length <= 2 || arguments[2] === undefined ? _Actions.POP : arguments[2];
-    var key = arguments.length <= 3 || arguments[3] === undefined ? createKey() : arguments[3];
-
-    var pathname = extractPath(path);
-    var search = '';
-    var hash = '';
-
-    var hashIndex = pathname.indexOf('#');
-    if (hashIndex !== -1) {
-      hash = pathname.substring(hashIndex);
-      pathname = pathname.substring(0, hashIndex);
-    }
-
-    var searchIndex = pathname.indexOf('?');
-    if (searchIndex !== -1) {
-      search = pathname.substring(searchIndex);
-      pathname = pathname.substring(0, searchIndex);
-    }
-
-    if (pathname === '') pathname = '/';
-
-    return {
-      pathname: pathname,
-      search: search,
-      hash: hash,
-      state: state,
-      action: action,
-      key: key
-    };
-  }
-
-  // deprecated
-  function setState(state) {
-    if (location) {
-      updateLocationState(location, state);
-      updateLocation(location);
-    } else {
-      updateLocationState(getCurrentLocation(), state);
-    }
-  }
-
-  function updateLocationState(location, state) {
-    location.state = _extends({}, location.state, state);
-    saveState(location.key, location.state);
-  }
-
   // deprecated
   function registerTransitionHook(hook) {
     if (transitionHooks.indexOf(hook) === -1) transitionHooks.push(hook);
@@ -1299,6 +1300,7 @@ function createHistory() {
     transitionTo: transitionTo,
     pushState: pushState,
     replaceState: replaceState,
+    setState: setState,
     go: go,
     goBack: goBack,
     goForward: goForward,
@@ -1307,7 +1309,6 @@ function createHistory() {
     createHref: createHref,
     createLocation: createLocation,
 
-    setState: _deprecate2['default'](setState, 'setState is deprecated; use location.key to save state instead'),
     registerTransitionHook: _deprecate2['default'](registerTransitionHook, 'registerTransitionHook is deprecated; use listenBefore instead'),
     unregisterTransitionHook: _deprecate2['default'](unregisterTransitionHook, 'unregisterTransitionHook is deprecated; use the callback returned from listenBefore instead')
   };
@@ -24854,11 +24855,6 @@ var Customers = (function (_React$Component) {
                 _react2['default'].createElement(
                     'td',
                     null,
-                    customer._id
-                ),
-                _react2['default'].createElement(
-                    'td',
-                    null,
                     customer.firstName
                 ),
                 _react2['default'].createElement(
@@ -24900,11 +24896,6 @@ var Customers = (function (_React$Component) {
                     _react2['default'].createElement(
                         'tr',
                         null,
-                        _react2['default'].createElement(
-                            'th',
-                            null,
-                            'ID'
-                        ),
                         _react2['default'].createElement(
                             'th',
                             null,
@@ -25351,7 +25342,7 @@ var Actions = {
 
     addCustomer: function addCustomer(newCustomer) {
 
-        if (newCustomer !== '') {
+        if (newCustomer.firstName !== '' && newCustomer.lastName !== '') {
             $.ajax({
                 type: "POST",
                 url: 'http://localhost:8000/api/customers',
@@ -25369,7 +25360,7 @@ var Actions = {
 
     updateCustomer: function updateCustomer(customerToUpdate) {
 
-        if (customerToUpdate !== '') {
+        if (customerToUpdate.firstName !== '' && customerToUpdate.lastName !== '') {
             $.ajax({
                 type: "PUT",
                 url: 'http://localhost:8000/api/customers/' + customerToUpdate.id,
@@ -25390,10 +25381,10 @@ var Actions = {
             type: "DELETE",
             url: 'http://localhost:8000/api/customers/' + customerToRemove._id,
             data: customerToRemove,
-            success: function success(data) {
+            success: function success() {
                 _dispatcher2['default'].dispatch({
                     actionType: _constants2['default'].REMOVE_CUSTOMER,
-                    removedCustomer: data
+                    removedCustomer: ''
                 });
             },
             dataType: 'json'
@@ -25488,17 +25479,18 @@ _dispatcher2['default'].register(function (action) {
 
         case _constants2['default'].ADD_CUSTOMER:
             customerStore.emitChange();
-            console.dir('Added Customer: ' + action.addedCustomer);
+            console.log('Added Customer:');
+            console.dir(action.addedCustomer);
             break;
 
         case _constants2['default'].UPDATE_CUSTOMER:
             customerStore.emitChange();
-            console.dir('Updated Customer: ' + action.updatedCustomer);
+            console.log('Updated Customer:');
+            console.dir(action.updatedCustomer);
             break;
 
         case _constants2['default'].REMOVE_CUSTOMER:
             customerStore.emitChange();
-            console.dir('Removed Customer: ' + action.removedCustomer);
             break;
 
         default:

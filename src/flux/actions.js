@@ -10,7 +10,7 @@ let Actions = {
 
     addCustomer: newCustomer => {
 
-        if (newCustomer !== '') {
+        if (newCustomer.firstName !== '' && newCustomer.lastName !== '') {
             $.ajax({
                 type: "POST",
                 url: 'http://localhost:8000/api/customers',
@@ -28,7 +28,7 @@ let Actions = {
 
     updateCustomer: customerToUpdate => {
 
-        if (customerToUpdate !== '') {
+        if (customerToUpdate.firstName !== '' && customerToUpdate.lastName !== '') {
             $.ajax({
                 type: "PUT",
                 url: `http://localhost:8000/api/customers/${customerToUpdate.id}`,
@@ -49,10 +49,10 @@ let Actions = {
             type: "DELETE",
             url: `http://localhost:8000/api/customers/${customerToRemove._id}`,
             data: customerToRemove,
-            success: (data) => {
+            success: () => {
                 dispatcher.dispatch({
                     actionType: constants.REMOVE_CUSTOMER,
-                    removedCustomer: data
+                    removedCustomer: ''
                 });
             },
             dataType: 'json'
