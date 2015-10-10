@@ -60,7 +60,7 @@ customerRouter.route('/customers/:customerId')
             if (err) {
                 res.status(500).send(err);
             } else {
-                res.status(204).send('the customer has been deleted');
+                res.status(204); // 204 means No content
             }
         })
     });

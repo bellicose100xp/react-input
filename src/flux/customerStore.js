@@ -45,14 +45,14 @@ dispatcher.register(action => {
 
         case constants.ADD_CUSTOMER:
             customerStore.emitChange();
-            console.log('Added Customer:');
-            console.dir(action.addedCustomer);
+           // console.log('Added Customer:');
+            //console.dir(action.addedCustomer);
             break;
 
         case constants.UPDATE_CUSTOMER:
             customerStore.emitChange();
-            console.log('Updated Customer:');
-            console.dir(action.updatedCustomer);
+           // console.log('Updated Customer:');
+           // console.dir(action.updatedCustomer);
             break;
 
         case constants.REMOVE_CUSTOMER:

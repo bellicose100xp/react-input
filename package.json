@@ -26,6 +26,7 @@
     "gulp-open": "^1.0.0",
     "history": "^1.11.1",
     "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
     "mongoose": "^4.1.9",
     "monitorctrlc": "^1.0.1",
     "react": "^0.13.3",
