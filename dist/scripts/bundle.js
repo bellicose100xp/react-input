@@ -1074,49 +1074,13 @@ function createRandomKey(length) {
 }
 
 function extractPath(string) {
-  var match = string.match(/https?:\/\/[^\/]*/);
+  var match = string.match(/^https?:\/\/[^\/]*/);
 
   if (match == null) return string;
 
   _warning2['default'](false, 'Location path must be pathname + query string only, not a fully qualified URL like "%s"', string);
 
   return string.substring(match[0].length);
-}
-
-function createLocation() {
-  var path = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
-  var state = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
-  var action = arguments.length <= 2 || arguments[2] === undefined ? _Actions.POP : arguments[2];
-  var key = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
-
-  path = extractPath(path);
-
-  var pathname = path;
-  var search = '';
-  var hash = '';
-
-  var hashIndex = pathname.indexOf('#');
-  if (hashIndex !== -1) {
-    hash = pathname.substring(hashIndex);
-    pathname = pathname.substring(0, hashIndex);
-  }
-
-  var searchIndex = pathname.indexOf('?');
-  if (searchIndex !== -1) {
-    search = pathname.substring(searchIndex);
-    pathname = pathname.substring(0, searchIndex);
-  }
-
-  if (pathname === '') pathname = '/';
-
-  return {
-    pathname: pathname,
-    search: search,
-    hash: hash,
-    state: state,
-    action: action,
-    key: key
-  };
 }
 
 function locationsAreEqual(a, b) {
@@ -1248,20 +1212,6 @@ function createHistory() {
     transitionTo(createLocation(path, state, _Actions.REPLACE, createKey()));
   }
 
-  function setState(state) {
-    if (location) {
-      updateLocationState(location, state);
-      updateLocation(location);
-    } else {
-      updateLocationState(getCurrentLocation(), state);
-    }
-  }
-
-  function updateLocationState(location, state) {
-    location.state = _extends({}, location.state, state);
-    saveState(location.key, location.state);
-  }
-
   function goBack() {
     go(-1);
   }
@@ -1282,6 +1232,55 @@ function createHistory() {
     return path;
   }
 
+  function createLocation() {
+    var path = arguments.length <= 0 || arguments[0] === undefined ? '/' : arguments[0];
+    var state = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+    var action = arguments.length <= 2 || arguments[2] === undefined ? _Actions.POP : arguments[2];
+    var key = arguments.length <= 3 || arguments[3] === undefined ? createKey() : arguments[3];
+
+    var pathname = extractPath(path);
+    var search = '';
+    var hash = '';
+
+    var hashIndex = pathname.indexOf('#');
+    if (hashIndex !== -1) {
+      hash = pathname.substring(hashIndex);
+      pathname = pathname.substring(0, hashIndex);
+    }
+
+    var searchIndex = pathname.indexOf('?');
+    if (searchIndex !== -1) {
+      search = pathname.substring(searchIndex);
+      pathname = pathname.substring(0, searchIndex);
+    }
+
+    if (pathname === '') pathname = '/';
+
+    return {
+      pathname: pathname,
+      search: search,
+      hash: hash,
+      state: state,
+      action: action,
+      key: key
+    };
+  }
+
+  // deprecated
+  function setState(state) {
+    if (location) {
+      updateLocationState(location, state);
+      updateLocation(location);
+    } else {
+      updateLocationState(getCurrentLocation(), state);
+    }
+  }
+
+  function updateLocationState(location, state) {
+    location.state = _extends({}, location.state, state);
+    saveState(location.key, location.state);
+  }
+
   // deprecated
   function registerTransitionHook(hook) {
     if (transitionHooks.indexOf(hook) === -1) transitionHooks.push(hook);
@@ -1300,7 +1299,6 @@ function createHistory() {
     transitionTo: transitionTo,
     pushState: pushState,
     replaceState: replaceState,
-    setState: setState,
     go: go,
     goBack: goBack,
     goForward: goForward,
@@ -1309,6 +1307,7 @@ function createHistory() {
     createHref: createHref,
     createLocation: createLocation,
 
+    setState: _deprecate2['default'](setState, 'setState is deprecated; use location.key to save state instead'),
     registerTransitionHook: _deprecate2['default'](registerTransitionHook, 'registerTransitionHook is deprecated; use listenBefore instead'),
     unregisterTransitionHook: _deprecate2['default'](unregisterTransitionHook, 'unregisterTransitionHook is deprecated; use the callback returned from listenBefore instead')
   };
@@ -37363,7 +37362,7 @@ var Homepage = (function (_React$Component) {
         this.filterCustomers = function (event) {
 
             var filter = event.target.value.toUpperCase();
-
+            // this step is so that I can get updated value on this.getAllCustomerData
             var searchEventTemp = {
                 target: {
                     value: filter
@@ -37787,6 +37786,7 @@ var Actions = {
             url: 'http://localhost:8000/api/customers/' + customerToRemove._id,
             data: customerToRemove,
             success: function success() {
+                console.log('firing event after removing customer');
                 _dispatcher2['default'].dispatch({
                     actionType: _constants2['default'].REMOVE_CUSTOMER,
                     removedCustomer: ''
@@ -37896,6 +37896,7 @@ _dispatcher2['default'].register(function (action) {
 
         case _constants2['default'].REMOVE_CUSTOMER:
             customerStore.emitChange();
+            //console.log('customer removed..');
             break;
 
         default:

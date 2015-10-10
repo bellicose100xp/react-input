@@ -57,6 +57,7 @@ dispatcher.register(action => {
 
         case constants.REMOVE_CUSTOMER:
             customerStore.emitChange();
+            //console.log('customer removed..');
             break;
 
         default:

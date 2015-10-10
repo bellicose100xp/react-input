@@ -34,7 +34,7 @@ customerRouter.use('/customers/:customerId', (req, res, next) => {
             req.customer = data;
             next();
         } else {
-            res.status(404).send('no book found!!'); // this is mongoose didn't find any books
+            res.status(404).send('no customer found!!'); // this is mongoose didn't find any books
         }
     })
 });
@@ -60,7 +60,8 @@ customerRouter.route('/customers/:customerId')
             if (err) {
                 res.status(500).send(err);
             } else {
-                res.status(204); // 204 means No content
+                res.status(204).send('Removed'); // 204 means No content // need to send for flux event
+                //console.log('customer removed on server');
             }
         })
     });
