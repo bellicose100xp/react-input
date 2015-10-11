@@ -22,7 +22,8 @@ export default class Homepage extends React.Component {
             allCustomers: [],
             filteredCustomers: [],
             dirty: false,
-            searchEvent: {target: {value: ''}}
+            searchEvent: {target: {value: ''}},
+            sort: {by: 'firstName', direction: 'asc'}
         };
     }
 
@@ -31,10 +32,14 @@ export default class Homepage extends React.Component {
         location: React.PropTypes.object
     }
 
+    // filter data
     filterCustomers = event => {
 
         let filter = event.target.value.toUpperCase();
-// this step is so that I can get updated value on this.getAllCustomerData
+        // this step is so that I can get updated value on this.getAllCustomerData
+        // with the same filter while adding users
+        // this is because he state.searchEvent was passed here and it doesn't have a val
+        //
         let searchEventTemp = {
             target: {
                 value: filter
@@ -54,11 +59,47 @@ export default class Homepage extends React.Component {
         }
     }
 
+    sortCustomers = sortBy => {
+        let direction = this.state.sort.direction;
+
+        if (!sortBy) {
+            // initial sort
+            sortBy = this.state.sort.by;
+        } else if (sortBy === this.state.sort.by) {
+            // flip direction if the same item was clicked
+            direction = direction === 'asc' ? 'desc' : 'asc';
+        } else {
+            // new item always has this default direction
+            direction = 'asc';
+        }
+
+        // keeping new sort and direction information in state
+        let sortTemp = {by: sortBy, direction: direction};
+        this.setState({sort: sortTemp});
+
+        this.state.filteredCustomers = _.sortByOrder(this.state.filteredCustomers,
+            [customerField => {
+                // this is so the comparison is case insensitive
+                if (typeof customerField[sortBy] === 'string') {
+                    return customerField[sortBy].toLowerCase();
+                }
+                return customerField[sortBy];
+
+            }], [direction]);
+
+        this.setState({filterCustomers: this.state.filteredCustomers});
+
+       // console.log(sortBy, direction);
+    }
+
     getAllCustomerData = () => {
         $.get('http://localhost:8000/api/customers', (data) => {
-            console.log('getting all customers...');
+           // console.log('getting all customers...');
             this.setState({allCustomers: data});
+            // keep current filter even while updating field
             this.filterCustomers(this.state.searchEvent);
+            // initial sort
+            this.sortCustomers();
         });
     }
 
@@ -117,6 +158,7 @@ export default class Homepage extends React.Component {
                     customers={this.state.filteredCustomers}
                     removeCustomer={this.removeCustomer}
                     filterCustomers={this.filterCustomers}
+                    sortCustomers={this.sortCustomers}
                 />
 
             </div>

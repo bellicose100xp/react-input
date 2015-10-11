@@ -23,8 +23,8 @@ export default class Input extends React.Component {
         }
 
         return (
-            <div>
-                <form className="form col-md-6 col-md-offset-3" onSubmit={this.props.updateForm}>
+            <div className="col-md-6 col-xs-6 col-sm-6 input-box">
+                <form onSubmit={this.props.updateForm}>
 
                     <div className={firstNameClass}>
                         <label htmlFor="firstName">First Name: </label>

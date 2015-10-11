@@ -8,7 +8,9 @@ export default class App extends React.Component {
     render() {
         return (
             <div>
-                <h1>I'M IN APP.JS</h1>
+                <div className="container">
+                    <h1 id="main-title">Very Simple Customer List</h1>
+                </div>
                 {this.props.children}
             </div>
         );

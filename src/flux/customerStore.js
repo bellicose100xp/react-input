@@ -20,7 +20,7 @@ let customerStore = Object.assign({}, EventEmitter.prototype, {
     // using arrow functions results in error on any of the 'this.om'
     emitChange: function () {
         this.emit(CHANGE_EVENT);
-        console.log('event fired');
+        //console.log('event fired');
     },
 
     /**

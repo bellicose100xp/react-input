@@ -24,7 +24,7 @@ export default class Customers extends React.Component {
     render() {
         return (
             <div>
-                <div className="form-group col-md-6 col-md-offset-3">
+                <div className="form-group col-md-6 col-sm-6 col-xs-6 search-box">
                     <label htmlFor="filter">Search:</label>
                     <input
                         className="form-control"
@@ -35,11 +35,11 @@ export default class Customers extends React.Component {
                 </div>
 
 
-                <table className="table table-table-striped">
+                <table className="table table-striped col-md-12 col-sm-12 col-xs-12">
                     <thead>
                     <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
+                        <th onClick={this.props.sortCustomers.bind(null, 'firstName')}>First Name</th>
+                        <th onClick={this.props.sortCustomers.bind(null, 'lastName')}>Last Name</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>

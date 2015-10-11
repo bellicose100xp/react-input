@@ -24,7 +24,8 @@ var config = {
         mainJs: './src/main.js',
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
-            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
+            'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
+            'src/css/style.css'
         ]
     }
 };
@@ -72,6 +73,7 @@ gulp.task('css', function () {
     gulp.src(config.paths.css)
         .pipe(concat('bundle.css'))
         .pipe(gulp.dest(config.paths.dist + '/css'))
+        .pipe(connect.reload())
 });
 
 gulp.task('images', function () {
@@ -108,6 +110,7 @@ gulp.task('node', function () {
 
 gulp.task('watch', function () {
    // monitorCtrlC();
+    gulp.watch(config.paths.css, ['css']);
     gulp.watch(config.paths.html, ['html']);
     gulp.watch(config.paths.js, ['js', 'lint']);
 });

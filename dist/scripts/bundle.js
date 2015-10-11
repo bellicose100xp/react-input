@@ -37040,9 +37040,13 @@ var App = (function (_React$Component) {
                 'div',
                 null,
                 _react2['default'].createElement(
-                    'h1',
-                    null,
-                    'I\'M IN APP.JS'
+                    'div',
+                    { className: 'container' },
+                    _react2['default'].createElement(
+                        'h1',
+                        { id: 'main-title' },
+                        'Very Simple Customer List'
+                    )
                 ),
                 this.props.children
             );
@@ -37246,7 +37250,7 @@ var Customers = (function (_React$Component) {
                 null,
                 _react2['default'].createElement(
                     'div',
-                    { className: 'form-group col-md-6 col-md-offset-3' },
+                    { className: 'form-group col-md-6 col-sm-6 col-xs-6 search-box' },
                     _react2['default'].createElement(
                         'label',
                         { htmlFor: 'filter' },
@@ -37261,7 +37265,7 @@ var Customers = (function (_React$Component) {
                 ),
                 _react2['default'].createElement(
                     'table',
-                    { className: 'table table-table-striped' },
+                    { className: 'table table-striped col-md-12 col-sm-12 col-xs-12' },
                     _react2['default'].createElement(
                         'thead',
                         null,
@@ -37270,12 +37274,12 @@ var Customers = (function (_React$Component) {
                             null,
                             _react2['default'].createElement(
                                 'th',
-                                null,
+                                { onClick: this.props.sortCustomers.bind(null, 'firstName') },
                                 'First Name'
                             ),
                             _react2['default'].createElement(
                                 'th',
-                                null,
+                                { onClick: this.props.sortCustomers.bind(null, 'lastName') },
                                 'Last Name'
                             ),
                             _react2['default'].createElement(
@@ -37363,6 +37367,9 @@ var Homepage = (function (_React$Component) {
 
             var filter = event.target.value.toUpperCase();
             // this step is so that I can get updated value on this.getAllCustomerData
+            // with the same filter while adding users
+            // this is because he state.searchEvent was passed here and it doesn't have a val
+            //
             var searchEventTemp = {
                 target: {
                     value: filter
@@ -37381,11 +37388,45 @@ var Homepage = (function (_React$Component) {
             }
         };
 
+        this.sortCustomers = function (sortBy) {
+            var direction = _this.state.sort.direction;
+
+            if (!sortBy) {
+                // initial sort
+                sortBy = _this.state.sort.by;
+            } else if (sortBy === _this.state.sort.by) {
+                // flip direction if the same item was clicked
+                direction = direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                // new item always has this default direction
+                direction = 'asc';
+            }
+
+            // keeping new sort and direction information in state
+            var sortTemp = { by: sortBy, direction: direction };
+            _this.setState({ sort: sortTemp });
+
+            _this.state.filteredCustomers = _lodash2['default'].sortByOrder(_this.state.filteredCustomers, [function (customerField) {
+                // this is so the comparison is case insensitive
+                if (typeof customerField[sortBy] === 'string') {
+                    return customerField[sortBy].toLowerCase();
+                }
+                return customerField[sortBy];
+            }], [direction]);
+
+            _this.setState({ filterCustomers: _this.state.filteredCustomers });
+
+            // console.log(sortBy, direction);
+        };
+
         this.getAllCustomerData = function () {
             $.get('http://localhost:8000/api/customers', function (data) {
-                console.log('getting all customers...');
+                // console.log('getting all customers...');
                 _this.setState({ allCustomers: data });
+                // keep current filter even while updating field
                 _this.filterCustomers(_this.state.searchEvent);
+                // initial sort
+                _this.sortCustomers();
             });
         };
 
@@ -37436,7 +37477,8 @@ var Homepage = (function (_React$Component) {
             allCustomers: [],
             filteredCustomers: [],
             dirty: false,
-            searchEvent: { target: { value: '' } }
+            searchEvent: { target: { value: '' } },
+            sort: { by: 'firstName', direction: 'asc' }
         };
     }
 
@@ -37455,7 +37497,8 @@ var Homepage = (function (_React$Component) {
                 _react2['default'].createElement(_customers2['default'], {
                     customers: this.state.filteredCustomers,
                     removeCustomer: this.removeCustomer,
-                    filterCustomers: this.filterCustomers
+                    filterCustomers: this.filterCustomers,
+                    sortCustomers: this.sortCustomers
                 })
             );
         }
@@ -37465,6 +37508,8 @@ var Homepage = (function (_React$Component) {
             history: _react2['default'].PropTypes.object,
             location: _react2['default'].PropTypes.object
         },
+
+        // filter data
         enumerable: true
     }]);
 
@@ -37527,10 +37572,10 @@ var Input = (function (_React$Component) {
 
             return _react2['default'].createElement(
                 'div',
-                null,
+                { className: 'col-md-6 col-xs-6 col-sm-6 input-box' },
                 _react2['default'].createElement(
                     'form',
-                    { className: 'form col-md-6 col-md-offset-3', onSubmit: this.props.updateForm },
+                    { onSubmit: this.props.updateForm },
                     _react2['default'].createElement(
                         'div',
                         { className: firstNameClass },
@@ -37859,7 +37904,7 @@ var customerStore = Object.assign({}, _events.EventEmitter.prototype, {
     // using arrow functions results in error on any of the 'this.om'
     emitChange: function emitChange() {
         this.emit(CHANGE_EVENT);
-        console.log('event fired');
+        //console.log('event fired');
     },
 
     /**

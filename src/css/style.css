@@ -1,0 +1,19 @@
+.input-box {
+    background: lightblue;
+    padding: 2%;
+    height: 240px
+}
+
+.search-box {
+    background: lightgray;
+    padding: 2%;
+    height: 240px;
+
+}
+
+#main-title {
+    background: lightcoral;
+    color: white;
+    text-align: center;
+    padding: 2%;
+}
