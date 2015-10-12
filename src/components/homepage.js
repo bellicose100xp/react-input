@@ -22,6 +22,7 @@ export default class Homepage extends React.Component {
             allCustomers: [],
             filteredCustomers: [],
             dirty: false,
+            isValid: false,
             searchEvent: {target: {value: ''}},
             sort: {by: 'firstName', direction: 'asc'}
         };
@@ -84,17 +85,15 @@ export default class Homepage extends React.Component {
                     return customerField[sortBy].toLowerCase();
                 }
                 return customerField[sortBy];
-
             }], [direction]);
 
         this.setState({filterCustomers: this.state.filteredCustomers});
-
-       // console.log(sortBy, direction);
+        // console.log(sortBy, direction);
     }
 
     getAllCustomerData = () => {
         $.get('http://localhost:8000/api/customers', (data) => {
-           // console.log('getting all customers...');
+            // console.log('getting all customers...');
             this.setState({allCustomers: data});
             // keep current filter even while updating field
             this.filterCustomers(this.state.searchEvent);
@@ -115,6 +114,7 @@ export default class Homepage extends React.Component {
     }
 
     updateCustomer = event => {
+        this.setState({dirty: true});
         let property = event.target.name;
         let value = event.target.value;
         this.state.customer[property] = value;

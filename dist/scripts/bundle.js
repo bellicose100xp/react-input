@@ -37415,7 +37415,6 @@ var Homepage = (function (_React$Component) {
             }], [direction]);
 
             _this.setState({ filterCustomers: _this.state.filteredCustomers });
-
             // console.log(sortBy, direction);
         };
 
@@ -37442,6 +37441,7 @@ var Homepage = (function (_React$Component) {
         };
 
         this.updateCustomer = function (event) {
+            _this.setState({ dirty: true });
             var property = event.target.name;
             var value = event.target.value;
             _this.state.customer[property] = value;
@@ -37477,6 +37477,7 @@ var Homepage = (function (_React$Component) {
             allCustomers: [],
             filteredCustomers: [],
             dirty: false,
+            isValid: false,
             searchEvent: { target: { value: '' } },
             sort: { by: 'firstName', direction: 'asc' }
         };
