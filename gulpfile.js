@@ -8,7 +8,7 @@ var source = require('vinyl-source-stream'); //Use conventional text stream with
 var concat = require('gulp-concat'); // concatenates files
 var lint = require('gulp-eslint'); //performs code check
 var babelify = require('babelify');
-var monitorCtrlC = require('monitorctrlc');
+//var monitorCtrlC = require('monitorctrlc');
 var historyApiFallback = require('connect-history-api-fallback');
 var nodemon = require('gulp-nodemon');
 

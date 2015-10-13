@@ -22,7 +22,19 @@ export default class Homepage extends React.Component {
             allCustomers: [],
             filteredCustomers: [],
             dirty: false,
-            isValid: false,
+            displayDirtyErrorMessage: false,
+            displayInvalidErrorMessage: false,
+            // if error the it will be 'true' otherwise 'false'
+            errors: {
+                firstName: {
+                    required: false,
+                    min: false
+                },
+                lastName: {
+                    required: false,
+                    min: false
+                }
+            },
             searchEvent: {target: {value: ''}},
             sort: {by: 'firstName', direction: 'asc'}
         };
@@ -121,21 +133,55 @@ export default class Homepage extends React.Component {
         this.setState({customer: this.state.customer});
     }
 
+    validateCustomerFormFields = event => {
+        let field = event.target.name;
+        let value = event.target.value;
+        let errorObject = Object.assign({}, this.state.errors);
+
+        if (field === 'firstName' || field === 'lastName') {
+            errorObject[field].required = !value; //check if empty
+            errorObject[field].min = !!(value && value.length <= 2); // check min length
+        }
+
+        //console.dir(JSON.stringify(errorObject));
+        this.setState({error: errorObject});
+    }
+
     updateForm = event => {
         event.preventDefault();
 
-        let firstName = this.state.customer.firstName;
-        let lastName = this.state.customer.lastName;
+        let isNotValid = () => {
+            for (let field in this.state.errors) {
+                for (let fieldErrors in this.state.errors[field]) {
+                    if (this.state.errors[field][fieldErrors]) {
+                        return true; // return true if any errors are true in 'this.state.errors'
+                    }
+                }
+            }
+        };
 
-        Actions.addCustomer({firstName: firstName, lastName: lastName});
+        if (!this.state.dirty) {
+            this.setState({displayDirtyErrorMessage: true});
+            setTimeout(() => {
+                this.setState({displayDirtyErrorMessage: false});
+            }, 3000);
+        } else if (isNotValid()) { // check if all form entries are in valid state
+            this.setState({displayInvalidErrorMessage: true});
+            setTimeout(() => {
+                this.setState({displayInvalidErrorMessage: false});
+            }, 3000);
+        } else { // is all entries are valid submit form
+            let firstName = this.state.customer.firstName;
+            let lastName = this.state.customer.lastName;
 
-        this.state.customer.firstName = '';
-        this.state.customer.lastName = '';
+            Actions.addCustomer({firstName: firstName, lastName: lastName});
 
-        document.querySelector('#firstName').focus();
+            this.state.customer.firstName = '';
+            this.state.customer.lastName = '';
 
-        // this.context.history.pushState(null, '/test');
-
+            document.querySelector('#firstName').focus();
+            // this.context.history.pushState(null, '/test');
+        }
     }
 
     removeCustomer = (customer) => {
@@ -151,7 +197,11 @@ export default class Homepage extends React.Component {
                     updateCustomer={this.updateCustomer}
                     customer={this.state.customer}
                     dirty={this.state.dirty}
+                    displayDirtyErrorMessage={this.state.displayDirtyErrorMessage}
+                    displayInvalidErrorMessage={this.state.displayInvalidErrorMessage}
+                    validateCustomerFormFields={this.validateCustomerFormFields}
                     updateForm={this.updateForm}
+                    errors={this.state.errors}
                 />
 
                 <Customers
@@ -165,3 +215,4 @@ export default class Homepage extends React.Component {
         );
     }
 }
+

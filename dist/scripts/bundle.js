@@ -37061,6 +37061,55 @@ module.exports = exports['default'];
 
 },{"react":218}],220:[function(require,module,exports){
 /**
+ * Created by admin on 10/12/2015.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var Display = (function (_React$Component) {
+    _inherits(Display, _React$Component);
+
+    function Display() {
+        _classCallCheck(this, Display);
+
+        _get(Object.getPrototypeOf(Display.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(Display, [{
+        key: 'render',
+        value: function render() {
+            return this.props['if'] ? _react2['default'].createElement(
+                'span',
+                null,
+                this.props.children
+            ) : null;
+        }
+    }]);
+
+    return Display;
+})(_react2['default'].Component);
+
+exports['default'] = Display;
+module.exports = exports['default'];
+
+},{"react":218}],221:[function(require,module,exports){
+/**
  * Created by buggy on 10/7/15.
  */
 'use strict';
@@ -37171,7 +37220,7 @@ var Customer = (function (_React$Component) {
 exports['default'] = Customer;
 module.exports = exports['default'];
 
-},{"../flux/actions":226,"../flux/customerStore":228,"./inputUpdateCustomer":224,"react":218}],221:[function(require,module,exports){
+},{"../flux/actions":227,"../flux/customerStore":229,"./inputUpdateCustomer":225,"react":218}],222:[function(require,module,exports){
 /**
  * Created by HSO on 9/25/15.
  */
@@ -37310,7 +37359,7 @@ var Customers = (function (_React$Component) {
 exports['default'] = Customers;
 module.exports = exports['default'];
 
-},{"react":218,"react-router":39}],222:[function(require,module,exports){
+},{"react":218,"react-router":39}],223:[function(require,module,exports){
 /**
  * Created by buggy on 9/19/15.
  */
@@ -37448,20 +37497,57 @@ var Homepage = (function (_React$Component) {
             _this.setState({ customer: _this.state.customer });
         };
 
+        this.validateCustomerFormFields = function (event) {
+            var field = event.target.name;
+            var value = event.target.value;
+            var errorObject = Object.assign({}, _this.state.errors);
+
+            if (field === 'firstName' || field === 'lastName') {
+                errorObject[field].required = !value; //check if empty
+                errorObject[field].min = !!(value && value.length <= 2); // check min length
+            }
+
+            //console.dir(JSON.stringify(errorObject));
+            _this.setState({ error: errorObject });
+        };
+
         this.updateForm = function (event) {
             event.preventDefault();
 
-            var firstName = _this.state.customer.firstName;
-            var lastName = _this.state.customer.lastName;
+            var isNotValid = function isNotValid() {
+                for (var field in _this.state.errors) {
+                    for (var fieldErrors in _this.state.errors[field]) {
+                        if (_this.state.errors[field][fieldErrors]) {
+                            return true; // return true if any errors are true in 'this.state.errors'
+                        }
+                    }
+                }
+            };
 
-            _fluxActions2['default'].addCustomer({ firstName: firstName, lastName: lastName });
+            if (!_this.state.dirty) {
+                _this.setState({ displayDirtyErrorMessage: true });
+                setTimeout(function () {
+                    _this.setState({ displayDirtyErrorMessage: false });
+                }, 3000);
+            } else if (isNotValid()) {
+                // check if all form entries are in valid state
+                _this.setState({ displayInvalidErrorMessage: true });
+                setTimeout(function () {
+                    _this.setState({ displayInvalidErrorMessage: false });
+                }, 3000);
+            } else {
+                // is all entries are valid submit form
+                var firstName = _this.state.customer.firstName;
+                var lastName = _this.state.customer.lastName;
 
-            _this.state.customer.firstName = '';
-            _this.state.customer.lastName = '';
+                _fluxActions2['default'].addCustomer({ firstName: firstName, lastName: lastName });
 
-            document.querySelector('#firstName').focus();
+                _this.state.customer.firstName = '';
+                _this.state.customer.lastName = '';
 
-            // this.context.history.pushState(null, '/test');
+                document.querySelector('#firstName').focus();
+                // this.context.history.pushState(null, '/test');
+            }
         };
 
         this.removeCustomer = function (customer) {
@@ -37477,7 +37563,19 @@ var Homepage = (function (_React$Component) {
             allCustomers: [],
             filteredCustomers: [],
             dirty: false,
-            isValid: false,
+            displayDirtyErrorMessage: false,
+            displayInvalidErrorMessage: false,
+            // if error the it will be 'true' otherwise 'false'
+            errors: {
+                firstName: {
+                    required: false,
+                    min: false
+                },
+                lastName: {
+                    required: false,
+                    min: false
+                }
+            },
             searchEvent: { target: { value: '' } },
             sort: { by: 'firstName', direction: 'asc' }
         };
@@ -37493,7 +37591,11 @@ var Homepage = (function (_React$Component) {
                     updateCustomer: this.updateCustomer,
                     customer: this.state.customer,
                     dirty: this.state.dirty,
-                    updateForm: this.updateForm
+                    displayDirtyErrorMessage: this.state.displayDirtyErrorMessage,
+                    displayInvalidErrorMessage: this.state.displayInvalidErrorMessage,
+                    validateCustomerFormFields: this.validateCustomerFormFields,
+                    updateForm: this.updateForm,
+                    errors: this.state.errors
                 }),
                 _react2['default'].createElement(_customers2['default'], {
                     customers: this.state.filteredCustomers,
@@ -37520,7 +37622,7 @@ var Homepage = (function (_React$Component) {
 exports['default'] = Homepage;
 module.exports = exports['default'];
 
-},{"../flux/actions":226,"../flux/customerStore":228,"./customers":221,"./input":223,"lodash":21,"react":218}],223:[function(require,module,exports){
+},{"../flux/actions":227,"../flux/customerStore":229,"./customers":222,"./input":224,"lodash":21,"react":218}],224:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -37545,6 +37647,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _commonDisplay = require('./common/display');
+
+var _commonDisplay2 = _interopRequireDefault(_commonDisplay);
+
 var Input = (function (_React$Component) {
     _inherits(Input, _React$Component);
 
@@ -37558,19 +37664,6 @@ var Input = (function (_React$Component) {
         key: 'render',
         value: function render() {
 
-            var firstNameClass = 'form-group';
-            var firstNameHelpText = '';
-
-            if (this.props.customer.firstName && this.props.customer.firstName.length <= 2) {
-                firstNameClass += ' has-error';
-                firstNameHelpText = 'First Name must be more than 2 characters';
-                this.props.dirty = true;
-            } else {
-                firstNameClass = 'form-group';
-                firstNameHelpText = '';
-                this.props.dirty = false;
-            }
-
             return _react2['default'].createElement(
                 'div',
                 { className: 'col-md-6 col-xs-6 col-sm-6 input-box' },
@@ -37579,7 +37672,7 @@ var Input = (function (_React$Component) {
                     { onSubmit: this.props.updateForm },
                     _react2['default'].createElement(
                         'div',
-                        { className: firstNameClass },
+                        { className: 'form-group' },
                         _react2['default'].createElement(
                             'label',
                             { htmlFor: 'firstName' },
@@ -37591,12 +37684,26 @@ var Input = (function (_React$Component) {
                             name: 'firstName',
                             ref: 'firstName',
                             value: this.props.customer.firstName,
-                            onChange: this.props.updateCustomer
+                            onChange: this.props.updateCustomer,
+                            onBlur: this.props.validateCustomerFormFields
                         }),
                         _react2['default'].createElement(
-                            'span',
-                            { className: 'help-block' },
-                            firstNameHelpText
+                            _commonDisplay2['default'],
+                            { 'if': this.props.errors.firstName.required },
+                            _react2['default'].createElement(
+                                'span',
+                                { className: 'text-danger' },
+                                ' First name is Required'
+                            )
+                        ),
+                        _react2['default'].createElement(
+                            _commonDisplay2['default'],
+                            { 'if': this.props.errors.firstName.min },
+                            _react2['default'].createElement(
+                                'span',
+                                { className: 'text-danger' },
+                                ' First name must be more than 2 characters'
+                            )
                         )
                     ),
                     _react2['default'].createElement(
@@ -37612,10 +37719,47 @@ var Input = (function (_React$Component) {
                             name: 'lastName',
                             ref: 'lastName',
                             value: this.props.customer.lastName,
-                            onChange: this.props.updateCustomer
-                        })
+                            onChange: this.props.updateCustomer,
+                            onBlur: this.props.validateCustomerFormFields
+                        }),
+                        _react2['default'].createElement(
+                            _commonDisplay2['default'],
+                            { 'if': this.props.errors.lastName.required },
+                            _react2['default'].createElement(
+                                'span',
+                                { className: 'text-danger' },
+                                ' Last name is Required'
+                            )
+                        ),
+                        _react2['default'].createElement(
+                            _commonDisplay2['default'],
+                            { 'if': this.props.errors.lastName.min },
+                            _react2['default'].createElement(
+                                'span',
+                                { className: 'text-danger' },
+                                ' Last name must be more than 2 characters'
+                            )
+                        )
                     ),
-                    _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' })
+                    _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' }),
+                    _react2['default'].createElement(
+                        _commonDisplay2['default'],
+                        { 'if': this.props.displayDirtyErrorMessage },
+                        _react2['default'].createElement(
+                            'span',
+                            { className: 'error' },
+                            'Please fill the form first!!!'
+                        )
+                    ),
+                    _react2['default'].createElement(
+                        _commonDisplay2['default'],
+                        { 'if': this.props.displayInvalidErrorMessage },
+                        _react2['default'].createElement(
+                            'span',
+                            { className: 'error' },
+                            'Check all errors on page'
+                        )
+                    )
                 )
             );
         }
@@ -37627,7 +37771,7 @@ var Input = (function (_React$Component) {
 exports['default'] = Input;
 module.exports = exports['default'];
 
-},{"react":218,"react-router":39}],224:[function(require,module,exports){
+},{"./common/display":220,"react":218,"react-router":39}],225:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -37716,7 +37860,7 @@ var InputUpdateCustomer = (function (_React$Component) {
 exports['default'] = InputUpdateCustomer;
 module.exports = exports['default'];
 
-},{"react":218,"react-router":39}],225:[function(require,module,exports){
+},{"react":218,"react-router":39}],226:[function(require,module,exports){
 /**
  * Created by buggy on 9/27/15.
  */
@@ -37769,7 +37913,7 @@ var Test = (function (_React$Component) {
 exports['default'] = Test;
 module.exports = exports['default'];
 
-},{"react":218}],226:[function(require,module,exports){
+},{"react":218}],227:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -37846,7 +37990,7 @@ var Actions = {
 exports['default'] = Actions;
 module.exports = exports['default'];
 
-},{"./constants":227,"./dispatcher":229}],227:[function(require,module,exports){
+},{"./constants":228,"./dispatcher":230}],228:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -37869,7 +38013,7 @@ exports['default'] = (0, _reactLibKeyMirror2['default'])({
 });
 module.exports = exports['default'];
 
-},{"react/lib/keyMirror":203}],228:[function(require,module,exports){
+},{"react/lib/keyMirror":203}],229:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -37953,7 +38097,7 @@ _dispatcher2['default'].register(function (action) {
 exports['default'] = customerStore;
 module.exports = exports['default'];
 
-},{"./constants":227,"./dispatcher":229,"events":1}],229:[function(require,module,exports){
+},{"./constants":228,"./dispatcher":230,"events":1}],230:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -37969,7 +38113,7 @@ var dispatcher = new _flux.Dispatcher();
 exports['default'] = dispatcher;
 module.exports = exports['default'];
 
-},{"flux":3}],230:[function(require,module,exports){
+},{"flux":3}],231:[function(require,module,exports){
 /**
  * Created by buggy on 8/19/15.
  */
@@ -38024,4 +38168,4 @@ _react2['default'].render(_react2['default'].createElement(
     )
 ), document.querySelector('#app'));
 
-},{"./app":219,"./components/customer":220,"./components/customers":221,"./components/homepage":222,"./components/test":225,"history/lib/createBrowserHistory":11,"react":218,"react-router":39}]},{},[230]);
+},{"./app":219,"./components/customer":221,"./components/customers":222,"./components/homepage":223,"./components/test":226,"history/lib/createBrowserHistory":11,"react":218,"react-router":39}]},{},[231]);
