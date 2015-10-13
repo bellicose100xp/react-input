@@ -37479,7 +37479,7 @@ var Homepage = (function (_React$Component) {
         };
 
         this.componentDidMount = function () {
-            document.querySelector('#firstName').focus();
+            //document.querySelector('#firstName').focus();
             //this.getAllCustomerData();
             _fluxCustomerStore2['default'].addChangeListener(_this.getAllCustomerData);
             _fluxCustomerStore2['default'].emitChange(); //getting initial data on load from database
@@ -37545,7 +37545,7 @@ var Homepage = (function (_React$Component) {
                 _this.state.customer.firstName = '';
                 _this.state.customer.lastName = '';
 
-                document.querySelector('#firstName').focus();
+                // document.querySelector('#firstName').focus();
                 // this.context.history.pushState(null, '/test');
             }
         };

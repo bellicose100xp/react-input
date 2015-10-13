@@ -115,7 +115,7 @@ export default class Homepage extends React.Component {
     }
 
     componentDidMount = () => {
-        document.querySelector('#firstName').focus();
+        //document.querySelector('#firstName').focus();
         //this.getAllCustomerData();
         customerStore.addChangeListener(this.getAllCustomerData);
         customerStore.emitChange(); //getting initial data on load from database
@@ -179,7 +179,7 @@ export default class Homepage extends React.Component {
             this.state.customer.firstName = '';
             this.state.customer.lastName = '';
 
-            document.querySelector('#firstName').focus();
+           // document.querySelector('#firstName').focus();
             // this.context.history.pushState(null, '/test');
         }
     }
