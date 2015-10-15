@@ -4,6 +4,7 @@
 'use strict';
 import React from 'react';
 import {Link} from 'react-router';
+import Display from './common/display';
 
 export default class Customers extends React.Component {
 
@@ -38,8 +39,22 @@ export default class Customers extends React.Component {
                 <table className="table table-striped col-md-12 col-sm-12 col-xs-12">
                     <thead>
                     <tr>
-                        <th onClick={this.props.sortCustomers.bind(null, 'firstName')}>First Name</th>
-                        <th onClick={this.props.sortCustomers.bind(null, 'lastName')}>Last Name</th>
+                        <th onClick={this.props.sortCustomers.bind(null, 'firstName')}>
+                            First Name{' '}
+                        <Display if={this.props.sort.by === 'firstName'}>
+                            {this.props.sort.direction === 'asc' ?
+                                (<span className="glyphicon glyphicon-sort-by-attributes text-primary"> </span>)
+                                : (<span className="glyphicon glyphicon-sort-by-attributes-alt text-primary"> </span>)}
+                        </Display>
+                        </th>
+                        <th onClick={this.props.sortCustomers.bind(null, 'lastName')}>
+                            Last Name{' '}
+                            <Display if={this.props.sort.by === 'lastName'}>
+                                {this.props.sort.direction === 'asc' ?
+                                    (<span className="glyphicon glyphicon-sort-by-attributes text-primary"> </span>)
+                                    : (<span className="glyphicon glyphicon-sort-by-attributes-alt text-primary"> </span>)}
+                            </Display>
+                        </th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>

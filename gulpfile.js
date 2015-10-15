@@ -83,6 +83,9 @@ gulp.task('images', function () {
 
     gulp.src('./src/favicon.ico')
         .pipe(gulp.dest(config.paths.dist));
+
+    gulp.src('node_modules/bootstrap/fonts/*')
+        .pipe(gulp.dest(config.paths.dist + '/fonts'));
 });
 
 gulp.task('lint', function () {

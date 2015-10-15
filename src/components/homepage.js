@@ -209,6 +209,7 @@ export default class Homepage extends React.Component {
                     removeCustomer={this.removeCustomer}
                     filterCustomers={this.filterCustomers}
                     sortCustomers={this.sortCustomers}
+                    sort={this.state.sort}
                 />
 
             </div>

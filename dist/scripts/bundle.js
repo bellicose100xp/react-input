@@ -37245,6 +37245,10 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = require('react-router');
 
+var _commonDisplay = require('./common/display');
+
+var _commonDisplay2 = _interopRequireDefault(_commonDisplay);
+
 var Customers = (function (_React$Component) {
     _inherits(Customers, _React$Component);
 
@@ -37324,12 +37328,40 @@ var Customers = (function (_React$Component) {
                             _react2['default'].createElement(
                                 'th',
                                 { onClick: this.props.sortCustomers.bind(null, 'firstName') },
-                                'First Name'
+                                'First Name',
+                                ' ',
+                                _react2['default'].createElement(
+                                    _commonDisplay2['default'],
+                                    { 'if': this.props.sort.by === 'firstName' },
+                                    this.props.sort.direction === 'asc' ? _react2['default'].createElement(
+                                        'span',
+                                        { className: 'glyphicon glyphicon-sort-by-attributes text-primary' },
+                                        ' '
+                                    ) : _react2['default'].createElement(
+                                        'span',
+                                        { className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
+                                        ' '
+                                    )
+                                )
                             ),
                             _react2['default'].createElement(
                                 'th',
                                 { onClick: this.props.sortCustomers.bind(null, 'lastName') },
-                                'Last Name'
+                                'Last Name',
+                                ' ',
+                                _react2['default'].createElement(
+                                    _commonDisplay2['default'],
+                                    { 'if': this.props.sort.by === 'lastName' },
+                                    this.props.sort.direction === 'asc' ? _react2['default'].createElement(
+                                        'span',
+                                        { className: 'glyphicon glyphicon-sort-by-attributes text-primary' },
+                                        ' '
+                                    ) : _react2['default'].createElement(
+                                        'span',
+                                        { className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
+                                        ' '
+                                    )
+                                )
                             ),
                             _react2['default'].createElement(
                                 'th',
@@ -37359,7 +37391,7 @@ var Customers = (function (_React$Component) {
 exports['default'] = Customers;
 module.exports = exports['default'];
 
-},{"react":218,"react-router":39}],223:[function(require,module,exports){
+},{"./common/display":220,"react":218,"react-router":39}],223:[function(require,module,exports){
 /**
  * Created by buggy on 9/19/15.
  */
@@ -37601,7 +37633,8 @@ var Homepage = (function (_React$Component) {
                     customers: this.state.filteredCustomers,
                     removeCustomer: this.removeCustomer,
                     filterCustomers: this.filterCustomers,
-                    sortCustomers: this.sortCustomers
+                    sortCustomers: this.sortCustomers,
+                    sort: this.state.sort
                 })
             );
         }
