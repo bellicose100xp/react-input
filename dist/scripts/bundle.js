@@ -36793,160 +36793,27 @@ module.exports = exports['default'];
  */
 'use strict';
 Object.defineProperty(exports, '__esModule', {
-    value: true
+  value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var Display = (function (_React$Component) {
-    _inherits(Display, _React$Component);
-
-    function Display() {
-        _classCallCheck(this, Display);
-
-        _get(Object.getPrototypeOf(Display.prototype), 'constructor', this).apply(this, arguments);
-    }
-
-    _createClass(Display, [{
-        key: 'render',
-        value: function render() {
-            return this.props['if'] ? _react2['default'].createElement(
-                'span',
-                null,
-                this.props.children
-            ) : null;
-        }
-    }]);
-
-    return Display;
-})(_react2['default'].Component);
+var Display = function Display(props) {
+  return props['if'] ? _react2['default'].createElement(
+    'span',
+    null,
+    props.children
+  ) : _react2['default'].createElement('span', null);
+};
 
 exports['default'] = Display;
 module.exports = exports['default'];
 
 },{"react":226}],229:[function(require,module,exports){
-/**
- * Created by buggy on 10/7/15.
- */
-'use strict';
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _inputUpdateCustomer = require('./inputUpdateCustomer');
-
-var _inputUpdateCustomer2 = _interopRequireDefault(_inputUpdateCustomer);
-
-var _fluxCustomerStore = require('../flux/customerStore');
-
-var _fluxCustomerStore2 = _interopRequireDefault(_fluxCustomerStore);
-
-var _fluxActions = require('../flux/actions');
-
-var _fluxActions2 = _interopRequireDefault(_fluxActions);
-
-var Customer = (function (_React$Component) {
-    _inherits(Customer, _React$Component);
-
-    function Customer(props) {
-        var _this = this;
-
-        _classCallCheck(this, Customer);
-
-        _get(Object.getPrototypeOf(Customer.prototype), 'constructor', this).call(this, props);
-
-        this.getCustomerById = function () {
-            $.get('http://localhost:8000/api/customers/' + _this.props.params.customerId, function (data) {
-                _this.setState({ customer: data });
-            });
-        };
-
-        this.componentDidMount = function () {
-            //document.querySelector('#firstName').focus();
-            _this.getCustomerById();
-        };
-
-        this.updateCustomerFields = function (event) {
-            var property = event.target.name;
-            var value = event.target.value;
-            _this.state.customer[property] = value;
-            _this.setState({ customer: _this.state.customer });
-        };
-
-        this.updateCustomer = function (event) {
-            event.preventDefault();
-
-            var id = _this.state.customer._id;
-            var firstName = _this.state.customer.firstName;
-            var lastName = _this.state.customer.lastName;
-
-            _fluxActions2['default'].updateCustomer({ id: id, firstName: firstName, lastName: lastName });
-
-            // document.querySelector('#firstName').focus();
-
-            _this.context.history.pushState(null, '/');
-        };
-
-        this.state = {
-            customer: {}
-        };
-    }
-
-    _createClass(Customer, [{
-        key: 'render',
-        value: function render() {
-            // let {customerId} = this.props.params; //get the parameter from the params object
-
-            return _react2['default'].createElement(
-                'div',
-                null,
-                _react2['default'].createElement(_inputUpdateCustomer2['default'], {
-                    customer: this.state.customer,
-                    updateCustomerFields: this.updateCustomerFields,
-                    updateCustomer: this.updateCustomer
-                })
-            );
-        }
-    }]);
-
-    return Customer;
-})(_react2['default'].Component);
-
-exports['default'] = Customer;
-
-Customer.contextTypes = {
-    history: _react2['default'].PropTypes.object,
-    location: _react2['default'].PropTypes.object
-};
-module.exports = exports['default'];
-
-},{"../flux/actions":235,"../flux/customerStore":237,"./inputUpdateCustomer":233,"react":226}],230:[function(require,module,exports){
 /**
  * Created by HSO on 9/25/15.
  */
@@ -37117,7 +36984,7 @@ var Customers = (function (_React$Component) {
 exports['default'] = Customers;
 module.exports = exports['default'];
 
-},{"./common/display":228,"react":226,"react-router":45}],231:[function(require,module,exports){
+},{"./common/display":228,"react":226,"react-router":45}],230:[function(require,module,exports){
 /**
  * Created by buggy on 9/19/15.
  */
@@ -37381,7 +37248,7 @@ Homepage.contextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../flux/actions":235,"../flux/customerStore":237,"./customers":230,"./input":232,"lodash":24,"react":226}],232:[function(require,module,exports){
+},{"../flux/actions":235,"../flux/customerStore":237,"./customers":229,"./input":231,"lodash":24,"react":226}],231:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -37530,96 +37397,7 @@ var Input = (function (_React$Component) {
 exports['default'] = Input;
 module.exports = exports['default'];
 
-},{"./common/display":228,"react":226,"react-router":45}],233:[function(require,module,exports){
-/**
- * Created by buggy on 9/23/15.
- */
-'use strict';
-Object.defineProperty(exports, '__esModule', {
-    value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRouter = require('react-router');
-
-var InputUpdateCustomer = (function (_React$Component) {
-    _inherits(InputUpdateCustomer, _React$Component);
-
-    function InputUpdateCustomer() {
-        _classCallCheck(this, InputUpdateCustomer);
-
-        _get(Object.getPrototypeOf(InputUpdateCustomer.prototype), 'constructor', this).apply(this, arguments);
-    }
-
-    _createClass(InputUpdateCustomer, [{
-        key: 'render',
-        value: function render() {
-
-            return _react2['default'].createElement(
-                'div',
-                null,
-                _react2['default'].createElement(
-                    'form',
-                    { className: 'form col-md-6 col-md-offset-3', onSubmit: this.props.updateCustomer },
-                    _react2['default'].createElement(
-                        'div',
-                        { className: 'form-group' },
-                        _react2['default'].createElement(
-                            'label',
-                            { htmlFor: 'firstName' },
-                            'First Name: '
-                        ),
-                        _react2['default'].createElement('input', {
-                            id: 'firstName',
-                            className: 'form-control',
-                            name: 'firstName',
-                            ref: 'firstName',
-                            value: this.props.customer.firstName,
-                            onChange: this.props.updateCustomerFields
-                        })
-                    ),
-                    _react2['default'].createElement(
-                        'div',
-                        { className: 'form-group' },
-                        _react2['default'].createElement(
-                            'label',
-                            { htmlFor: 'lastName' },
-                            'Last Name: '
-                        ),
-                        _react2['default'].createElement('input', {
-                            className: 'form-control',
-                            name: 'lastName',
-                            ref: 'lastName',
-                            value: this.props.customer.lastName,
-                            onChange: this.props.updateCustomerFields
-                        })
-                    ),
-                    _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' })
-                )
-            );
-        }
-    }]);
-
-    return InputUpdateCustomer;
-})(_react2['default'].Component);
-
-exports['default'] = InputUpdateCustomer;
-module.exports = exports['default'];
-
-},{"react":226,"react-router":45}],234:[function(require,module,exports){
+},{"./common/display":228,"react":226,"react-router":45}],232:[function(require,module,exports){
 /**
  * Created by buggy on 9/27/15.
  */
@@ -37672,7 +37450,205 @@ var Test = (function (_React$Component) {
 exports['default'] = Test;
 module.exports = exports['default'];
 
-},{"react":226}],235:[function(require,module,exports){
+},{"react":226}],233:[function(require,module,exports){
+/**
+ * Created by buggy on 10/7/15.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _inputUpdateCustomer = require('./inputUpdateCustomer');
+
+var _inputUpdateCustomer2 = _interopRequireDefault(_inputUpdateCustomer);
+
+var _fluxCustomerStore = require('../../flux/customerStore');
+
+var _fluxCustomerStore2 = _interopRequireDefault(_fluxCustomerStore);
+
+var _fluxActions = require('../../flux/actions');
+
+var _fluxActions2 = _interopRequireDefault(_fluxActions);
+
+var Customer = (function (_React$Component) {
+    _inherits(Customer, _React$Component);
+
+    function Customer(props) {
+        var _this = this;
+
+        _classCallCheck(this, Customer);
+
+        _get(Object.getPrototypeOf(Customer.prototype), 'constructor', this).call(this, props);
+
+        this.getCustomerById = function () {
+            $.get('http://localhost:8000/api/customers/' + _this.props.params.customerId, function (data) {
+                _this.setState({ customer: data });
+            });
+        };
+
+        this.componentDidMount = function () {
+            //document.querySelector('#firstName').focus();
+            _this.getCustomerById();
+        };
+
+        this.updateCustomerFields = function (event) {
+            var property = event.target.name;
+            var value = event.target.value;
+            _this.state.customer[property] = value;
+            _this.setState({ customer: _this.state.customer });
+        };
+
+        this.updateCustomer = function (event) {
+            event.preventDefault();
+
+            var id = _this.state.customer._id;
+            var firstName = _this.state.customer.firstName;
+            var lastName = _this.state.customer.lastName;
+
+            _fluxActions2['default'].updateCustomer({ id: id, firstName: firstName, lastName: lastName });
+
+            // document.querySelector('#firstName').focus();
+
+            _this.context.history.pushState(null, '/');
+        };
+
+        this.state = {
+            customer: {}
+        };
+    }
+
+    _createClass(Customer, [{
+        key: 'render',
+        value: function render() {
+            // let {customerId} = this.props.params; //get the parameter from the params object
+
+            return _react2['default'].createElement(
+                'div',
+                null,
+                _react2['default'].createElement(_inputUpdateCustomer2['default'], {
+                    customer: this.state.customer,
+                    updateCustomerFields: this.updateCustomerFields,
+                    updateCustomer: this.updateCustomer
+                })
+            );
+        }
+    }]);
+
+    return Customer;
+})(_react2['default'].Component);
+
+exports['default'] = Customer;
+
+Customer.contextTypes = {
+    history: _react2['default'].PropTypes.object,
+    location: _react2['default'].PropTypes.object
+};
+module.exports = exports['default'];
+
+},{"../../flux/actions":235,"../../flux/customerStore":237,"./inputUpdateCustomer":234,"react":226}],234:[function(require,module,exports){
+/**
+ * Created by buggy on 9/23/15.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = require('react-router');
+
+var InputUpdateCustomer = (function (_React$Component) {
+    _inherits(InputUpdateCustomer, _React$Component);
+
+    function InputUpdateCustomer() {
+        _classCallCheck(this, InputUpdateCustomer);
+
+        _get(Object.getPrototypeOf(InputUpdateCustomer.prototype), 'constructor', this).apply(this, arguments);
+    }
+
+    _createClass(InputUpdateCustomer, [{
+        key: 'render',
+        value: function render() {
+            return _react2['default'].createElement(
+                'div',
+                null,
+                _react2['default'].createElement(
+                    'form',
+                    { className: 'form col-md-6 col-md-offset-3', onSubmit: this.props.updateCustomer },
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'form-group' },
+                        _react2['default'].createElement(
+                            'label',
+                            { htmlFor: 'firstName' },
+                            'First Name: '
+                        ),
+                        _react2['default'].createElement('input', {
+                            id: 'firstName',
+                            className: 'form-control',
+                            name: 'firstName',
+                            ref: 'firstName',
+                            value: this.props.customer.firstName,
+                            onChange: this.props.updateCustomerFields
+                        })
+                    ),
+                    _react2['default'].createElement(
+                        'div',
+                        { className: 'form-group' },
+                        _react2['default'].createElement(
+                            'label',
+                            { htmlFor: 'lastName' },
+                            'Last Name: '
+                        ),
+                        _react2['default'].createElement('input', {
+                            className: 'form-control',
+                            name: 'lastName',
+                            ref: 'lastName',
+                            value: this.props.customer.lastName,
+                            onChange: this.props.updateCustomerFields
+                        })
+                    ),
+                    _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' })
+                )
+            );
+        }
+    }]);
+
+    return InputUpdateCustomer;
+})(_react2['default'].Component);
+
+exports['default'] = InputUpdateCustomer;
+module.exports = exports['default'];
+
+},{"react":226,"react-router":45}],235:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -37891,9 +37867,9 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouter = require('react-router');
 
-var _componentsCustomer = require('./components/customer');
+var _componentsUpdateCustomerCustomer = require('./components/updateCustomer/customer');
 
-var _componentsCustomer2 = _interopRequireDefault(_componentsCustomer);
+var _componentsUpdateCustomerCustomer2 = _interopRequireDefault(_componentsUpdateCustomerCustomer);
 
 // this gets rid of wierd characters in URL
 
@@ -37926,9 +37902,9 @@ _reactDom2['default'].render(_react2['default'].createElement(
         _reactRouter.Route,
         { path: '/', component: _app2['default'] },
         _react2['default'].createElement(_reactRouter.IndexRoute, { component: _componentsHomepage2['default'] }),
-        _react2['default'].createElement(_reactRouter.Route, { path: '/customer/:customerId', component: _componentsCustomer2['default'] }),
+        _react2['default'].createElement(_reactRouter.Route, { path: '/customer/:customerId', component: _componentsUpdateCustomerCustomer2['default'] }),
         _react2['default'].createElement(_reactRouter.Route, { path: 'test', component: _componentsTest2['default'] })
     )
 ), document.querySelector('#app'));
 
-},{"./app":227,"./components/customer":229,"./components/customers":230,"./components/homepage":231,"./components/test":234,"history/lib/createBrowserHistory":11,"react":226,"react-dom":25,"react-router":45}]},{},[239]);
+},{"./app":227,"./components/customers":229,"./components/homepage":230,"./components/test":232,"./components/updateCustomer/customer":233,"history/lib/createBrowserHistory":11,"react":226,"react-dom":25,"react-router":45}]},{},[239]);

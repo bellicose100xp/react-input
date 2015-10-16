@@ -4,8 +4,8 @@
 'use strict';
 import React from 'react';
 
-export default class Display extends React.Component {
-    render() {
-        return this.props.if ? <span>{this.props.children}</span> : null;
-    }
-}
+const Display = props => {
+    return props.if ? <span>{props.children}</span> : <span></span>;
+};
+
+export default Display;

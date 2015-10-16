@@ -4,8 +4,8 @@
 'use strict';
 import React from 'react';
 import InputUpdateCustomer from './inputUpdateCustomer';
-import customerStore from '../flux/customerStore';
-import Actions from '../flux/actions';
+import customerStore from '../../flux/customerStore';
+import Actions from '../../flux/actions';
 
 export default class Customer extends React.Component {
 

@@ -8,7 +8,6 @@ import {Link} from 'react-router';
 export default class InputUpdateCustomer extends React.Component {
 
     render() {
-
         return (
             <div>
                 <form className="form col-md-6 col-md-offset-3" onSubmit={this.props.updateCustomer}>

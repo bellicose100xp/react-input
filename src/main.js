@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute} from 'react-router';
 
-import Customer from './components/customer';
+import Customer from './components/updateCustomer/customer';
 
 // this gets rid of wierd characters in URL
 import createBrowserHistory from 'history/lib/createBrowserHistory';
