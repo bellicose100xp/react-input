@@ -50,7 +50,7 @@ let Actions = {
             url: `http://localhost:8000/api/customers/${customerToRemove._id}`,
             data: customerToRemove,
             success: () => {
-                console.log('firing event after removing customer');
+                //console.log('firing event after removing customer');
                 dispatcher.dispatch({
                     actionType: constants.REMOVE_CUSTOMER,
                     removedCustomer: ''

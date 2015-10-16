@@ -9,17 +9,12 @@ import Actions from '../flux/actions';
 
 export default class Customer extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.state = {
             customer: {}
         };
-    }
-
-    static contextTypes= {
-        history: React.PropTypes.object,
-        location: React.PropTypes.object
     }
 
     getCustomerById = () => {
@@ -49,23 +44,28 @@ export default class Customer extends React.Component {
 
         Actions.updateCustomer({id: id, firstName: firstName, lastName: lastName});
 
-       // document.querySelector('#firstName').focus();
+        // document.querySelector('#firstName').focus();
 
-    this.context.history.pushState(null, '/');
+        this.context.history.pushState(null, '/');
 
     }
 
-    render(){
-       // let {customerId} = this.props.params; //get the parameter from the params object
+    render() {
+        // let {customerId} = this.props.params; //get the parameter from the params object
 
         return (
-          <div>
-              <InputUpdateCustomer
-                customer={this.state.customer}
-                updateCustomerFields={this.updateCustomerFields}
-                updateCustomer={this.updateCustomer}
-              />
-          </div>
+            <div>
+                <InputUpdateCustomer
+                    customer={this.state.customer}
+                    updateCustomerFields={this.updateCustomerFields}
+                    updateCustomer={this.updateCustomer}
+                />
+            </div>
         );
     }
 }
+
+Customer.contextTypes = {
+    history: React.PropTypes.object,
+    location: React.PropTypes.object
+};

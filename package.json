@@ -26,10 +26,12 @@
     "gulp-open": "^1.0.0",
     "history": "^1.11.1",
     "jquery": "^2.1.4",
+    "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
     "mongoose": "^4.1.9",
     "monitorctrlc": "^1.0.1",
-    "react": "^0.13.3",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
     "react-router": "^1.0.0-rc1",
     "vinyl-source-stream": "^1.1.0"
   }

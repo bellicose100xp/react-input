@@ -3,6 +3,7 @@
  */
 /* eslint-disable strict */ //disabling strict mode here cause we need global vars.
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute} from 'react-router';
 
 import Customer from './components/customer';
@@ -16,7 +17,7 @@ import Homepage from './components/homepage';
 import Customers from './components/customers';
 import Test from './components/test';
 
-React.render((
+ReactDOM.render((
         <Router history={history}>
             <Route path="/" component={App}>
                 <IndexRoute component={Homepage} />

@@ -40,11 +40,6 @@ export default class Homepage extends React.Component {
         };
     }
 
-    static contextTypes = {
-        history: React.PropTypes.object,
-        location: React.PropTypes.object
-    }
-
     // filter data
     filterCustomers = event => {
 
@@ -179,8 +174,10 @@ export default class Homepage extends React.Component {
             this.state.customer.firstName = '';
             this.state.customer.lastName = '';
 
-           // document.querySelector('#firstName').focus();
-            // this.context.history.pushState(null, '/test');
+            this.setState({dirty: false});
+
+            // document.querySelector('#firstName').focus();
+             //this.context.history.pushState(null, '/test');
         }
     }
 
@@ -217,3 +214,7 @@ export default class Homepage extends React.Component {
     }
 }
 
+Homepage.contextTypes = {
+    history: React.PropTypes.object,
+    location: React.PropTypes.object
+};
