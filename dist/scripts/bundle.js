@@ -36802,7 +36802,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var Display = function Display(props) {
+exports['default'] = function (props) {
   return props['if'] ? _react2['default'].createElement(
     'span',
     null,
@@ -36810,7 +36810,6 @@ var Display = function Display(props) {
   ) : _react2['default'].createElement('span', null);
 };
 
-exports['default'] = Display;
 module.exports = exports['default'];
 
 },{"react":226}],229:[function(require,module,exports){

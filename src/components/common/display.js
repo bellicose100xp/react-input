@@ -4,8 +4,4 @@
 'use strict';
 import React from 'react';
 
-const Display = props => {
-    return props.if ? <span>{props.children}</span> : <span></span>;
-};
-
-export default Display;
+export default props => props.if ? <span>{props.children}</span> : <span></span>;
