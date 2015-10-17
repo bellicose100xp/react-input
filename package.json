@@ -30,6 +30,7 @@
     "lodash": "^3.10.1",
     "mongoose": "^4.1.9",
     "monitorctrlc": "^1.0.1",
+    "nodemailer": "^1.8.0",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-mixin": "^2.0.2",

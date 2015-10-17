@@ -2,14 +2,35 @@
 
 let express = require('express');
 let CustomerModel = require('../models/customerModel');
-
 let customerRouter = express.Router();
+let transporter = require('../mailer/mailer');
+
+let mailOptions = {
+    from: 'Test 4hso <test@4hso.com>',
+    to:'admin@4hso.com',
+    subject: 'Customer added to Simple List',
+    text: 'A customer was added'
+};
 
 customerRouter.route('/customers')
     .post((req, res) => {
         let customer = new CustomerModel(req.body); // creates an instance using mongoose
         customer.save(); // this will save customer to mongodb
         // console.log(customer);
+
+        let currentDateTime = new Date();
+
+        //customizing message body
+        mailOptions.text = `${customer.firstName} ${customer.lastName} was added to simple list on ${currentDateTime}`;
+
+        //send email here
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log(`Message sent: ${info.response}`)
+        });
+
         res.status(201).send(customer); // status 201 means created
     })
     .get((req, res) => {
