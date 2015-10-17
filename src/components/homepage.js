@@ -143,6 +143,18 @@ export default class Homepage extends React.Component {
         this.setState({error: errorObject});
     }
 
+    resetErrors = () => {
+
+        for (let field in this.state.errors) {
+            for (let fieldErrors in this.state.errors[field]) {
+                this.state.errors[field][fieldErrors] = false;
+            }
+        }
+
+        this.setState({errors: this.state.errors});
+
+    }
+
     updateForm = event => {
         event.preventDefault();
 
@@ -200,6 +212,7 @@ export default class Homepage extends React.Component {
                     validateCustomerFormFields={this.validateCustomerFormFields}
                     updateForm={this.updateForm}
                     errors={this.state.errors}
+                    resetErrors={this.resetErrors}
                 />
 
                 <Customers

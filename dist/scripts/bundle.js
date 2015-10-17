@@ -37135,6 +37135,17 @@ var Homepage = (function (_React$Component) {
             _this.setState({ error: errorObject });
         };
 
+        this.resetErrors = function () {
+
+            for (var field in _this.state.errors) {
+                for (var fieldErrors in _this.state.errors[field]) {
+                    _this.state.errors[field][fieldErrors] = false;
+                }
+            }
+
+            _this.setState({ errors: _this.state.errors });
+        };
+
         this.updateForm = function (event) {
             event.preventDefault();
 
@@ -37223,7 +37234,8 @@ var Homepage = (function (_React$Component) {
                     displayInvalidErrorMessage: this.state.displayInvalidErrorMessage,
                     validateCustomerFormFields: this.validateCustomerFormFields,
                     updateForm: this.updateForm,
-                    errors: this.state.errors
+                    errors: this.state.errors,
+                    resetErrors: this.resetErrors
                 }),
                 _react2['default'].createElement(_customers2['default'], {
                     customers: this.state.filteredCustomers,
@@ -37294,7 +37306,7 @@ var Input = (function (_React$Component) {
                 { className: 'col-md-6 col-xs-6 col-sm-6 input-box' },
                 _react2['default'].createElement(
                     'form',
-                    { onSubmit: this.props.updateForm },
+                    { onSubmit: this.props.updateForm, onReset: this.props.resetErrors },
                     _react2['default'].createElement(
                         'div',
                         { className: 'form-group' },
@@ -37367,6 +37379,7 @@ var Input = (function (_React$Component) {
                         )
                     ),
                     _react2['default'].createElement('input', { className: 'btn btn-primary', type: 'submit', value: 'Submit' }),
+                    _react2['default'].createElement('input', { className: 'btn btn-primary reset-button', type: 'reset', value: 'Reset' }),
                     _react2['default'].createElement(
                         _commonDisplay2['default'],
                         { 'if': this.props.displayDirtyErrorMessage },

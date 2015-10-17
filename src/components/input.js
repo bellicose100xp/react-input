@@ -12,7 +12,7 @@ export default class Input extends React.Component {
 
         return (
             <div className="col-md-6 col-xs-6 col-sm-6 input-box">
-                <form onSubmit={this.props.updateForm}>
+                <form onSubmit={this.props.updateForm} onReset={this.props.resetErrors}>
 
                     <div className="form-group">
                         <label htmlFor="firstName">First Name: </label>
@@ -53,6 +53,7 @@ export default class Input extends React.Component {
 
 
                     <input className="btn btn-primary" type="submit" value="Submit"/>
+                    <input className="btn btn-primary reset-button" type="reset" value="Reset"/>
                     <Display if={this.props.displayDirtyErrorMessage}>
                         <span className="error">Please fill the form first!!!</span>
                     </Display>
