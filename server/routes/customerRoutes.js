@@ -24,12 +24,12 @@ customerRouter.route('/customers')
         mailOptions.text = `${customer.firstName} ${customer.lastName} was added to simple list on ${currentDateTime}`;
 
         //send email here
-        transporter.sendMail(mailOptions, (error, info) => {
+        /*transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 return console.log(error);
             }
             console.log(`Message sent: ${info.response}`)
-        });
+        });*/
 
         res.status(201).send(customer); // status 201 means created
     })
