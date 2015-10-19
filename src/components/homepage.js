@@ -150,7 +150,7 @@ export default class Homepage extends React.Component {
                 this.state.errors[field][fieldErrors] = false;
             }
         }
-
+        this.setState({customer: {firstName: '', lastName: ''}});
         this.setState({errors: this.state.errors});
 
     }
@@ -190,14 +190,14 @@ export default class Homepage extends React.Component {
             this.setState({dirty: false});
 
             // document.querySelector('#firstName').focus();
-             //this.context.history.pushState(null, '/test');
+            //this.context.history.pushState(null, '/test');
         }
     }
 
     removeCustomer = (customer) => {
         // console.log(customer);
         Actions.removeCustomer(customer);
-    };
+    }
 
     render() {
         return (

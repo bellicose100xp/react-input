@@ -37142,7 +37142,7 @@ var Homepage = (function (_React$Component) {
                     _this.state.errors[field][fieldErrors] = false;
                 }
             }
-
+            _this.setState({ customer: { firstName: '', lastName: '' } });
             _this.setState({ errors: _this.state.errors });
         };
 
