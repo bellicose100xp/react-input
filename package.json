@@ -31,6 +31,7 @@
     "mongoose": "^4.1.9",
     "monitorctrlc": "^1.0.1",
     "nodemailer": "^1.8.0",
+    "re-base": "^1.2.1",
     "react": "^0.14.0",
     "react-dom": "^0.14.0",
     "react-mixin": "^2.0.2",

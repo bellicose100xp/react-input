@@ -8,6 +8,7 @@ import Customers from './customers';
 import customerStore from '../flux/customerStore';
 import Actions from '../flux/actions';
 import _ from 'lodash';
+import Auth from './auth/auth';
 
 export default class Homepage extends React.Component {
 
@@ -113,6 +114,7 @@ export default class Homepage extends React.Component {
     componentDidMount = () => {
         //document.querySelector('#firstName').focus();
         //this.getAllCustomerData();
+       // Auth.login();
         customerStore.addChangeListener(this.getAllCustomerData);
         customerStore.emitChange(); //getting initial data on load from database
     }

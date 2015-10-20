@@ -5,6 +5,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, IndexRoute} from 'react-router';
+import Auth from './components/auth/auth';
 
 import Customer from './components/updateCustomer/customer';
 
@@ -16,13 +17,21 @@ import App from './app';
 import Homepage from './components/homepage';
 import Customers from './components/customers';
 import Test from './components/test';
+import Login from './components/auth/login';
+
+let requireAuth = (nextState, replaceState) => {
+    if (!Auth.loggedIn()) {
+        replaceState({nextPathname: nextState.location.pathname}, '/login');
+    }
+};
 
 ReactDOM.render((
         <Router history={history}>
             <Route path="/" component={App}>
-                <IndexRoute component={Homepage} />
+                <IndexRoute component={Homepage} onEnter={requireAuth} />
                 <Route path="/customer/:customerId" component={Customer} />
                 <Route path="test" component={Test}/>
+                <Route path="login" component={Login}/>
             </Route>
         </Router>
     ),
