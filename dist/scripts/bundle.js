@@ -37046,17 +37046,11 @@ var App = (function (_React$Component) {
         _get(Object.getPrototypeOf(App.prototype), 'constructor', this).call(this);
 
         this.updateAuth = function (authData) {
-            //if (authData) {
-            //    console.log("onAuth: User " + authData.uid + " is logged in with " + authData.provider);
-            //} else {
-            //    console.log("onAuth: User is logged out");
-            //}
-
             _this.setState({ loggedIn: !!authData });
         };
 
         this.componentDidMount = function () {
-            ref.onAuth(_this.updateAuth); // fire this callback every time auth status changes
+            ref.onAuth(_this.updateAuth); // callback every time auth status changes
         };
 
         this.state = {
@@ -37067,12 +37061,14 @@ var App = (function (_React$Component) {
     _createClass(App, [{
         key: 'render',
         value: function render() {
+            var location = this.props.location;
+
             return _react2['default'].createElement(
                 'div',
-                null,
+                { className: 'container' },
                 _react2['default'].createElement(
                     'div',
-                    { className: 'container' },
+                    null,
                     _react2['default'].createElement(
                         'div',
                         { className: 'row pull-right' },
@@ -37236,19 +37232,28 @@ var Login = (function (_React$Component) {
                 'form',
                 { onSubmit: this.handleSubmit },
                 _react2['default'].createElement(
-                    'label',
-                    null,
-                    _react2['default'].createElement('input', { type: 'email', ref: 'email', placeholder: 'email', required: true })
+                    'div',
+                    { className: 'form-group' },
+                    _react2['default'].createElement(
+                        'label',
+                        { htmlFor: 'email' },
+                        'Email: '
+                    ),
+                    _react2['default'].createElement('input', { className: 'form-control', name: 'email', type: 'email', ref: 'email', placeholder: 'email', required: true })
                 ),
                 _react2['default'].createElement(
-                    'label',
-                    null,
-                    _react2['default'].createElement('input', { type: 'password', ref: 'pass', placeholder: 'password', required: true })
+                    'div',
+                    { className: 'form-group' },
+                    _react2['default'].createElement(
+                        'label',
+                        { htmlFor: 'pass' },
+                        'Password: '
+                    ),
+                    _react2['default'].createElement('input', { className: 'form-control', name: 'pass', type: 'password', ref: 'pass', placeholder: 'password', required: true })
                 ),
-                _react2['default'].createElement('br', null),
                 _react2['default'].createElement(
                     'button',
-                    { type: 'submit' },
+                    { className: 'btn btn-primary', type: 'submit' },
                     'login'
                 ),
                 this.state.error && _react2['default'].createElement(
@@ -37714,7 +37719,7 @@ var Homepage = (function (_React$Component) {
         value: function render() {
             return _react2['default'].createElement(
                 'div',
-                { className: 'container' },
+                null,
                 _react2['default'].createElement(_input2['default'], {
                     updateCustomer: this.updateCustomer,
                     customer: this.state.customer,

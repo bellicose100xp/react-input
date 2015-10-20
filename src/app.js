@@ -17,23 +17,20 @@ export default class App extends React.Component {
     }
 
     updateAuth = authData => {
-        //if (authData) {
-        //    console.log("onAuth: User " + authData.uid + " is logged in with " + authData.provider);
-        //} else {
-        //    console.log("onAuth: User is logged out");
-        //}
-
         this.setState({loggedIn: !!authData});
     }
 
     componentDidMount = () => {
-        ref.onAuth(this.updateAuth); // fire this callback every time auth status changes
+        ref.onAuth(this.updateAuth); // callback every time auth status changes
     }
 
     render() {
+
+        let {location} = this.props;
+
         return (
-            <div>
-                <div className="container">
+            <div className="container">
+                <div>
                     <div className="row pull-right">
                         { this.state.loggedIn ?
                             (<Link to='/login' onClick={Auth.logout}> Logout </Link>)
