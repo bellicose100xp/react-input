@@ -3,6 +3,7 @@
  */
 'use strict';
 import React from 'react';
+import Display from './components/common/display';
 import {Link} from 'react-router';
 import Auth from './components/auth/auth';
 import Firebase from 'firebase';
@@ -31,16 +32,17 @@ export default class App extends React.Component {
         return (
             <div className="container">
                 <div>
-                    <div className="row pull-right">
-                        { this.state.loggedIn ?
-                            (<Link to='/login' onClick={Auth.logout}> Logout </Link>)
-                            : (<Link to='/login'> Login </Link>)
-                        }
-                    </div>
+                    <Display if={location.pathname !== '/login'}>
+                        <div className="row pull-right">
+                            { this.state.loggedIn ?
+                                (<Link to='/login' onClick={Auth.logout}> Logout </Link>)
+                                : (<Link to='/login'> Login </Link>)
+                            }
+                        </div>
+                    </Display>
                     <div className="row">
                         <h1 id="main-title">Very Simple Customer List</h1>
                     </div>
-
                     <hr />
                 </div>
                 {this.props.children}

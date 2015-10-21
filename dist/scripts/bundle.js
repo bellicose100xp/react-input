@@ -37023,6 +37023,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _componentsCommonDisplay = require('./components/common/display');
+
+var _componentsCommonDisplay2 = _interopRequireDefault(_componentsCommonDisplay);
+
 var _reactRouter = require('react-router');
 
 var _componentsAuthAuth = require('./components/auth/auth');
@@ -37070,16 +37074,20 @@ var App = (function (_React$Component) {
                     'div',
                     null,
                     _react2['default'].createElement(
-                        'div',
-                        { className: 'row pull-right' },
-                        this.state.loggedIn ? _react2['default'].createElement(
-                            _reactRouter.Link,
-                            { to: '/login', onClick: _componentsAuthAuth2['default'].logout },
-                            ' Logout '
-                        ) : _react2['default'].createElement(
-                            _reactRouter.Link,
-                            { to: '/login' },
-                            ' Login '
+                        _componentsCommonDisplay2['default'],
+                        { 'if': location.pathname !== '/login' },
+                        _react2['default'].createElement(
+                            'div',
+                            { className: 'row pull-right' },
+                            this.state.loggedIn ? _react2['default'].createElement(
+                                _reactRouter.Link,
+                                { to: '/login', onClick: _componentsAuthAuth2['default'].logout },
+                                ' Logout '
+                            ) : _react2['default'].createElement(
+                                _reactRouter.Link,
+                                { to: '/login' },
+                                ' Login '
+                            )
                         )
                     ),
                     _react2['default'].createElement(
@@ -37104,7 +37112,7 @@ var App = (function (_React$Component) {
 exports['default'] = App;
 module.exports = exports['default'];
 
-},{"./components/auth/auth":229,"firebase":3,"react":227,"react-router":46}],229:[function(require,module,exports){
+},{"./components/auth/auth":229,"./components/common/display":231,"firebase":3,"react":227,"react-router":46}],229:[function(require,module,exports){
 /**
  * Created by admin on 10/19/2015.
  */
