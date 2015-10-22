@@ -12,7 +12,10 @@ var babelify = require('babelify');
 var historyApiFallback = require('connect-history-api-fallback');
 var nodemon = require('gulp-nodemon');
 var uglify = require('gulp-uglify');
-
+var replace = require('gulp-replace');
+var runSequence = require('run-sequence');
+var rename = require('gulp-rename');
+var debug = require('gulp-debug');
 
 var config = {
     port: 9005,
@@ -37,7 +40,7 @@ gulp.task('connect', function () {
         port: config.port,
         base: config.devBaseUrl,
         livereload: true,
-        middleware: function(connect, opt){
+        middleware: function (connect, opt) {
             return [historyApiFallback({})];
         }
     });
@@ -105,28 +108,51 @@ gulp.task('node', function () {
         env: {
             PORT: 8000
         },
-        ignore: ['node_modules/**','src/**','dist/**']
+        ignore: ['node_modules/**', 'src/**', 'dist/**']
     })
-    .on('restart', function () {
-        console.log('Restarting node server...');
-    })
+        .on('restart', function () {
+            console.log('Restarting node server...');
+        })
 });
 
 gulp.task('watch', function () {
-   // monitorCtrlC();
+    // monitorCtrlC();
     gulp.watch(config.paths.css, ['css']);
     gulp.watch(config.paths.html, ['html']);
     gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'connect', 'node', 'watch']);
+gulp.task('template-dev', function () {
+    gulp.src('src/components/common/appConstants.js', {base: './'})
+        .pipe(replace('https://secure-chamber-4968.herokuapp.com/api/customers', 'http://localhost:8000/api/customers'))
+        .pipe(gulp.dest('./'));
 
-//TODO: write production gulp task
+    gulp.src('src/index.html', {base: './'})
+        .pipe(replace('bundle.min.js', 'bundle.js'))
+        .pipe(gulp.dest('./'));
+});
 
-gulp.task('production', ['html', 'js', 'css', 'images']);
+gulp.task('default', ['template-dev', 'html', 'js', 'css', 'images', 'lint', 'connect', 'node', 'watch']);
 
-gulp.task('compress', ['noWatch'], function() {
-    return gulp.src('dist/bundle.js')
+gulp.task('template-production', function () {
+    gulp.src('src/components/common/appConstants.js', {base: './'})
+        .pipe(replace('http://localhost:8000/api/customers', 'https://secure-chamber-4968.herokuapp.com/api/customers'))
+        .pipe(gulp.dest('./'));
+
+    gulp.src('src/index.html', {base: './'})
+        .pipe(replace('bundle.js', 'bundle.min.js'))
+        .pipe(gulp.dest('./'));
+});
+
+gulp.task('compress', function () {
+    return gulp.src('dist/scripts/bundle.js')
         .pipe(uglify())
-        .pipe(gulp.dest('dist/bundle.min.js'));
+        .pipe(rename({
+            extname: '.min.js'
+        }))
+        .pipe(gulp.dest('dist/scripts'));
+});
+
+gulp.task('production', function (callback) {
+    runSequence('template-production', 'html', 'js', 'css', 'images', 'compress', callback);
 });
