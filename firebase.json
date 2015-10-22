@@ -1,0 +1,9 @@
+{
+  "firebase": "react-input",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}
