@@ -9,6 +9,7 @@ import customerStore from '../flux/customerStore';
 import Actions from '../flux/actions';
 import _ from 'lodash';
 import Auth from './auth/auth';
+import {restServerAPI} from './common/appConstants';
 
 export default class Homepage extends React.Component {
 
@@ -101,7 +102,7 @@ export default class Homepage extends React.Component {
     }
 
     getAllCustomerData = () => {
-        $.get('http://localhost:8000/api/customers', (data) => {
+        $.get(restServerAPI, (data) => {
             // console.log('getting all customers...');
             this.setState({allCustomers: data});
             // keep current filter even while updating field

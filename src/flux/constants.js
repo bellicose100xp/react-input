@@ -9,4 +9,5 @@ export default keyMirror({
     UPDATE_CUSTOMER: null,
     REMOVE_CUSTOMER: null,
     INITIALIZE: null
+
 });

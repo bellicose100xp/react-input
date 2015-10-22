@@ -6,6 +6,7 @@ import React from 'react';
 import InputUpdateCustomer from './inputUpdateCustomer';
 import customerStore from '../../flux/customerStore';
 import Actions from '../../flux/actions';
+import {restServerAPI} from '../common/appConstants';
 
 export default class Customer extends React.Component {
 
@@ -18,7 +19,7 @@ export default class Customer extends React.Component {
     }
 
     getCustomerById = () => {
-        $.get(`http://localhost:8000/api/customers/${this.props.params.customerId}`, (data) => {
+        $.get(`${restServerAPI}/${this.props.params.customerId}`, (data) => {
             this.setState({customer: data});
         });
     }

@@ -4,7 +4,7 @@
 'use strict';
 import dispatcher from './dispatcher';
 import constants from './constants';
-
+import {restServerAPI} from '../components/common/appConstants';
 
 let Actions = {
 
@@ -13,7 +13,7 @@ let Actions = {
         if (newCustomer.firstName !== '' && newCustomer.lastName !== '') {
             $.ajax({
                 type: "POST",
-                url: 'http://localhost:8000/api/customers',
+                url: restServerAPI,
                 data: newCustomer,
                 success: (data) => {
                     dispatcher.dispatch({
@@ -31,7 +31,7 @@ let Actions = {
         if (customerToUpdate.firstName !== '' && customerToUpdate.lastName !== '') {
             $.ajax({
                 type: "PUT",
-                url: `http://localhost:8000/api/customers/${customerToUpdate.id}`,
+                url: `${restServerAPI}/${customerToUpdate.id}`,
                 data: customerToUpdate,
                 success: (data) => {
                     dispatcher.dispatch({
@@ -47,7 +47,7 @@ let Actions = {
     removeCustomer: customerToRemove => {
         $.ajax({
             type: "DELETE",
-            url: `http://localhost:8000/api/customers/${customerToRemove._id}`,
+            url: `${restServerAPI}/${customerToRemove._id}`,
             data: customerToRemove,
             success: () => {
                 //console.log('firing event after removing customer');

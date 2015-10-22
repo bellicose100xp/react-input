@@ -25,6 +25,7 @@
     "gulp-eslint": "^0.15.0",
     "gulp-nodemon": "^2.0.4",
     "gulp-open": "^1.0.0",
+    "gulp-uglify": "^1.4.2",
     "history": "^1.11.1",
     "jquery": "^2.1.4",
     "keymirror": "^0.1.1",

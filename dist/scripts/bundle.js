@@ -37112,7 +37112,7 @@ var App = (function (_React$Component) {
 exports['default'] = App;
 module.exports = exports['default'];
 
-},{"./components/auth/auth":229,"./components/common/display":231,"firebase":3,"react":227,"react-router":46}],229:[function(require,module,exports){
+},{"./components/auth/auth":229,"./components/common/display":232,"firebase":3,"react":227,"react-router":46}],229:[function(require,module,exports){
 /**
  * Created by admin on 10/19/2015.
  */
@@ -37286,6 +37286,19 @@ module.exports = exports['default'];
 
 },{"./auth":229,"react":227,"react-dom":26}],231:[function(require,module,exports){
 /**
+ * Created by admin on 10/21/2015.
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var restServerAPI = 'https://secure-chamber-4968.herokuapp.com/api/customers';
+
+exports.restServerAPI = restServerAPI;
+
+},{}],232:[function(require,module,exports){
+/**
  * Created by admin on 10/12/2015.
  */
 'use strict';
@@ -37309,7 +37322,7 @@ exports['default'] = function (props) {
 
 module.exports = exports['default'];
 
-},{"react":227}],232:[function(require,module,exports){
+},{"react":227}],233:[function(require,module,exports){
 /**
  * Created by HSO on 9/25/15.
  */
@@ -37480,7 +37493,7 @@ var Customers = (function (_React$Component) {
 exports['default'] = Customers;
 module.exports = exports['default'];
 
-},{"./common/display":231,"react":227,"react-router":46}],233:[function(require,module,exports){
+},{"./common/display":232,"react":227,"react-router":46}],234:[function(require,module,exports){
 /**
  * Created by buggy on 9/19/15.
  */
@@ -37526,6 +37539,8 @@ var _lodash2 = _interopRequireDefault(_lodash);
 var _authAuth = require('./auth/auth');
 
 var _authAuth2 = _interopRequireDefault(_authAuth);
+
+var _commonAppConstants = require('./common/appConstants');
 
 var Homepage = (function (_React$Component) {
     _inherits(Homepage, _React$Component);
@@ -37593,7 +37608,7 @@ var Homepage = (function (_React$Component) {
         };
 
         this.getAllCustomerData = function () {
-            $.get('http://localhost:8000/api/customers', function (data) {
+            $.get(_commonAppConstants.restServerAPI, function (data) {
                 // console.log('getting all customers...');
                 _this.setState({ allCustomers: data });
                 // keep current filter even while updating field
@@ -37761,7 +37776,7 @@ Homepage.contextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../flux/actions":238,"../flux/customerStore":240,"./auth/auth":229,"./customers":232,"./input":234,"lodash":25,"react":227}],234:[function(require,module,exports){
+},{"../flux/actions":239,"../flux/customerStore":241,"./auth/auth":229,"./common/appConstants":231,"./customers":233,"./input":235,"lodash":25,"react":227}],235:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -37911,7 +37926,7 @@ var Input = (function (_React$Component) {
 exports['default'] = Input;
 module.exports = exports['default'];
 
-},{"./common/display":231,"react":227,"react-router":46}],235:[function(require,module,exports){
+},{"./common/display":232,"react":227,"react-router":46}],236:[function(require,module,exports){
 /**
  * Created by buggy on 9/27/15.
  */
@@ -37964,7 +37979,7 @@ var Test = (function (_React$Component) {
 exports['default'] = Test;
 module.exports = exports['default'];
 
-},{"react":227}],236:[function(require,module,exports){
+},{"react":227}],237:[function(require,module,exports){
 /**
  * Created by buggy on 10/7/15.
  */
@@ -37999,6 +38014,8 @@ var _fluxActions = require('../../flux/actions');
 
 var _fluxActions2 = _interopRequireDefault(_fluxActions);
 
+var _commonAppConstants = require('../common/appConstants');
+
 var Customer = (function (_React$Component) {
     _inherits(Customer, _React$Component);
 
@@ -38010,7 +38027,7 @@ var Customer = (function (_React$Component) {
         _get(Object.getPrototypeOf(Customer.prototype), 'constructor', this).call(this, props);
 
         this.getCustomerById = function () {
-            $.get('http://localhost:8000/api/customers/' + _this.props.params.customerId, function (data) {
+            $.get(_commonAppConstants.restServerAPI + '/' + _this.props.params.customerId, function (data) {
                 _this.setState({ customer: data });
             });
         };
@@ -38074,7 +38091,7 @@ Customer.contextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../../flux/actions":238,"../../flux/customerStore":240,"./inputUpdateCustomer":237,"react":227}],237:[function(require,module,exports){
+},{"../../flux/actions":239,"../../flux/customerStore":241,"../common/appConstants":231,"./inputUpdateCustomer":238,"react":227}],238:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -38162,7 +38179,7 @@ var InputUpdateCustomer = (function (_React$Component) {
 exports['default'] = InputUpdateCustomer;
 module.exports = exports['default'];
 
-},{"react":227,"react-router":46}],238:[function(require,module,exports){
+},{"react":227,"react-router":46}],239:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -38181,6 +38198,8 @@ var _constants = require('./constants');
 
 var _constants2 = _interopRequireDefault(_constants);
 
+var _componentsCommonAppConstants = require('../components/common/appConstants');
+
 var Actions = {
 
     addCustomer: function addCustomer(newCustomer) {
@@ -38188,7 +38207,7 @@ var Actions = {
         if (newCustomer.firstName !== '' && newCustomer.lastName !== '') {
             $.ajax({
                 type: "POST",
-                url: 'http://localhost:8000/api/customers',
+                url: _componentsCommonAppConstants.restServerAPI,
                 data: newCustomer,
                 success: function success(data) {
                     _dispatcher2['default'].dispatch({
@@ -38206,7 +38225,7 @@ var Actions = {
         if (customerToUpdate.firstName !== '' && customerToUpdate.lastName !== '') {
             $.ajax({
                 type: "PUT",
-                url: 'http://localhost:8000/api/customers/' + customerToUpdate.id,
+                url: _componentsCommonAppConstants.restServerAPI + '/' + customerToUpdate.id,
                 data: customerToUpdate,
                 success: function success(data) {
                     _dispatcher2['default'].dispatch({
@@ -38222,7 +38241,7 @@ var Actions = {
     removeCustomer: function removeCustomer(customerToRemove) {
         $.ajax({
             type: "DELETE",
-            url: 'http://localhost:8000/api/customers/' + customerToRemove._id,
+            url: _componentsCommonAppConstants.restServerAPI + '/' + customerToRemove._id,
             data: customerToRemove,
             success: function success() {
                 //console.log('firing event after removing customer');
@@ -38239,7 +38258,7 @@ var Actions = {
 exports['default'] = Actions;
 module.exports = exports['default'];
 
-},{"./constants":239,"./dispatcher":241}],239:[function(require,module,exports){
+},{"../components/common/appConstants":231,"./constants":240,"./dispatcher":242}],240:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -38259,10 +38278,11 @@ exports['default'] = (0, _keymirror2['default'])({
     UPDATE_CUSTOMER: null,
     REMOVE_CUSTOMER: null,
     INITIALIZE: null
+
 });
 module.exports = exports['default'];
 
-},{"keymirror":24}],240:[function(require,module,exports){
+},{"keymirror":24}],241:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -38346,7 +38366,7 @@ _dispatcher2['default'].register(function (action) {
 exports['default'] = customerStore;
 module.exports = exports['default'];
 
-},{"./constants":239,"./dispatcher":241,"events":1}],241:[function(require,module,exports){
+},{"./constants":240,"./dispatcher":242,"events":1}],242:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -38362,7 +38382,7 @@ var dispatcher = new _flux.Dispatcher();
 exports['default'] = dispatcher;
 module.exports = exports['default'];
 
-},{"flux":4}],242:[function(require,module,exports){
+},{"flux":4}],243:[function(require,module,exports){
 /**
  * Created by buggy on 8/19/15.
  */
@@ -38436,4 +38456,4 @@ _reactDom2['default'].render(_react2['default'].createElement(
     )
 ), document.querySelector('#app'));
 
-},{"./app":228,"./components/auth/auth":229,"./components/auth/login":230,"./components/customers":232,"./components/homepage":233,"./components/test":235,"./components/updateCustomer/customer":236,"history/lib/createBrowserHistory":12,"react":227,"react-dom":26,"react-router":46}]},{},[242]);
+},{"./app":228,"./components/auth/auth":229,"./components/auth/login":230,"./components/customers":233,"./components/homepage":234,"./components/test":236,"./components/updateCustomer/customer":237,"history/lib/createBrowserHistory":12,"react":227,"react-dom":26,"react-router":46}]},{},[243]);

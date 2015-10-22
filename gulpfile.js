@@ -11,6 +11,7 @@ var babelify = require('babelify');
 //var monitorCtrlC = require('monitorctrlc');
 var historyApiFallback = require('connect-history-api-fallback');
 var nodemon = require('gulp-nodemon');
+var uglify = require('gulp-uglify');
 
 
 var config = {
@@ -119,3 +120,13 @@ gulp.task('watch', function () {
 });
 
 gulp.task('default', ['html', 'js', 'css', 'images', 'lint', 'connect', 'node', 'watch']);
+
+//TODO: write production gulp task
+
+gulp.task('production', ['html', 'js', 'css', 'images']);
+
+gulp.task('compress', ['noWatch'], function() {
+    return gulp.src('dist/bundle.js')
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/bundle.min.js'));
+});
