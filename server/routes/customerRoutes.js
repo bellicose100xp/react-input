@@ -12,6 +12,12 @@ let mailOptions = {
     text: 'A customer was added'
 };
 
+// remove boilerplate for socket.io
+customerRouter.use((req, res, next) => {
+    req.io = req.app.get('io');
+    next();
+});
+
 customerRouter.route('/customers')
     .post((req, res) => {
         let customer = new CustomerModel(req.body); // creates an instance using mongoose
@@ -31,8 +37,8 @@ customerRouter.route('/customers')
             console.log(`Message sent: ${info.response}`)
         });*/
 
-        let io = req.app.get('io'); //once and app.set has been done in index.js
-        io.emit('update'); //update on customer added
+         //once and app.set has been done in index.js
+        req.io.emit('update'); //update on customer added
 
         res.status(201).send(customer); // status 201 means created
     })
@@ -75,8 +81,7 @@ customerRouter.route('/customers/:customerId')
             if (err) {
                 res.status(500).send(err);
             } else {
-                let io = req.app.get('io'); //once and app.set has been done in index.js
-                io.emit('update'); // update on individual custoemer change
+                req.io.emit('update'); // update on individual custoemer change
                 res.json(req.customer);
             }
         });
@@ -86,8 +91,7 @@ customerRouter.route('/customers/:customerId')
             if (err) {
                 res.status(500).send(err);
             } else {
-                let io = req.app.get('io'); //once and app.set has been done in index.js
-                io.emit('update'); // update on delete
+                req.io.emit('update'); // update on delete
                 res.status(204).send('Removed'); // 204 means No content // need to send for flux event
                 //console.log('customer removed on server');
             }
