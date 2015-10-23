@@ -13,6 +13,7 @@ let mailOptions = {
 };
 
 // remove boilerplate for socket.io
+// attach io to req for all routes to use
 customerRouter.use((req, res, next) => {
     req.io = req.app.get('io');
     next();
@@ -81,7 +82,7 @@ customerRouter.route('/customers/:customerId')
             if (err) {
                 res.status(500).send(err);
             } else {
-                req.io.emit('update'); // update on individual custoemer change
+                req.io.emit('update'); // update on individual customer change
                 res.json(req.customer);
             }
         });
