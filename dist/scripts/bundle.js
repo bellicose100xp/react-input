@@ -44278,7 +44278,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var socketServer = 'http://localhost:8000';
+var socketServer = 'https://secure-chamber-4968.herokuapp.com';
 var restServerAPI = socketServer + '/api/customers';
 
 exports.restServerAPI = restServerAPI;
