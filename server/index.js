@@ -53,7 +53,6 @@ io.on('connection', socket => {
         socket.emit('update');
     });
 
-     //not handled yet
     connections.push(socket.id);
     console.log(`new socket ${socket.id} added, total sockets: ${connections.length}`);
 });
