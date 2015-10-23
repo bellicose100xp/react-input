@@ -9,7 +9,8 @@ import customerStore from '../flux/customerStore';
 import Actions from '../flux/actions';
 import _ from 'lodash';
 import Auth from './auth/auth';
-import {restServerAPI} from './common/appConstants';
+import {restServerAPI, socketServer} from './common/appConstants';
+import io from 'socket.io-client';
 
 export default class Homepage extends React.Component {
 
@@ -102,26 +103,34 @@ export default class Homepage extends React.Component {
     }
 
     getAllCustomerData = () => {
-        $.get(restServerAPI, (data) => {
-            // console.log('getting all customers...');
-            this.setState({allCustomers: data});
-            // keep current filter even while updating field
-            this.filterCustomers(this.state.searchEvent);
-            // initial sort
-            this.sortCustomers();
-        });
+        // verify if conponent is mounted before running the code ...
+        if(this.mounted) {
+            $.get(restServerAPI, (data) => {
+                // console.log('getting all customers...');
+                this.setState({allCustomers: data});
+                // keep current filter even while updating field
+                this.filterCustomers(this.state.searchEvent);
+                // initial sort
+                this.sortCustomers();
+            });
+        }
     }
 
     componentDidMount = () => {
-        //document.querySelector('#firstName').focus();
-        //this.getAllCustomerData();
-       // Auth.login();
-        customerStore.addChangeListener(this.getAllCustomerData);
-        customerStore.emitChange(); //getting initial data on load from database
+
+        this.mounted = true; // isMounted() Alternative for ES6 Classes
+
+        this.socket = io.connect(socketServer);
+        this.socket.emit('componentDidMount');
+        this.socket.on('update', this.getAllCustomerData);
+
+      //  customerStore.addChangeListener(this.getAllCustomerData);
+      //  customerStore.emitChange(); //getting initial data on load from database
     }
 
     componentWillUnmount = () => {
-        customerStore.removeChangeListener(this.getAllCustomerData);
+        this.mounted = false;
+        //customerStore.removeChangeListener(this.getAllCustomerData);
     }
 
     updateCustomer = event => {

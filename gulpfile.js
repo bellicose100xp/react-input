@@ -124,7 +124,7 @@ gulp.task('watch', function () {
 
 gulp.task('template-dev', function () {
     gulp.src('src/components/common/appConstants.js', {base: './'})
-        .pipe(replace('https://secure-chamber-4968.herokuapp.com/api/customers', 'http://localhost:8000/api/customers'))
+        .pipe(replace('https://secure-chamber-4968.herokuapp.com', 'http://localhost:8000'))
         .pipe(gulp.dest('./'));
 
     gulp.src('src/index.html', {base: './'})
@@ -136,7 +136,7 @@ gulp.task('default', ['template-dev', 'html', 'js', 'css', 'images', 'lint', 'co
 
 gulp.task('template-production', function () {
     gulp.src('src/components/common/appConstants.js', {base: './'})
-        .pipe(replace('http://localhost:8000/api/customers', 'https://secure-chamber-4968.herokuapp.com/api/customers'))
+        .pipe(replace('http://localhost:8000', 'https://secure-chamber-4968.herokuapp.com'))
         .pipe(gulp.dest('./'));
 
     gulp.src('src/index.html', {base: './'})

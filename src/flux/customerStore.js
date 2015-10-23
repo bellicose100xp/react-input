@@ -44,19 +44,19 @@ dispatcher.register(action => {
     switch (action.actionType) {
 
         case constants.ADD_CUSTOMER:
-            customerStore.emitChange();
+          //  customerStore.emitChange();
            // console.log('Added Customer:');
             //console.dir(action.addedCustomer);
             break;
 
         case constants.UPDATE_CUSTOMER:
-            customerStore.emitChange();
+          //  customerStore.emitChange();
            // console.log('Updated Customer:');
            // console.dir(action.updatedCustomer);
             break;
 
         case constants.REMOVE_CUSTOMER:
-            customerStore.emitChange();
+           // customerStore.emitChange();
             //console.log('customer removed..');
             break;
 

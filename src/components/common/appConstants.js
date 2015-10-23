@@ -3,6 +3,7 @@
  */
 'use strict';
 
-const restServerAPI = 'https://secure-chamber-4968.herokuapp.com/api/customers';
+const socketServer = 'http://localhost:8000';
+const restServerAPI = `${socketServer}/api/customers`;
 
-export {restServerAPI};
+export {restServerAPI, socketServer};

@@ -31,6 +31,29 @@ app.get('/', (req, res) => {
     res.send('welcome to my REST API');
 });
 
-app.listen(port, () => {
+let server = app.listen(port, () => {
     console.log(`Running the REST server on ${port}`);
+});
+
+//socket stuff
+let io = require('socket.io').listen(server);
+let connections = [];
+
+app.set('io', io); // so we can access it in any express route with req.app.get
+
+io.on('connection', socket => {
+
+    socket.once('disconnect', () => {
+        connections.splice(connections.indexOf(socket), 1);
+        socket.disconnect();
+        console.log(`${socket.id} disconnected: remaining sockets ${connections.length}`);
+    });
+
+    socket.on('componentDidMount', () => {
+        socket.emit('update');
+    });
+
+     //not handled yet
+    connections.push(socket.id);
+    console.log(`new socket ${socket.id} added, total sockets: ${connections.length}`);
 });
