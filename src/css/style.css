@@ -7,7 +7,7 @@
 .search-box {
     background: lightgray;
     padding: 2%;
-    height: 240px;
+    height: 100px;
 }
 
 #main-title {
@@ -27,4 +27,12 @@
 .reset-button {
     margin-left: 1%;
     margin-right: 1%;
+}
+
+@media screen and (min-width: 480px) {
+    .search-box {
+        background: lightgray;
+        padding: 2%;
+        height: 240px;
+    }
 }

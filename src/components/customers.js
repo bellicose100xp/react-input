@@ -25,7 +25,7 @@ export default class Customers extends React.Component {
     render() {
         return (
             <div>
-                <div className="form-group col-md-6 col-sm-6 col-xs-6 search-box">
+                <div className="form-group col-md-6 col-sm-6 col-xs-12 search-box">
                     <label htmlFor="filter">Search:</label>
                     <input
                         className="form-control"

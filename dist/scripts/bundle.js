@@ -44392,7 +44392,7 @@ var Customers = (function (_React$Component) {
                 null,
                 _react2['default'].createElement(
                     'div',
-                    { className: 'form-group col-md-6 col-sm-6 col-xs-6 search-box' },
+                    { className: 'form-group col-md-6 col-sm-6 col-xs-12 search-box' },
                     _react2['default'].createElement(
                         'label',
                         { htmlFor: 'filter' },
