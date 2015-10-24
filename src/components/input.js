@@ -24,6 +24,7 @@ export default class Input extends React.Component {
                             value={this.props.customer.firstName}
                             onChange={this.props.updateCustomer}
                             onBlur={this.props.validateCustomerFormFields}
+                            onKeyPress={this.props.handleOnKeyUpEvent}
                         />
                         <Display if={this.props.errors.firstName.required}>
                             <span className="text-danger"> First name is Required</span>
@@ -42,6 +43,7 @@ export default class Input extends React.Component {
                             value={this.props.customer.lastName}
                             onChange={this.props.updateCustomer}
                             onBlur={this.props.validateCustomerFormFields}
+                            onKeyPress={this.props.handleOnKeyUpEvent}
                         />
                         <Display if={this.props.errors.lastName.required}>
                             <span className="text-danger"> Last name is Required</span>

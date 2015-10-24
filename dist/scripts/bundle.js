@@ -44637,6 +44637,12 @@ var Homepage = (function (_React$Component) {
             _this.setState({ customer: _this.state.customer });
         };
 
+        this.handleOnKeyUpEvent = function (event) {
+            if (event.nativeEvent.which === 13) {
+                event.nativeEvent.target.blur();
+            }
+        };
+
         this.validateCustomerFormFields = function (event) {
             var field = event.target.name;
             var value = event.target.value;
@@ -44751,7 +44757,8 @@ var Homepage = (function (_React$Component) {
                     validateCustomerFormFields: this.validateCustomerFormFields,
                     updateForm: this.updateForm,
                     errors: this.state.errors,
-                    resetErrors: this.resetErrors
+                    resetErrors: this.resetErrors,
+                    handleOnKeyUpEvent: this.handleOnKeyUpEvent
                 }),
                 _react2['default'].createElement(_customers2['default'], {
                     customers: this.state.filteredCustomers,
@@ -44838,7 +44845,8 @@ var Input = (function (_React$Component) {
                             ref: 'firstName',
                             value: this.props.customer.firstName,
                             onChange: this.props.updateCustomer,
-                            onBlur: this.props.validateCustomerFormFields
+                            onBlur: this.props.validateCustomerFormFields,
+                            onKeyPress: this.props.handleOnKeyUpEvent
                         }),
                         _react2['default'].createElement(
                             _commonDisplay2['default'],
@@ -44873,7 +44881,8 @@ var Input = (function (_React$Component) {
                             ref: 'lastName',
                             value: this.props.customer.lastName,
                             onChange: this.props.updateCustomer,
-                            onBlur: this.props.validateCustomerFormFields
+                            onBlur: this.props.validateCustomerFormFields,
+                            onKeyPress: this.props.handleOnKeyUpEvent
                         }),
                         _react2['default'].createElement(
                             _commonDisplay2['default'],

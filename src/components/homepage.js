@@ -104,7 +104,7 @@ export default class Homepage extends React.Component {
 
     getAllCustomerData = () => {
         // verify if conponent is mounted before running the code ...
-        if(this.mounted) {
+        if (this.mounted) {
             $.get(restServerAPI, (data) => {
                 // console.log('getting all customers...');
                 this.setState({allCustomers: data});
@@ -124,8 +124,8 @@ export default class Homepage extends React.Component {
         this.socket.emit('componentDidMount');
         this.socket.on('update', this.getAllCustomerData);
 
-      //  customerStore.addChangeListener(this.getAllCustomerData);
-      //  customerStore.emitChange(); //getting initial data on load from database
+        //  customerStore.addChangeListener(this.getAllCustomerData);
+        //  customerStore.emitChange(); //getting initial data on load from database
     }
 
     componentWillUnmount = () => {
@@ -139,6 +139,12 @@ export default class Homepage extends React.Component {
         let value = event.target.value;
         this.state.customer[property] = value;
         this.setState({customer: this.state.customer});
+    }
+
+    handleOnKeyUpEvent = event => {
+        if (event.nativeEvent.which === 13) {
+            event.nativeEvent.target.blur();
+        }
     }
 
     validateCustomerFormFields = event => {
@@ -225,6 +231,7 @@ export default class Homepage extends React.Component {
                     updateForm={this.updateForm}
                     errors={this.state.errors}
                     resetErrors={this.resetErrors}
+                    handleOnKeyUpEvent={this.handleOnKeyUpEvent}
                 />
 
                 <Customers
