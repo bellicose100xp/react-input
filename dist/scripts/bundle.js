@@ -44826,7 +44826,7 @@ var Input = (function (_React$Component) {
 
             return _react2['default'].createElement(
                 'div',
-                { className: 'col-md-6 col-xs-6 col-sm-6 input-box' },
+                { className: 'col-md-6 col-xs-12 col-sm-6 input-box' },
                 _react2['default'].createElement(
                     'form',
                     { onSubmit: this.props.updateForm, onReset: this.props.resetErrors },

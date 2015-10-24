@@ -11,7 +11,7 @@ export default class Input extends React.Component {
     render() {
 
         return (
-            <div className="col-md-6 col-xs-6 col-sm-6 input-box">
+            <div className="col-md-6 col-xs-12 col-sm-6 input-box">
                 <form onSubmit={this.props.updateForm} onReset={this.props.resetErrors}>
 
                     <div className="form-group">
