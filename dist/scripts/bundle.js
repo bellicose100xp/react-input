@@ -44052,6 +44052,10 @@ var App = (function (_React$Component) {
         value: function render() {
             var location = this.props.location;
 
+            var removeNegativeMarginStyle = {
+                margin: 0
+            };
+
             return _react2['default'].createElement(
                 'div',
                 { className: 'container' },
@@ -44063,7 +44067,7 @@ var App = (function (_React$Component) {
                         { 'if': location.pathname !== '/login' },
                         _react2['default'].createElement(
                             'div',
-                            { className: 'row pull-right' },
+                            { className: 'row pull-right', style: removeNegativeMarginStyle },
                             this.state.loggedIn ? _react2['default'].createElement(
                                 _reactRouter.Link,
                                 { to: '/login', onClick: _componentsAuthAuth2['default'].logout },
@@ -44077,14 +44081,13 @@ var App = (function (_React$Component) {
                     ),
                     _react2['default'].createElement(
                         'div',
-                        { className: 'row' },
+                        { className: 'row', style: removeNegativeMarginStyle },
                         _react2['default'].createElement(
                             'h1',
                             { id: 'main-title' },
                             'Very Simple Customer List'
                         )
-                    ),
-                    _react2['default'].createElement('hr', null)
+                    )
                 ),
                 this.props.children
             );
@@ -44390,6 +44393,11 @@ var Customers = (function (_React$Component) {
             return _react2['default'].createElement(
                 'div',
                 null,
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'row hr-before-search' },
+                    _react2['default'].createElement('hr', null)
+                ),
                 _react2['default'].createElement(
                     'div',
                     { className: 'form-group col-md-6 col-sm-6 col-xs-12 search-box' },

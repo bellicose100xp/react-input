@@ -53,6 +53,13 @@ gulp.task('connect', function () {
 //        }));
 //});
 
+// Artificial Delay
+gulp.task('wait', function (cb) {
+    setTimeout(function () {
+        cb();
+    }, 1000);
+});
+
 gulp.task('html', function () {
     gulp.src(config.paths.html)
         .pipe(gulp.dest(config.paths.dist))
@@ -132,7 +139,7 @@ gulp.task('template-dev', function () {
         .pipe(gulp.dest('./'));
 });
 
-gulp.task('default', ['template-dev', 'html', 'js', 'css', 'images', 'lint', 'connect', 'node', 'watch']);
+gulp.task('default', ['template-dev', 'wait', 'html', 'js', 'css', 'images', 'lint', 'connect', 'node', 'watch']);
 
 gulp.task('template-production', function () {
     gulp.src('src/components/common/appConstants.js', {base: './'})
@@ -154,5 +161,5 @@ gulp.task('compress', function () {
 });
 
 gulp.task('production', function (callback) {
-    runSequence('template-production', 'html', 'js', 'css', 'images', 'compress', callback);
+    runSequence('template-production', 'wait', 'html', 'js', 'css', 'images', 'compress', callback);
 });
