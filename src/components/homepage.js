@@ -43,7 +43,6 @@ export default class Homepage extends React.Component {
         };
     }
 
-
     // filter data
     filterCustomers = event => {
 
