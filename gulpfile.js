@@ -162,5 +162,5 @@ gulp.task('compress', function () {
 });
 
 gulp.task('production', function (callback) {
-    runSequence('template-production', 'wait', 'html', 'js', 'css', 'images', 'wait', 'compress', callback);
+    runSequence('template-production', 'wait', 'html', 'js', 'css', 'images', 'compress', callback);
 });

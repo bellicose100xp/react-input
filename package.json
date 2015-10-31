@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/index.js",
-    "build": "gulp production",
+    "build": "gulp production && gulp compress",
     "git": "git add . && git commit -m 'autodeployment' && git push -u origin master",
     "firebase": "firebase deploy",
     "heroku": "git push heroku master",
