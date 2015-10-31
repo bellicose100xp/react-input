@@ -29,7 +29,8 @@ var config = {
         css: [
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
-            'src/css/style.css'
+            'src/css/style.css',
+            'src/css/spinner.css'
         ]
     }
 };
@@ -161,5 +162,5 @@ gulp.task('compress', function () {
 });
 
 gulp.task('production', function (callback) {
-    runSequence('template-production', 'wait', 'html', 'js', 'css', 'images', 'compress', callback);
+    runSequence('template-production', 'wait', 'html', 'js', 'css', 'images', 'wait', 'compress', callback);
 });

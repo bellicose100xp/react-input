@@ -11,7 +11,8 @@ export default class RxJS extends React.Component {
     constructor() {
         super();
         this.state = {
-            customers: []
+            customers: [],
+            busyIndicator: false
         };
     }
 
@@ -32,20 +33,26 @@ export default class RxJS extends React.Component {
             .filter(text => text.length > 2)
             .debounce(500)
             .distinctUntilChanged()
+            .doOnNext(() => {
+                this.setState({busyIndicator: true});
+            })
             .flatMapLatest(queryServer)
             .subscribe(data => {
-                this.setState({customers: data});
+                this.setState({
+                    customers: data,
+                    busyIndicator: false
+                });
             });
     }
 
     displayCustomerRow = customer => {
-        console.log(JSON.stringify(customer));
+        //  console.log(JSON.stringify(customer));
         return (
             <tr key={customer._id}>
                 <td>{customer.firstName}</td>
                 <td>{customer.lastName}</td>
                 <td>{customer.created_at}</td>
-                <td>{customer.updates_at}</td>
+                <td>{customer.updated_at}</td>
             </tr>
         );
     }
@@ -53,7 +60,14 @@ export default class RxJS extends React.Component {
     render() {
         return (
             <div>
-                <input id="search" type="text" className="form-control" placeholder="Search Query"/>
+                <div className="input-group">
+                    <input id="search" type="text" className="form-control" placeholder="Search Query"/>
+                    <span className="input-group-addon">
+                    {this.state.busyIndicator ? (<div className="three-quarters-loader">Loading...</div>) : (<div></div>)}
+                        </span>
+                </div>
+
+
                 <table className="table table-striped">
                     <thead>
                     <tr>
@@ -68,6 +82,7 @@ export default class RxJS extends React.Component {
                     </tbody>
                 </table>
             </div>
-        );
+        )
+            ;
     }
 }

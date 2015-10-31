@@ -56530,7 +56530,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var socketServer = 'https://secure-chamber-4968.herokuapp.com';
+var socketServer = 'http://localhost:8000';
 var restServerAPI = socketServer + '/api/customers';
 var restSearchAPI = socketServer + '/api/search';
 
@@ -57247,13 +57247,18 @@ var RxJS = (function (_React$Component) {
 
             _rx2['default'].Observable.fromEvent(input, 'keyup').pluck('target', 'value').filter(function (text) {
                 return text.length > 2;
-            }).debounce(500).distinctUntilChanged().flatMapLatest(queryServer).subscribe(function (data) {
-                _this.setState({ customers: data });
+            }).debounce(500).distinctUntilChanged().doOnNext(function () {
+                _this.setState({ busyIndicator: true });
+            }).flatMapLatest(queryServer).subscribe(function (data) {
+                _this.setState({
+                    customers: data,
+                    busyIndicator: false
+                });
             });
         };
 
         this.displayCustomerRow = function (customer) {
-            console.log(JSON.stringify(customer));
+            //  console.log(JSON.stringify(customer));
             return _react2['default'].createElement(
                 'tr',
                 { key: customer._id },
@@ -57275,13 +57280,14 @@ var RxJS = (function (_React$Component) {
                 _react2['default'].createElement(
                     'td',
                     null,
-                    customer.updates_at
+                    customer.updated_at
                 )
             );
         };
 
         this.state = {
-            customers: []
+            customers: [],
+            busyIndicator: false
         };
     }
 
@@ -57291,7 +57297,20 @@ var RxJS = (function (_React$Component) {
             return _react2['default'].createElement(
                 'div',
                 null,
-                _react2['default'].createElement('input', { id: 'search', type: 'text', className: 'form-control', placeholder: 'Search Query' }),
+                _react2['default'].createElement(
+                    'div',
+                    { className: 'input-group' },
+                    _react2['default'].createElement('input', { id: 'search', type: 'text', className: 'form-control', placeholder: 'Search Query' }),
+                    _react2['default'].createElement(
+                        'span',
+                        { className: 'input-group-addon' },
+                        this.state.busyIndicator ? _react2['default'].createElement(
+                            'div',
+                            { className: 'three-quarters-loader' },
+                            'Loading...'
+                        ) : _react2['default'].createElement('div', null)
+                    )
+                ),
                 _react2['default'].createElement(
                     'table',
                     { className: 'table table-striped' },
