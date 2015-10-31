@@ -39,7 +39,7 @@ export default class Homepage extends React.Component {
                 }
             },
             searchEvent: {target: {value: ''}},
-            sort: {by: 'firstName', direction: 'asc'}
+            sort: {by: '', direction: ''}
         };
     }
 
@@ -110,7 +110,7 @@ export default class Homepage extends React.Component {
                 // keep current filter even while updating field
                 this.filterCustomers(this.state.searchEvent);
                 // initial sort
-                this.sortCustomers();
+               // this.sortCustomers();
             });
         }
     }

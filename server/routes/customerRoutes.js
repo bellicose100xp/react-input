@@ -7,7 +7,7 @@ let transporter = require('../mailer/mailer');
 
 let mailOptions = {
     from: 'Test 4hso <test@4hso.com>',
-    to:'admin@4hso.com',
+    to: 'admin@4hso.com',
     subject: 'Customer added to Simple List',
     text: 'A customer was added'
 };
@@ -32,26 +32,54 @@ customerRouter.route('/customers')
 
         //send email here
         /*transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return console.log(error);
-            }
-            console.log(`Message sent: ${info.response}`)
-        });*/
+         if (error) {
+         return console.log(error);
+         }
+         console.log(`Message sent: ${info.response}`)
+         });*/
 
-         //once and app.set has been done in index.js
+        //once and app.set has been done in index.js
         req.io.emit('update'); //update on customer added
 
         res.status(201).send(customer); // status 201 means created
     })
     .get((req, res) => {
-        CustomerModel.find((err, data) => {
-            if (err) {
-                // 500 is error
-                res.status(500).send(err);
-            } else {
-                res.json(data);
-            }
-        });
+        CustomerModel
+            .find()
+            .sort({created_at: -1})
+            .limit(10)
+            .exec((err, data) => {
+                if (err) {
+                    // 500 is error
+                    res.status(500).send(err);
+                } else {
+                    res.json(data);
+                }
+            });
+    });
+
+
+customerRouter.route('/search')
+    .get((req, res) => {
+        // console.log(req.query.searchTerm);
+        let searchTerm = req.query.searchTerm;
+        CustomerModel
+            .find({
+                $or: [
+                    {firstName: new RegExp(searchTerm, 'i')},
+                    {lastName: new RegExp(searchTerm, 'i')}
+                ]
+            })
+            .
+            limit(10)
+            .exec((err, data) => {
+                if (err) {
+                    // 500 is error
+                    res.status(500).send(err);
+                } else {
+                    res.json(data);
+                }
+            });
     });
 
 //middleware to remove boilerplate code of finding customer by ID

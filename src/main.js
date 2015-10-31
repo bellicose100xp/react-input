@@ -18,6 +18,7 @@ import Homepage from './components/homepage';
 import Customers from './components/customers';
 import Test from './components/test';
 import Login from './components/auth/login';
+import RxJS from './components/rxjs/rxjs';
 
 let requireAuth = (nextState, replaceState) => {
     if (!Auth.loggedIn()) {
@@ -32,6 +33,7 @@ ReactDOM.render((
                 <Route path="/customer/:customerId" component={Customer} />
                 <Route path="test" component={Test}/>
                 <Route path="login" component={Login}/>
+                <Route path="rxjs" component={RxJS} />
             </Route>
         </Router>
     ),

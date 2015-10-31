@@ -48,6 +48,7 @@
     "react-mixin": "^2.0.2",
     "react-router": "^1.0.0-rc1",
     "run-sequence": "^1.1.4",
+    "rx": "^4.0.6",
     "socket.io": "^1.3.7",
     "socket.io-client": "^1.3.7",
     "vinyl-source-stream": "^1.1.0"
