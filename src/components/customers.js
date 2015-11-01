@@ -5,6 +5,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import Display from './common/display';
+import FormattedDate from './common/formatDate';
 
 export default class Customers extends React.Component {
 
@@ -13,6 +14,7 @@ export default class Customers extends React.Component {
             <tr key={customer._id}>
                 <td>{customer.firstName}</td>
                 <td>{customer.lastName}</td>
+                <td><FormattedDate date={customer.created_at} /></td>
                 <td><Link to={`/customer/${customer._id}`}>Edit Customer</Link></td>
                 <td>
                     <button className="btn btn-danger" onClick={this.props.removeCustomer.bind(null, customer)}>Delete
@@ -52,6 +54,14 @@ export default class Customers extends React.Component {
                         <th onClick={this.props.sortCustomers.bind(null, 'lastName')}>
                             Last Name{' '}
                             <Display if={this.props.sort.by === 'lastName'}>
+                                {this.props.sort.direction === 'asc' ?
+                                    (<span className="glyphicon glyphicon-sort-by-attributes text-primary"> </span>)
+                                    : (<span className="glyphicon glyphicon-sort-by-attributes-alt text-primary"> </span>)}
+                            </Display>
+                        </th>
+                        <th onClick={this.props.sortCustomers.bind(null, 'created_at')}>
+                            Created{' '}
+                            <Display if={this.props.sort.by === 'created_at'}>
                                 {this.props.sort.direction === 'asc' ?
                                     (<span className="glyphicon glyphicon-sort-by-attributes text-primary"> </span>)
                                     : (<span className="glyphicon glyphicon-sort-by-attributes-alt text-primary"> </span>)}

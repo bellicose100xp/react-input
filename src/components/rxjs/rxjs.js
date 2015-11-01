@@ -6,6 +6,7 @@
 import React from 'react';
 import Rx from 'rx';
 import {restSearchAPI} from '../common/appConstants';
+import FormattedDate from '../common/formatDate';
 
 export default class RxJS extends React.Component {
     constructor() {
@@ -46,13 +47,12 @@ export default class RxJS extends React.Component {
     }
 
     displayCustomerRow = customer => {
-        //  console.log(JSON.stringify(customer));
         return (
             <tr key={customer._id}>
                 <td>{customer.firstName}</td>
                 <td>{customer.lastName}</td>
-                <td>{customer.created_at}</td>
-                <td>{customer.updated_at}</td>
+                <td><FormattedDate date={customer.created_at} /></td>
+                <td><FormattedDate date={customer.updated_at} /></td>
             </tr>
         );
     }
@@ -74,7 +74,7 @@ export default class RxJS extends React.Component {
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Created</th>
-                        <th>Updates</th>
+                        <th>Updated</th>
                     </tr>
                     </thead>
                     <tbody>
