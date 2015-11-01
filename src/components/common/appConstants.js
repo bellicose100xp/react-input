@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const socketServer = 'http://localhost:8000';
+const socketServer = 'https://secure-chamber-4968.herokuapp.com';
 const restServerAPI = `${socketServer}/api/customers`;
 const restSearchAPI = `${socketServer}/api/search`;
 
