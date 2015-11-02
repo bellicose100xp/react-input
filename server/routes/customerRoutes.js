@@ -47,7 +47,7 @@ customerRouter.route('/customers')
         CustomerModel
             .find()
             .sort({created_at: -1})
-            .limit(10)
+            .limit(50)
             .exec((err, data) => {
                 if (err) {
                     // 500 is error

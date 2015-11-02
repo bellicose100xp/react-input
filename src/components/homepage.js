@@ -39,7 +39,8 @@ export default class Homepage extends React.Component {
                 }
             },
             searchEvent: {target: {value: ''}},
-            sort: {by: 'created_at', direction: 'desc'}
+            sort: {by: 'created_at', direction: 'desc'},
+            loadingCustomers: true
         };
     }
 
@@ -106,11 +107,14 @@ export default class Homepage extends React.Component {
         if (this.mounted) {
             $.get(restServerAPI, data => {
                 // console.log('getting all customers...');
-                this.setState({allCustomers: data});
+                this.setState({
+                    allCustomers: data,
+                    loadingCustomers: false
+                });
                 // keep current filter even while updating field
                 this.filterCustomers(this.state.searchEvent);
                 // initial sort, not needed, already sorted at server...
-               // this.sortCustomers();
+                // this.sortCustomers();
             });
         }
     }
@@ -239,6 +243,7 @@ export default class Homepage extends React.Component {
                     filterCustomers={this.filterCustomers}
                     sortCustomers={this.sortCustomers}
                     sort={this.state.sort}
+                    loadingCustomers={this.state.loadingCustomers}
                 />
 
             </div>

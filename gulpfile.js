@@ -30,7 +30,8 @@ var config = {
             'node_modules/bootstrap/dist/css/bootstrap.min.css',
             'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
             'src/css/style.css',
-            'src/css/spinner.css'
+            'src/css/spinners/spinner.css',
+            'src/css/spinners/spinner-google.css'
         ]
     }
 };

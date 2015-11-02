@@ -56600,6 +56600,39 @@ module.exports = exports['default'];
 
 },{"react":227}],283:[function(require,module,exports){
 /**
+ * Created by admin on 10/12/2015.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+exports['default'] = function () {
+    return _react2['default'].createElement(
+        'div',
+        { className: 'showbox' },
+        _react2['default'].createElement(
+            'div',
+            { className: 'loader' },
+            _react2['default'].createElement(
+                'svg',
+                { className: 'circular', viewBox: '25 25 50 50' },
+                _react2['default'].createElement('circle', { className: 'path', cx: '50', cy: '50', r: '20', fill: 'none', strokeWidth: '2', 'stroke-miterlimit': '10' })
+            )
+        )
+    );
+};
+
+module.exports = exports['default'];
+
+},{"react":227}],284:[function(require,module,exports){
+/**
  * Created by HSO on 9/25/15.
  */
 'use strict';
@@ -56630,6 +56663,10 @@ var _commonDisplay2 = _interopRequireDefault(_commonDisplay);
 var _commonFormatDate = require('./common/formatDate');
 
 var _commonFormatDate2 = _interopRequireDefault(_commonFormatDate);
+
+var _commonSpinner = require('./common/spinner');
+
+var _commonSpinner2 = _interopRequireDefault(_commonSpinner);
 
 var Customers = (function (_React$Component) {
     _inherits(Customers, _React$Component);
@@ -56703,12 +56740,29 @@ var Customers = (function (_React$Component) {
                     ),
                     _react2['default'].createElement('input', {
                         className: 'form-control',
+                        placeholder: 'Filter the list below (Recently added customers)',
                         name: 'filter',
                         ref: 'filter',
                         onChange: this.props.filterCustomers
                     })
                 ),
-                _react2['default'].createElement(
+                this.props.loadingCustomers ? _react2['default'].createElement(
+                    'table',
+                    { className: 'table table-striped col-md-12 col-sm-12 col-xs-12' },
+                    _react2['default'].createElement(
+                        'tbody',
+                        null,
+                        _react2['default'].createElement(
+                            'tr',
+                            null,
+                            _react2['default'].createElement(
+                                'td',
+                                null,
+                                _react2['default'].createElement(_commonSpinner2['default'], null)
+                            )
+                        )
+                    )
+                ) : _react2['default'].createElement(
                     'table',
                     { className: 'table table-striped col-md-12 col-sm-12 col-xs-12' },
                     _react2['default'].createElement(
@@ -56731,7 +56785,8 @@ var Customers = (function (_React$Component) {
                                         ' '
                                     ) : _react2['default'].createElement(
                                         'span',
-                                        { className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
+                                        {
+                                            className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
                                         ' '
                                     )
                                 )
@@ -56750,7 +56805,8 @@ var Customers = (function (_React$Component) {
                                         ' '
                                     ) : _react2['default'].createElement(
                                         'span',
-                                        { className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
+                                        {
+                                            className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
                                         ' '
                                     )
                                 )
@@ -56769,7 +56825,8 @@ var Customers = (function (_React$Component) {
                                         ' '
                                     ) : _react2['default'].createElement(
                                         'span',
-                                        { className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
+                                        {
+                                            className: 'glyphicon glyphicon-sort-by-attributes-alt text-primary' },
                                         ' '
                                     )
                                 )
@@ -56802,7 +56859,7 @@ var Customers = (function (_React$Component) {
 exports['default'] = Customers;
 module.exports = exports['default'];
 
-},{"./common/display":281,"./common/formatDate":282,"react":227,"react-router":46}],284:[function(require,module,exports){
+},{"./common/display":281,"./common/formatDate":282,"./common/spinner":283,"react":227,"react-router":46}],285:[function(require,module,exports){
 /**
  * Created by buggy on 9/19/15.
  */
@@ -56925,7 +56982,10 @@ var Homepage = (function (_React$Component) {
             if (_this.mounted) {
                 $.get(_commonAppConstants.restServerAPI, function (data) {
                     // console.log('getting all customers...');
-                    _this.setState({ allCustomers: data });
+                    _this.setState({
+                        allCustomers: data,
+                        loadingCustomers: false
+                    });
                     // keep current filter even while updating field
                     _this.filterCustomers(_this.state.searchEvent);
                     // initial sort, not needed, already sorted at server...
@@ -57058,7 +57118,8 @@ var Homepage = (function (_React$Component) {
                 }
             },
             searchEvent: { target: { value: '' } },
-            sort: { by: 'created_at', direction: 'desc' }
+            sort: { by: 'created_at', direction: 'desc' },
+            loadingCustomers: true
         };
     }
 
@@ -57087,7 +57148,8 @@ var Homepage = (function (_React$Component) {
                     removeCustomer: this.removeCustomer,
                     filterCustomers: this.filterCustomers,
                     sortCustomers: this.sortCustomers,
-                    sort: this.state.sort
+                    sort: this.state.sort,
+                    loadingCustomers: this.state.loadingCustomers
                 })
             );
         }
@@ -57104,7 +57166,7 @@ Homepage.contextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../flux/actions":290,"../flux/customerStore":292,"./auth/auth":278,"./common/appConstants":280,"./customers":283,"./input":285,"lodash":25,"react":227,"socket.io-client":229}],285:[function(require,module,exports){
+},{"../flux/actions":291,"../flux/customerStore":293,"./auth/auth":278,"./common/appConstants":280,"./customers":284,"./input":286,"lodash":25,"react":227,"socket.io-client":229}],286:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -57256,7 +57318,7 @@ var Input = (function (_React$Component) {
 exports['default'] = Input;
 module.exports = exports['default'];
 
-},{"./common/display":281,"react":227,"react-router":46}],286:[function(require,module,exports){
+},{"./common/display":281,"react":227,"react-router":46}],287:[function(require,module,exports){
 /**
  * Created by admin on 10/30/2015.
  */
@@ -57424,7 +57486,7 @@ var RxJS = (function (_React$Component) {
 exports['default'] = RxJS;
 module.exports = exports['default'];
 
-},{"../common/appConstants":280,"../common/formatDate":282,"react":227,"rx":228}],287:[function(require,module,exports){
+},{"../common/appConstants":280,"../common/formatDate":282,"react":227,"rx":228}],288:[function(require,module,exports){
 /**
  * Created by buggy on 9/27/15.
  */
@@ -57477,7 +57539,7 @@ var Test = (function (_React$Component) {
 exports['default'] = Test;
 module.exports = exports['default'];
 
-},{"react":227}],288:[function(require,module,exports){
+},{"react":227}],289:[function(require,module,exports){
 /**
  * Created by buggy on 10/7/15.
  */
@@ -57589,7 +57651,7 @@ Customer.contextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../../flux/actions":290,"../../flux/customerStore":292,"../common/appConstants":280,"./inputUpdateCustomer":289,"react":227}],289:[function(require,module,exports){
+},{"../../flux/actions":291,"../../flux/customerStore":293,"../common/appConstants":280,"./inputUpdateCustomer":290,"react":227}],290:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -57677,7 +57739,7 @@ var InputUpdateCustomer = (function (_React$Component) {
 exports['default'] = InputUpdateCustomer;
 module.exports = exports['default'];
 
-},{"react":227,"react-router":46}],290:[function(require,module,exports){
+},{"react":227,"react-router":46}],291:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -57756,7 +57818,7 @@ var Actions = {
 exports['default'] = Actions;
 module.exports = exports['default'];
 
-},{"../components/common/appConstants":280,"./constants":291,"./dispatcher":293}],291:[function(require,module,exports){
+},{"../components/common/appConstants":280,"./constants":292,"./dispatcher":294}],292:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -57780,7 +57842,7 @@ exports['default'] = (0, _keymirror2['default'])({
 });
 module.exports = exports['default'];
 
-},{"keymirror":24}],292:[function(require,module,exports){
+},{"keymirror":24}],293:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -57864,7 +57926,7 @@ _dispatcher2['default'].register(function (action) {
 exports['default'] = customerStore;
 module.exports = exports['default'];
 
-},{"./constants":291,"./dispatcher":293,"events":1}],293:[function(require,module,exports){
+},{"./constants":292,"./dispatcher":294,"events":1}],294:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -57880,7 +57942,7 @@ var dispatcher = new _flux.Dispatcher();
 exports['default'] = dispatcher;
 module.exports = exports['default'];
 
-},{"flux":4}],294:[function(require,module,exports){
+},{"flux":4}],295:[function(require,module,exports){
 /**
  * Created by buggy on 8/19/15.
  */
@@ -57959,4 +58021,4 @@ _reactDom2['default'].render(_react2['default'].createElement(
     )
 ), document.querySelector('#app'));
 
-},{"./app":277,"./components/auth/auth":278,"./components/auth/login":279,"./components/customers":283,"./components/homepage":284,"./components/rxjs/rxjs":286,"./components/test":287,"./components/updateCustomer/customer":288,"history/lib/createBrowserHistory":12,"react":227,"react-dom":26,"react-router":46}]},{},[294]);
+},{"./app":277,"./components/auth/auth":278,"./components/auth/login":279,"./components/customers":284,"./components/homepage":285,"./components/rxjs/rxjs":287,"./components/test":288,"./components/updateCustomer/customer":289,"history/lib/createBrowserHistory":12,"react":227,"react-dom":26,"react-router":46}]},{},[295]);
