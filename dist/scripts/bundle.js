@@ -56616,14 +56616,14 @@ var _react2 = _interopRequireDefault(_react);
 exports['default'] = function () {
     return _react2['default'].createElement(
         'div',
-        { className: 'showbox' },
+        { className: 'showbox-google' },
         _react2['default'].createElement(
             'div',
-            { className: 'loader' },
+            { className: 'loader-google' },
             _react2['default'].createElement(
                 'svg',
-                { className: 'circular', viewBox: '25 25 50 50' },
-                _react2['default'].createElement('circle', { className: 'path', cx: '50', cy: '50', r: '20', fill: 'none', strokeWidth: '2', 'stroke-miterlimit': '10' })
+                { className: 'circular-google', viewBox: '25 25 50 50' },
+                _react2['default'].createElement('circle', { className: 'path-google', cx: '50', cy: '50', r: '20', fill: 'none', strokeWidth: '2', 'stroke-miterlimit': '10' })
             )
         )
     );
@@ -56702,8 +56702,8 @@ var Customers = (function (_React$Component) {
                     null,
                     _react2['default'].createElement(
                         _reactRouter.Link,
-                        { to: '/customer/' + customer._id },
-                        'Edit Customer'
+                        { className: 'btn btn-warning', to: '/customer/' + customer._id },
+                        'Edit'
                     )
                 ),
                 _react2['default'].createElement(
@@ -56748,7 +56748,7 @@ var Customers = (function (_React$Component) {
                 ),
                 this.props.loadingCustomers ? _react2['default'].createElement(
                     'table',
-                    { className: 'table table-striped col-md-12 col-sm-12 col-xs-12' },
+                    { className: 'table col-md-12 col-sm-12 col-xs-12' },
                     _react2['default'].createElement(
                         'tbody',
                         null,

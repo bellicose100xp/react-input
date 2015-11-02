@@ -16,7 +16,7 @@ export default class Customers extends React.Component {
                 <td>{customer.firstName}</td>
                 <td>{customer.lastName}</td>
                 <td><FormattedDate date={customer.created_at}/></td>
-                <td><Link to={`/customer/${customer._id}`}>Edit Customer</Link></td>
+                <td><Link className="btn btn-warning" to={`/customer/${customer._id}`}>Edit</Link></td>
                 <td>
                     <button className="btn btn-danger" onClick={this.props.removeCustomer.bind(null, customer)}>Delete
                     </button>
@@ -44,7 +44,7 @@ export default class Customers extends React.Component {
                 </div>
 
                 {this.props.loadingCustomers ? (
-                    <table className="table table-striped col-md-12 col-sm-12 col-xs-12">
+                    <table className="table col-md-12 col-sm-12 col-xs-12">
                         <tbody>
                         <tr>
                             <td><Spinner /></td>
@@ -91,6 +91,8 @@ export default class Customers extends React.Component {
                         </tbody>
                     </table>
                 )}
+
+
             </div>
         );
     }
