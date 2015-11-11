@@ -82,6 +82,20 @@ customerRouter.route('/search')
             });
     });
 
+customerRouter.route('/allCustomers')
+    .get((req, res) => {
+        CustomerModel
+            .find()
+            .exec((err, data) => {
+                if (err) {
+                    // 500 is error
+                    res.status(500).send(err);
+                } else {
+                    res.json(data);
+                }
+            });
+    });
+
 //middleware to remove boilerplate code of finding customer by ID
 customerRouter.use('/customers/:customerId', (req, res, next) => {
     CustomerModel.findById(req.params.customerId, (err, data) => {

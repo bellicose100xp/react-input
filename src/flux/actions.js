@@ -5,6 +5,7 @@
 import dispatcher from './dispatcher';
 import constants from './constants';
 import {restServerAPI} from '../components/common/appConstants';
+import {ajax} from 'jquery';
 
 let Actions = {
 
