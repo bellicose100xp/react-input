@@ -29,23 +29,35 @@ export default class App extends React.Component {
 
         let {location} = this.props;
 
-        let removeNegativeMarginStyle = {
-            margin: 0
-        };
-
         return (
             <div className="container">
                 <div>
-                    <Display if={location.pathname !== '/login'}>
-                        <div className="row pull-right" style={removeNegativeMarginStyle}>
-                            { this.state.loggedIn ?
-                                (<Link to='/login' onClick={Auth.logout}> Logout </Link>)
-                                : (<Link to='/login'> Login </Link>)
-                            }
+                    <div className="top-nav">
+                        <div>
+                            <Link to="/">Homepage</Link>
                         </div>
-                    </Display>
-                    <div className="row" style={removeNegativeMarginStyle}>
-                        <h1 id="main-title">Very Simple Customer List</h1>
+                        <div className="top-nav-separater">|</div>
+                        <div>
+                            <Link to="/reports">Reports</Link>
+                        </div>
+                        <div className="top-nav-separater">|</div>
+                        <div>
+                            <Link to="/rxjs">Search</Link>
+                        </div>
+                        <div className="top-nav-separater">|</div>
+                        <div>
+                            <Display if={location.pathname !== '/login'}>
+                                <div>
+                                    { this.state.loggedIn ?
+                                        (<Link to='/login' onClick={Auth.logout}> Logout </Link>)
+                                        : (<Link to='/login'> Login </Link>)
+                                    }
+                                </div>
+                            </Display>
+                        </div>
+                    </div>
+                    <div className="main-title">
+                        <h1 className="main-title-heading">Very Simple Customer List</h1>
                     </div>
                 </div>
                 {this.props.children}

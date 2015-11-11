@@ -14,8 +14,8 @@ import createBrowserHistory from 'history/lib/createBrowserHistory';
 let history = createBrowserHistory();
 
 import App from './app';
-import Homepage from './components/homepage';
-import Customers from './components/customers';
+import Homepage from './components/homepage/homepage';
+import Customers from './components/homepage/customers';
 import Test from './components/test';
 import Login from './components/auth/login';
 import RxJS from './components/rxjs/rxjs';
@@ -34,6 +34,7 @@ ReactDOM.render((
                 <Route path="test" component={Test}/>
                 <Route path="login" component={Login}/>
                 <Route path="rxjs" component={RxJS} />
+                <Route path="reports" component={Test} />
             </Route>
         </Router>
     ),

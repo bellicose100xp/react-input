@@ -4,14 +4,14 @@
 'use strict';
 import React from 'react';
 import {Link} from 'react-router';
-import Display from './common/display';
+import Display from './../common/display';
 
 export default class Input extends React.Component {
 
     render() {
 
         return (
-                <div className="col-md-6 col-xs-12 col-sm-6 input-box">
+                <div className="input-box input-search-items">
                     <form onSubmit={this.props.updateForm} onReset={this.props.resetErrors}>
 
                         <div className="form-group">

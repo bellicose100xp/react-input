@@ -4,9 +4,9 @@
 'use strict';
 import React from 'react';
 import {Link} from 'react-router';
-import Display from './common/display';
-import FormattedDate from './common/formatDate';
-import Spinner from './common/spinner';
+import Display from './../common/display';
+import FormattedDate from './../common/formatDate';
+import Spinner from './../common/spinner';
 
 export default class Customers extends React.Component {
 
@@ -28,21 +28,6 @@ export default class Customers extends React.Component {
     render() {
         return (
             <div>
-                <div className="row hr-before-search">
-                    <hr />
-                </div>
-
-                <div className="form-group col-md-6 col-sm-6 col-xs-12 search-box">
-                    <label htmlFor="filter">Search:</label>
-                    <input
-                        className="form-control"
-                        placeholder="Filter the list below (Recently added customers)"
-                        name="filter"
-                        ref="filter"
-                        onChange={this.props.filterCustomers}
-                    />
-                </div>
-
                 {this.props.loadingCustomers ? (
                     <table className="table col-md-12 col-sm-12 col-xs-12">
                         <tbody>

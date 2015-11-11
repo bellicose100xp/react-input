@@ -5,12 +5,13 @@
 import React from 'react';
 import Input from './input';
 import Customers from './customers';
-import customerStore from '../flux/customerStore';
-import Actions from '../flux/actions';
+import customerStore from '../../flux/customerStore';
+import Actions from '../../flux/actions';
 import _ from 'lodash';
-import Auth from './auth/auth';
-import {restServerAPI, socketServer} from './common/appConstants';
+import Auth from './../auth/auth';
+import {restServerAPI, socketServer} from './../common/appConstants';
 import io from 'socket.io-client';
+import SearchRecentlyAdded from './searchRecentlyAdded';
 
 export default class Homepage extends React.Component {
 
@@ -223,24 +224,28 @@ export default class Homepage extends React.Component {
     render() {
         return (
             <div>
+                <div className="input-search">
+                    <Input
+                        updateCustomer={this.updateCustomer}
+                        customer={this.state.customer}
+                        dirty={this.state.dirty}
+                        displayDirtyErrorMessage={this.state.displayDirtyErrorMessage}
+                        displayInvalidErrorMessage={this.state.displayInvalidErrorMessage}
+                        validateCustomerFormFields={this.validateCustomerFormFields}
+                        updateForm={this.updateForm}
+                        errors={this.state.errors}
+                        resetErrors={this.resetErrors}
+                        handleOnKeyUpEvent={this.handleOnKeyUpEvent}
+                    />
 
-                <Input
-                    updateCustomer={this.updateCustomer}
-                    customer={this.state.customer}
-                    dirty={this.state.dirty}
-                    displayDirtyErrorMessage={this.state.displayDirtyErrorMessage}
-                    displayInvalidErrorMessage={this.state.displayInvalidErrorMessage}
-                    validateCustomerFormFields={this.validateCustomerFormFields}
-                    updateForm={this.updateForm}
-                    errors={this.state.errors}
-                    resetErrors={this.resetErrors}
-                    handleOnKeyUpEvent={this.handleOnKeyUpEvent}
-                />
+                    <SearchRecentlyAdded
+                        filterCustomers={this.filterCustomers}
+                    />
+                </div>
 
                 <Customers
                     customers={this.state.filteredCustomers}
                     removeCustomer={this.removeCustomer}
-                    filterCustomers={this.filterCustomers}
                     sortCustomers={this.sortCustomers}
                     sort={this.state.sort}
                     loadingCustomers={this.state.loadingCustomers}
