@@ -65,33 +65,35 @@ export default class Test extends React.Component {
                     let rectwidth = 240;
                     let rectLeftSidePadding = 20;
 
-                    svg.append('rect')
-                        .attr({
-                            id: `info-rect`,
-                            x: parseInt(d3.select('svg').attr('width')) - rectwidth - rectLeftSidePadding,
-                            y: parseInt(d3.select('svg').attr('height')) * (1 / 10),
-                            width: rectwidth,
-                            height: 30,
-                            rx: '0.3em',
-                            ry: '0.3em'
-                        })
-                        .style({
-                            fill: 'orangered',
-                            stroke: 'orangered',
-                            'stroke-width': '0.1em'
-                        });
+                    if (parseFloat(reportElementWidth) > (20 * this.state.barWidthRef)) {
+                        svg.append('rect')
+                            .attr({
+                                id: `info-rect`,
+                                x: parseInt(d3.select('svg').attr('width')) - rectwidth - rectLeftSidePadding,
+                                y: parseInt(d3.select('svg').attr('height')) * (1 / 10),
+                                width: rectwidth,
+                                height: 30,
+                                rx: '0.3em',
+                                ry: '0.3em'
+                            })
+                            .style({
+                                fill: 'orangered',
+                                stroke: 'orangered',
+                                'stroke-width': '0.1em'
+                            });
 
-                    svg.append('text')
-                        .text(`${d[0]} appears ${d[1]} times`)
-                        .attr({
-                            fill: 'white',
-                            'text-anchor': 'start',
-                            id: `info-text`,
-                            x: parseInt(d3.select('svg').attr('width')) - rectwidth - (rectLeftSidePadding / 2),
-                            y: (parseInt(d3.select('svg').attr('height')) * (1 / 10) ) + 20,
-                            'font-size': '1.2em',
-                            'font-family': 'sans-serif'
-                        });
+                        svg.append('text')
+                            .text(`${d[0]} appears ${d[1]} times`)
+                            .attr({
+                                fill: 'white',
+                                'text-anchor': 'start',
+                                id: `info-text`,
+                                x: parseInt(d3.select('svg').attr('width')) - rectwidth - (rectLeftSidePadding / 2),
+                                y: (parseInt(d3.select('svg').attr('height')) * (1 / 10) ) + 20,
+                                'font-size': '1.2em',
+                                'font-family': 'sans-serif'
+                            });
+                    }
                 })
                 .on('mouseout', (d, i) => {
 
@@ -105,7 +107,7 @@ export default class Test extends React.Component {
                 .on('click', (d, i) => {
 
                     let newFill = d3.select(`#bar${i}`).attr('data-color') === 'red' ? '#666' : 'red';
-                   // console.log(newFill);
+                    // console.log(newFill);
                     d3.select(`#bar${i}`).
                     attr({
                         fill: newFill,

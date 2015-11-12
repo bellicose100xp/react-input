@@ -76272,29 +76272,31 @@ var Test = (function (_React$Component) {
                         var rectwidth = 240;
                         var rectLeftSidePadding = 20;
 
-                        svg.append('rect').attr({
-                            id: 'info-rect',
-                            x: parseInt(_d32['default'].select('svg').attr('width')) - rectwidth - rectLeftSidePadding,
-                            y: parseInt(_d32['default'].select('svg').attr('height')) * (1 / 10),
-                            width: rectwidth,
-                            height: 30,
-                            rx: '0.3em',
-                            ry: '0.3em'
-                        }).style({
-                            fill: 'orangered',
-                            stroke: 'orangered',
-                            'stroke-width': '0.1em'
-                        });
+                        if (parseFloat(reportElementWidth) > 20 * _this.state.barWidthRef) {
+                            svg.append('rect').attr({
+                                id: 'info-rect',
+                                x: parseInt(_d32['default'].select('svg').attr('width')) - rectwidth - rectLeftSidePadding,
+                                y: parseInt(_d32['default'].select('svg').attr('height')) * (1 / 10),
+                                width: rectwidth,
+                                height: 30,
+                                rx: '0.3em',
+                                ry: '0.3em'
+                            }).style({
+                                fill: 'orangered',
+                                stroke: 'orangered',
+                                'stroke-width': '0.1em'
+                            });
 
-                        svg.append('text').text(d[0] + ' appears ' + d[1] + ' times').attr({
-                            fill: 'white',
-                            'text-anchor': 'start',
-                            id: 'info-text',
-                            x: parseInt(_d32['default'].select('svg').attr('width')) - rectwidth - rectLeftSidePadding / 2,
-                            y: parseInt(_d32['default'].select('svg').attr('height')) * (1 / 10) + 20,
-                            'font-size': '1.2em',
-                            'font-family': 'sans-serif'
-                        });
+                            svg.append('text').text(d[0] + ' appears ' + d[1] + ' times').attr({
+                                fill: 'white',
+                                'text-anchor': 'start',
+                                id: 'info-text',
+                                x: parseInt(_d32['default'].select('svg').attr('width')) - rectwidth - rectLeftSidePadding / 2,
+                                y: parseInt(_d32['default'].select('svg').attr('height')) * (1 / 10) + 20,
+                                'font-size': '1.2em',
+                                'font-family': 'sans-serif'
+                            });
+                        }
                     }).on('mouseout', function (d, i) {
 
                         _d32['default'].select('#bar' + i).attr({
