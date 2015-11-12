@@ -27,7 +27,7 @@ export default class Test extends React.Component {
             let reportElementWidth = reportElement.node().getBoundingClientRect().width;
 
             //   console.log(reportElementWidth, this.state.frequency.length);
-            if(d3.select('svg')){
+            if (d3.select('svg')) {
                 d3.select('svg').remove();
             }
 
@@ -52,7 +52,65 @@ export default class Test extends React.Component {
                     y: d => yScale(d[1]),
                     width: (d, i) => (xScale(this.state.frequency.length) / this.state.frequency.length) - this.state.padding,
                     height: d => this.state.height - yScale(d[1]),
-                    fill: '#666'
+                    fill: '#666',
+                    id: (d, i) => `bar${i}`,
+                    'data-color': '#666'
+                })
+                .on('mouseover', (d, i) => {
+                    d3.select(`#bar${i}`).
+                    attr({
+                        fill: 'orangered'
+                    });
+
+                    let rectwidth = 240;
+                    let rectLeftSidePadding = 20;
+
+                    svg.append('rect')
+                        .attr({
+                            id: `info-rect`,
+                            x: parseInt(d3.select('svg').attr('width')) - rectwidth - rectLeftSidePadding,
+                            y: parseInt(d3.select('svg').attr('height')) * (1 / 10),
+                            width: rectwidth,
+                            height: 30,
+                            rx: '0.3em',
+                            ry: '0.3em'
+                        })
+                        .style({
+                            fill: 'orangered',
+                            stroke: 'orangered',
+                            'stroke-width': '0.1em'
+                        });
+
+                    svg.append('text')
+                        .text(`${d[0]} appears ${d[1]} times`)
+                        .attr({
+                            fill: 'white',
+                            'text-anchor': 'start',
+                            id: `info-text`,
+                            x: parseInt(d3.select('svg').attr('width')) - rectwidth - (rectLeftSidePadding / 2),
+                            y: (parseInt(d3.select('svg').attr('height')) * (1 / 10) ) + 20,
+                            'font-size': '1.2em',
+                            'font-family': 'sans-serif'
+                        });
+                })
+                .on('mouseout', (d, i) => {
+
+                    d3.select(`#bar${i}`).
+                    attr({
+                        fill: () => d3.select(`#bar${i}`).attr('data-color')
+                    });
+
+                    d3.selectAll('#info-text, #info-rect').remove();
+                })
+                .on('click', (d, i) => {
+
+                    let newFill = d3.select(`#bar${i}`).attr('data-color') === 'red' ? '#666' : 'red';
+                   // console.log(newFill);
+                    d3.select(`#bar${i}`).
+                    attr({
+                        fill: newFill,
+                        'data-color': newFill
+                    });
                 });
 
             svg.selectAll('text')

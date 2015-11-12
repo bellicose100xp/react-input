@@ -75339,7 +75339,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
-var socketServer = 'https://secure-chamber-4968.herokuapp.com';
+var socketServer = 'http://localhost:8000';
 var restServerAPI = socketServer + '/api/customers';
 var restSearchAPI = socketServer + '/api/search';
 var getAllCustomerAPI = socketServer + '/api/allCustomers';
@@ -76259,7 +76259,59 @@ var Test = (function (_React$Component) {
                         height: function height(d) {
                             return _this.state.height - yScale(d[1]);
                         },
-                        fill: '#666'
+                        fill: '#666',
+                        id: function id(d, i) {
+                            return 'bar' + i;
+                        },
+                        'data-color': '#666'
+                    }).on('mouseover', function (d, i) {
+                        _d32['default'].select('#bar' + i).attr({
+                            fill: 'orangered'
+                        });
+
+                        var rectwidth = 240;
+                        var rectLeftSidePadding = 20;
+
+                        svg.append('rect').attr({
+                            id: 'info-rect',
+                            x: parseInt(_d32['default'].select('svg').attr('width')) - rectwidth - rectLeftSidePadding,
+                            y: parseInt(_d32['default'].select('svg').attr('height')) * (1 / 10),
+                            width: rectwidth,
+                            height: 30,
+                            rx: '0.3em',
+                            ry: '0.3em'
+                        }).style({
+                            fill: 'orangered',
+                            stroke: 'orangered',
+                            'stroke-width': '0.1em'
+                        });
+
+                        svg.append('text').text(d[0] + ' appears ' + d[1] + ' times').attr({
+                            fill: 'white',
+                            'text-anchor': 'start',
+                            id: 'info-text',
+                            x: parseInt(_d32['default'].select('svg').attr('width')) - rectwidth - rectLeftSidePadding / 2,
+                            y: parseInt(_d32['default'].select('svg').attr('height')) * (1 / 10) + 20,
+                            'font-size': '1.2em',
+                            'font-family': 'sans-serif'
+                        });
+                    }).on('mouseout', function (d, i) {
+
+                        _d32['default'].select('#bar' + i).attr({
+                            fill: function fill() {
+                                return _d32['default'].select('#bar' + i).attr('data-color');
+                            }
+                        });
+
+                        _d32['default'].selectAll('#info-text, #info-rect').remove();
+                    }).on('click', function (d, i) {
+
+                        var newFill = _d32['default'].select('#bar' + i).attr('data-color') === 'red' ? '#666' : 'red';
+                        // console.log(newFill);
+                        _d32['default'].select('#bar' + i).attr({
+                            fill: newFill,
+                            'data-color': newFill
+                        });
                     });
 
                     svg.selectAll('text').data(_this.state.frequency).enter().append('text').text(function (data) {
