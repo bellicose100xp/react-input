@@ -20,6 +20,7 @@ import Test from './components/test';
 import Login from './components/auth/login';
 import RxJS from './components/rxjs/rxjs';
 import Reports from './components/reports/reports';
+import DumbComponent from './components/hoc/dumbComponent';
 
 let requireAuth = (nextState, replaceState) => {
     if (!Auth.loggedIn()) {
@@ -36,6 +37,7 @@ ReactDOM.render((
                 <Route path="login" component={Login}/>
                 <Route path="rxjs" component={RxJS} />
                 <Route path="reports" component={Reports} />
+                <Route path="hoc" component={DumbComponent} />
             </Route>
         </Router>
     ),

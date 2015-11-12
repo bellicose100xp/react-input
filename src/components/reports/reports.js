@@ -174,7 +174,7 @@ export default class Test extends React.Component {
         this.mounted = false;
     }
 
-    render() {
+    render = () => {
         return (
             <div id="reports">
             </div>

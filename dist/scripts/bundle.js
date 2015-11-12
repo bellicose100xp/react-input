@@ -75339,7 +75339,7 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
-var socketServer = 'https://secure-chamber-4968.herokuapp.com';
+var socketServer = 'http://localhost:8000';
 var restServerAPI = socketServer + '/api/customers';
 var restSearchAPI = socketServer + '/api/search';
 var getAllCustomerAPI = socketServer + '/api/allCustomers';
@@ -75443,6 +75443,92 @@ exports['default'] = function () {
 module.exports = exports['default'];
 
 },{"react":229}],286:[function(require,module,exports){
+/**
+ * Created by admin on 11/12/2015.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _wrapperHoc = require('./wrapperHoc');
+
+var _wrapperHoc2 = _interopRequireDefault(_wrapperHoc);
+
+var dumbComponent = function dumbComponent(props) {
+  return _react2['default'].createElement(
+    'div',
+    null,
+    ' ',
+    props.name,
+    ': ',
+    props.items,
+    ' '
+  );
+};
+
+exports['default'] = (0, _wrapperHoc2['default'])(dumbComponent);
+module.exports = exports['default'];
+
+},{"./wrapperHoc":287,"react":229}],287:[function(require,module,exports){
+/**
+ * Created by admin on 11/12/2015.
+ */
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+exports['default'] = function (dumbComponent) {
+    return (function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+            _classCallCheck(this, _class);
+
+            _get(Object.getPrototypeOf(_class.prototype), 'constructor', this).call(this, props);
+            this.state = {
+                items: 10,
+                name: 'belli'
+            };
+        }
+
+        _createClass(_class, [{
+            key: 'render',
+            value: function render() {
+                return _react2['default'].createElement('dumbComponent', _extends({}, this.state, this.props));
+            }
+        }]);
+
+        return _class;
+    })(_react2['default'].Component);
+};
+
+module.exports = exports['default'];
+
+},{"react":229}],288:[function(require,module,exports){
 /**
  * Created by HSO on 9/25/15.
  */
@@ -75649,7 +75735,7 @@ var Customers = (function (_React$Component) {
 exports['default'] = Customers;
 module.exports = exports['default'];
 
-},{"./../common/display":283,"./../common/formatDate":284,"./../common/spinner":285,"react":229,"react-router":48}],287:[function(require,module,exports){
+},{"./../common/display":283,"./../common/formatDate":284,"./../common/spinner":285,"react":229,"react-router":48}],289:[function(require,module,exports){
 /**
  * Created by buggy on 9/19/15.
  */
@@ -75966,7 +76052,7 @@ Homepage.contextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../../flux/actions":295,"../../flux/customerStore":297,"./../auth/auth":280,"./../common/appConstants":282,"./customers":286,"./input":288,"./searchRecentlyAdded":289,"lodash":27,"react":229,"socket.io-client":231}],288:[function(require,module,exports){
+},{"../../flux/actions":297,"../../flux/customerStore":299,"./../auth/auth":280,"./../common/appConstants":282,"./customers":288,"./input":290,"./searchRecentlyAdded":291,"lodash":27,"react":229,"socket.io-client":231}],290:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -76118,7 +76204,7 @@ var Input = (function (_React$Component) {
 exports['default'] = Input;
 module.exports = exports['default'];
 
-},{"./../common/display":283,"react":229,"react-router":48}],289:[function(require,module,exports){
+},{"./../common/display":283,"react":229,"react-router":48}],291:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', {
     value: true
@@ -76179,7 +76265,7 @@ var SearchRecentlyAdded = (function (_React$Component) {
 exports['default'] = SearchRecentlyAdded;
 module.exports = exports['default'];
 
-},{"react":229}],290:[function(require,module,exports){
+},{"react":229}],292:[function(require,module,exports){
 /**
  * Created by admin on 11/11/2015.
  */
@@ -76187,8 +76273,6 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
     value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
@@ -76373,6 +76457,10 @@ var Test = (function (_React$Component) {
             _this.mounted = false;
         };
 
+        this.render = function () {
+            return _react2['default'].createElement('div', { id: 'reports' });
+        };
+
         this.state = {
             customers: [],
             width: 1000,
@@ -76383,20 +76471,13 @@ var Test = (function (_React$Component) {
         };
     }
 
-    _createClass(Test, [{
-        key: 'render',
-        value: function render() {
-            return _react2['default'].createElement('div', { id: 'reports' });
-        }
-    }]);
-
     return Test;
 })(_react2['default'].Component);
 
 exports['default'] = Test;
 module.exports = exports['default'];
 
-},{"../common/appConstants":282,"d3":3,"lodash":27,"react":229}],291:[function(require,module,exports){
+},{"../common/appConstants":282,"d3":3,"lodash":27,"react":229}],293:[function(require,module,exports){
 /**
  * Created by admin on 10/30/2015.
  */
@@ -76564,7 +76645,7 @@ var RxJS = (function (_React$Component) {
 exports['default'] = RxJS;
 module.exports = exports['default'];
 
-},{"../common/appConstants":282,"../common/formatDate":284,"react":229,"rx":230}],292:[function(require,module,exports){
+},{"../common/appConstants":282,"../common/formatDate":284,"react":229,"rx":230}],294:[function(require,module,exports){
 /**
  * Created by buggy on 9/27/15.
  */
@@ -76617,7 +76698,7 @@ var Test = (function (_React$Component) {
 exports['default'] = Test;
 module.exports = exports['default'];
 
-},{"react":229}],293:[function(require,module,exports){
+},{"react":229}],295:[function(require,module,exports){
 /**
  * Created by buggy on 10/7/15.
  */
@@ -76729,7 +76810,7 @@ Customer.contextTypes = {
 };
 module.exports = exports['default'];
 
-},{"../../flux/actions":295,"../../flux/customerStore":297,"../common/appConstants":282,"./inputUpdateCustomer":294,"react":229}],294:[function(require,module,exports){
+},{"../../flux/actions":297,"../../flux/customerStore":299,"../common/appConstants":282,"./inputUpdateCustomer":296,"react":229}],296:[function(require,module,exports){
 /**
  * Created by buggy on 9/23/15.
  */
@@ -76817,7 +76898,7 @@ var InputUpdateCustomer = (function (_React$Component) {
 exports['default'] = InputUpdateCustomer;
 module.exports = exports['default'];
 
-},{"react":229,"react-router":48}],295:[function(require,module,exports){
+},{"react":229,"react-router":48}],297:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -76898,7 +76979,7 @@ var Actions = {
 exports['default'] = Actions;
 module.exports = exports['default'];
 
-},{"../components/common/appConstants":282,"./constants":296,"./dispatcher":298,"jquery":25}],296:[function(require,module,exports){
+},{"../components/common/appConstants":282,"./constants":298,"./dispatcher":300,"jquery":25}],298:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -76922,7 +77003,7 @@ exports['default'] = (0, _keymirror2['default'])({
 });
 module.exports = exports['default'];
 
-},{"keymirror":26}],297:[function(require,module,exports){
+},{"keymirror":26}],299:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -77006,7 +77087,7 @@ _dispatcher2['default'].register(function (action) {
 exports['default'] = customerStore;
 module.exports = exports['default'];
 
-},{"./constants":296,"./dispatcher":298,"events":1}],298:[function(require,module,exports){
+},{"./constants":298,"./dispatcher":300,"events":1}],300:[function(require,module,exports){
 /**
  * Created by admin on 10/2/2015.
  */
@@ -77022,7 +77103,7 @@ var dispatcher = new _flux.Dispatcher();
 exports['default'] = dispatcher;
 module.exports = exports['default'];
 
-},{"flux":5}],299:[function(require,module,exports){
+},{"flux":5}],301:[function(require,module,exports){
 /**
  * Created by buggy on 8/19/15.
  */
@@ -77083,6 +77164,10 @@ var _componentsReportsReports = require('./components/reports/reports');
 
 var _componentsReportsReports2 = _interopRequireDefault(_componentsReportsReports);
 
+var _componentsHocDumbComponent = require('./components/hoc/dumbComponent');
+
+var _componentsHocDumbComponent2 = _interopRequireDefault(_componentsHocDumbComponent);
+
 var history = (0, _historyLibCreateBrowserHistory2['default'])();
 
 var requireAuth = function requireAuth(nextState, replaceState) {
@@ -77102,8 +77187,9 @@ _reactDom2['default'].render(_react2['default'].createElement(
         _react2['default'].createElement(_reactRouter.Route, { path: 'test', component: _componentsTest2['default'] }),
         _react2['default'].createElement(_reactRouter.Route, { path: 'login', component: _componentsAuthLogin2['default'] }),
         _react2['default'].createElement(_reactRouter.Route, { path: 'rxjs', component: _componentsRxjsRxjs2['default'] }),
-        _react2['default'].createElement(_reactRouter.Route, { path: 'reports', component: _componentsReportsReports2['default'] })
+        _react2['default'].createElement(_reactRouter.Route, { path: 'reports', component: _componentsReportsReports2['default'] }),
+        _react2['default'].createElement(_reactRouter.Route, { path: 'hoc', component: _componentsHocDumbComponent2['default'] })
     )
 ), document.querySelector('#app'));
 
-},{"./app":279,"./components/auth/auth":280,"./components/auth/login":281,"./components/homepage/customers":286,"./components/homepage/homepage":287,"./components/reports/reports":290,"./components/rxjs/rxjs":291,"./components/test":292,"./components/updateCustomer/customer":293,"history/lib/createBrowserHistory":13,"react":229,"react-dom":28,"react-router":48}]},{},[299]);
+},{"./app":279,"./components/auth/auth":280,"./components/auth/login":281,"./components/hoc/dumbComponent":286,"./components/homepage/customers":288,"./components/homepage/homepage":289,"./components/reports/reports":292,"./components/rxjs/rxjs":293,"./components/test":294,"./components/updateCustomer/customer":295,"history/lib/createBrowserHistory":13,"react":229,"react-dom":28,"react-router":48}]},{},[301]);
