@@ -24,6 +24,7 @@ var config = {
         html: './src/*.html',
         dist: './dist',
         js: './src/**/*.js',
+        fetchPolyfill: './node_modules/whatwg-fetch/fetch.js',
         images: './src/images/*',
         mainJs: './src/main.js',
         css: [
@@ -79,6 +80,9 @@ gulp.task('js', function () {
         .pipe(source('bundle.js'))
         .pipe(gulp.dest(config.paths.dist + '/scripts'))
         .pipe(connect.reload())
+
+    gulp.src(config.paths.fetchPolyfill)
+        .pipe(gulp.dest(config.paths.dist + '/scripts'))
 
 });
 

@@ -52,7 +52,8 @@
     "rx": "^4.0.6",
     "socket.io": "^1.3.7",
     "socket.io-client": "^1.3.7",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "whatwg-fetch": "^0.10.1"
   },
   "engines": {
     "node": "4.0.0"
