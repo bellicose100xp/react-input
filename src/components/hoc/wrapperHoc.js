@@ -1,20 +1,21 @@
-/**
- * Created by admin on 11/12/2015.
- */
 'use strict';
 import React from 'react';
 
-export default dumbComponent => class extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            items: 10,
-            name: 'belli'
-        };
-    }
+export default Component => class extends React.Component {
 
-    render() {
-        return <dumbComponent {...this.state} {...this.props} />;
-    }
-};
+        constructor(props) {
+
+            super(props);
+
+            this.state = {
+                items: 13,
+                name: 'belli'
+            };
+        }
+
+        render() {
+            return <Component {...this.state} {...this.props} />;
+        }
+    };
+
 

@@ -3,10 +3,8 @@
  */
 'use strict';
 import React from 'react';
-import Wrapper from './wrapperHoc';
+import wrapper from './wrapperHoc';
 
-const dumbComponent = props => {
-    return <div> {props.name}: {props.items} </div>;
-};
+let DumbComponent = props => <div>{props.name} has {props.items} items</div>;
 
-export default Wrapper(dumbComponent);
+export default wrapper(DumbComponent);
