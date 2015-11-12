@@ -37,8 +37,6 @@ export default class Test extends React.Component {
                     height: this.state.height
                 });
 
-            console.log();
-
             let xScale = d3.scale.linear().domain([0, this.state.frequency.length]).range([0, reportElementWidth]);
             //  console.log(`freq: ${this.state.frequency.length} xScale(5): ${xScale(5)} `);
             let yScale = d3.scale.linear().domain([0, d3.max(this.state.frequency, data => data[1])]).range([this.state.height, 0]);
